@@ -1,0 +1,2322 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计量经济学 · 期末复习重点（按教材小节）— 徐秋华老师画重点</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+<style>
+/* ===== CSS 设计系统 V4 · 淡色纸质书感 ===== */
+:root {
+  --bg: #fefdf9;
+  --bg-card: #fffefb;
+  --text: #3d3226;
+  --text-secondary: #6b5e4e;
+  --border: #e8dfce;
+  --accent: #8b6914;
+  --accent-light: #d4b96a;
+  --accent-soft: #f5edd8;
+  --tag-bg: #f7f1e0;
+  --code-bg: #faf7ef;
+  --shadow: 0 1px 4px rgba(0,0,0,.04);
+  --highlight: #fef9e7;
+  --star3: #b84c2c;
+  --star2: #c88229;
+  --star1: #7b8b6f;
+  --sidebar-bg: #faf6eb;
+  --sidebar-active: #efe0c0;
+  --search-bg: #fffefb;
+  --stata-bg: #2a2520;
+  --stata-text: #e8dcc8;
+}
+
+[data-theme="dark"] {
+  --bg: #1e1b16;
+  --bg-card: #272318;
+  --text: #e6dcc8;
+  --text-secondary: #b8a080;
+  --border: #3d3525;
+  --accent: #d4a854;
+  --accent-light: #8b6f3e;
+  --accent-soft: #352d1e;
+  --tag-bg: #2d281c;
+  --code-bg: #272116;
+  --shadow: 0 1px 4px rgba(0,0,0,.3);
+  --highlight: #352a14;
+  --star3: #e07050;
+  --star2: #e0a040;
+  --star1: #8a9a7e;
+  --sidebar-bg: #222017;
+  --sidebar-active: #3d3520;
+  --search-bg: #2a251c;
+  --stata-bg: #1a1814;
+  --stata-text: #d4c8a8;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", "Georgia", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.9;
+  font-size: 16px;
+  transition: background .3s, color .3s;
+}
+
+/* Sidebar */
+#sidebar {
+  position: fixed; left: 0; top: 0; width: 275px; height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 100;
+  padding: 24px 14px;
+  transition: transform .3s, background .3s;
+}
+#sidebar h2 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.05rem; color: var(--accent);
+  margin-bottom: 14px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent-light);
+}
+#sidebar nav a {
+  display: block; padding: 6px 10px; margin: 2px 0;
+  font-size: .85rem; color: var(--text-secondary);
+  text-decoration: none; border-radius: 6px;
+  transition: all .15s;
+}
+#sidebar nav a:hover, #sidebar nav a.active {
+  background: var(--sidebar-active); color: var(--accent); font-weight: 600;
+}
+#sidebar nav a .tag {
+  display: inline-block; font-size: .68rem;
+  background: var(--tag-bg); padding: 1px 5px; border-radius: 3px;
+  margin-right: 3px; font-weight: 700; min-width: 24px; text-align: center;
+}
+.sidebar-toggle {
+  position: fixed; left: 282px; top: 14px; z-index: 101;
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--bg-card); border: 1px solid var(--border);
+  cursor: pointer; font-size: .95rem; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: left .3s, background .3s; color: var(--text);
+}
+
+/* Main */
+#main {
+  margin-left: 275px; padding: 36px 44px;
+  max-width: 980px; transition: margin-left .3s;
+}
+
+/* Header */
+.header-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 28px; padding-bottom: 18px;
+  border-bottom: 2px double var(--border);
+}
+.header-bar h1 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.7rem; color: var(--accent); font-weight: 700;
+}
+.header-bar .subtitle {
+  font-size: .88rem; color: var(--text-secondary); margin-top: 3px;
+}
+.header-actions {
+  display: flex; gap: 8px; align-items: center;
+}
+.header-actions button {
+  padding: 5px 12px; border: 1px solid var(--border);
+  border-radius: 18px; cursor: pointer; font-size: .8rem;
+  background: var(--bg-card); color: var(--text);
+  transition: all .2s;
+}
+.header-actions button:hover { border-color: var(--accent); color: var(--accent); }
+
+/* Section cards */
+.section-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 10px; padding: 26px 30px; margin-bottom: 26px;
+  box-shadow: var(--shadow); transition: background .3s, border-color .3s;
+  scroll-margin-top: 70px;
+}
+.section-card h2 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.28rem; color: var(--accent);
+  margin-bottom: 6px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent-soft);
+}
+.section-card h2 .sec-num {
+  font-size: .82rem; background: var(--accent); color: #fffef9;
+  padding: 2px 9px; border-radius: 11px; margin-right: 6px;
+  vertical-align: middle;
+}
+.section-card h3 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.08rem; color: var(--text); margin: 18px 0 8px;
+  padding-left: 8px; border-left: 3px solid var(--accent-light);
+}
+.section-card h4 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: .96rem; color: var(--accent); margin: 14px 0 6px;
+}
+
+/* Importance badges */
+.imp { display:inline-block; padding: 2px 9px; border-radius: 10px; font-size:.75rem; font-weight:700; margin-left:5px; vertical-align:middle; }
+.imp-3 { background:#fef0e8; color:var(--star3); border:1px solid #f0c8b0; }
+.imp-2 { background:#fef6e8; color:var(--star2); border:1px solid #f0d8a0; }
+.imp-1 { background:#f2f5ef; color:var(--star1); border:1px solid #c8d8c0; }
+
+/* Generic pre/code blocks (method chains, plain text) */
+pre {
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-radius: 8px; padding: 14px 16px; margin: 10px 0;
+  font-family: "Fira Code", "Cascadia Code", "Consolas", "Courier New", monospace;
+  font-size: .85rem; line-height: 1.7; overflow-x: auto;
+  white-space: pre-wrap; word-break: break-word;
+}
+pre code {
+  background: transparent; border: none; padding: 0;
+  font-size: inherit; font-family: inherit;
+}
+
+/* Stata code */
+.stata-code {
+  background: var(--stata-bg); color: var(--stata-text);
+  border-radius: 8px; padding: 15px 18px; margin: 10px 0;
+  font-family: "Fira Code", "Cascadia Code", "Consolas", "Courier New", monospace;
+  font-size: .83rem; line-height: 1.65; overflow-x: auto;
+  white-space: pre; position: relative;
+}
+.stata-code::before {
+  content: "Stata"; position: absolute; top: 5px; right: 10px;
+  font-size: .68rem; color: #887a60; font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+/* Inline code */
+code {
+  background: var(--code-bg); padding: 1px 5px; border-radius: 3px;
+  font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: .88em; border: 1px solid var(--border);
+}
+
+/* Collapsible details */
+details {
+  border: 1px solid var(--border); border-radius: 8px;
+  margin: 8px 0; overflow: hidden;
+}
+details summary {
+  padding: 10px 14px; cursor: pointer; font-weight: 600;
+  background: var(--tag-bg); user-select: none;
+  font-size: .9rem; transition: background .2s;
+}
+details summary:hover { background: var(--sidebar-active); }
+details .details-content {
+  padding: 14px 18px; background: var(--bg-card);
+}
+
+/* Tables */
+table {
+  width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .88rem;
+}
+th, td {
+  padding: 9px 12px; text-align: left;
+  border: 1px solid var(--border);
+}
+th { background: var(--accent-soft); font-weight: 700; color: var(--accent); }
+tr:nth-child(even) { background: var(--code-bg); }
+
+/* Lists */
+ul, ol { padding-left: 22px; margin: 6px 0; }
+li { margin-bottom: 3px; line-height: 1.75; }
+
+/* Paragraph spacing */
+p { margin: 6px 0; }
+
+/* KaTeX display math */
+.katex-display { margin: 12px 0; overflow-x: auto; overflow-y: hidden; }
+.katex { font-size: 1.04em; }
+
+/* Strong emphasis */
+strong { color: var(--accent); }
+
+/* Responsive */
+@media (max-width: 768px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; padding: 20px 14px; }
+  .sidebar-toggle { left: 10px; }
+  .section-card { padding: 16px 14px; }
+  table { font-size: .76rem; }
+  th, td { padding: 6px 8px; }
+}
+
+/* Print */
+@media print {
+  #sidebar, .sidebar-toggle, .header-actions { display: none !important; }
+  #main { margin-left: 0; padding: 0; }
+  .section-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  details .details-content { display: block !important; }
+  body { font-size: 10.5pt; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
+
+html { scroll-behavior: smooth; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <h2>📖 复习重点目录</h2>
+  <nav>
+    <a href="#sec0"><span class="tag">★3</span>§0 全章导论：从 OLS 到 DML —— 现代计量经济学的方法谱系</a>
+<a href="#sec1"><span class="tag">★3</span>§1 潜在结果框架：因果效应的定义与选择偏误（教材 §3.8）</a>
+<a href="#sec2"><span class="tag">★3</span>§2 回归调整与匹配：依可观测变量选择的因果推断（教材 §5.5）</a>
+<a href="#sec3"><span class="tag">★2</span>§3 聚类标准误：组内相关下的稳健推断（教材 §6.6）</a>
+<a href="#sec4"><span class="tag">★3</span>§4 线性矩模型与 GMM：工具变量法的统一框架（教材 §7.5.1 + §7.5.4）</a>
+<a href="#sec5"><span class="tag">★3</span>§5 固定效应模型：消除不随时间变化的遗漏变量（教材 §8.2）</a>
+<a href="#sec6"><span class="tag">★3</span>§6 动态面板数据模型：当过去影响现在（教材 §8.6）</a>
+<a href="#sec7"><span class="tag">★3</span>§7 双重差分（DID）：利用时间和组别差异识别政策效应（教材 §8.7）</a>
+<a href="#sec8"><span class="tag">★2</span>§8 岭回归：ℓ2 正则化与偏差-方差权衡（教材 §10.3）</a>
+<a href="#sec9"><span class="tag">★2</span>§9 主成分分析（PCA）：高维数据的降维利器（教材 §10.6）</a>
+<a href="#sec10"><span class="tag">★3</span>§10 全章总结：方法决策树与综合习题</a>
+  </nav>
+</aside>
+
+<button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')" title="切换侧边栏">☰</button>
+
+<!-- Main -->
+<main id="main">
+
+<div class="header-bar">
+  <div>
+    <h1>计量经济学 · 期末复习重点</h1>
+    <div class="subtitle">徐秋华《计量经济分析（修改）》· 10 个重点小节 · 三段式教学（脉络 + 重点 + 习题）</div>
+  </div>
+  <div class="header-actions">
+    <button onclick="toggleTheme()" id="themeBtn">🌙 暗色</button>
+    <button onclick="window.print()">🖨 打印</button>
+  </div>
+</div>
+
+<section class="section-card" id="sec0">
+<h2><span class="sec-num">§0</span>全章导论：从 OLS 到 DML —— 现代计量经济学的方法谱系<span class="imp imp-3">★★★ 必考</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>开场 Puzzle</strong>：你是一名实证研究者，想研究"大学学历对工资的因果效应"。你把工资对学历哑变量做 OLS 回归，得到系数为正且显著。这个系数真的是因果效应吗？——如果上大学的人本身能力更强，即使不上大学工资也更高，OLS 就把"能力溢价"错算成了"学历溢价"。这就是<strong>选择偏误（selection bias）</strong>。</li>
+<li><strong>区分两个概念</strong>：OLS 只能处理"可观测的遗漏变量"（加入控制变量），但不能处理"不可观测的遗漏变量"或"联立性导致的内生性"。</li>
+<li>全章方法谱系（一条箭头链）：</li>
+</ul>  <pre><code>OLS(基线，假设 Xi ⟂ εi)
+    │
+    ├─→ 面板固定效应 FE — 消除不随时间变化的遗漏变量
+    │     └─→ 动态面板 GMM — 处理"过去的 Y 影响现在的 Y"
+    │
+    ├─→ 工具变量 IV / 2SLS — 找"只通过 X 影响 Y"的外部变动源
+    │     └─→ 线性矩模型 GMM — IV 的泛化，统一框架
+    │
+    ├─→ 匹配 PSM / 回归调整 RA — 依可观测变量选择下的因果推断
+    │     └─→ DID 双重差分 — 利用面板+时间差分，消除不可观测混杂
+    │           └─→ 交叠 DID / CSDID — 处理"不同时间开始处置"的现代解法
+    │
+    ├─→ 聚类标准误 — "同一班级的学生彼此相关"时的正确推断
+    │
+    └─→ 高维方法（岭回归 / LASSO / PCA）— K > n 时的估计与降维
+          └─→ Double Lasso / DML — 让 ML 的灵活性不损害因果推断的可靠性</code></pre>
+<li><strong>一句话主线</strong>：观测数据中处置分配非随机 → 需要假设识别条件 → 不同假设引出不同方法 → 方法的核心差异在于"用什么信息替代随机化"。</li>
+
+<h3>二、重点内容申明</h3>
+<h4>0. 选择偏误的直观理解</h4>
+你是一名实证研究者，想知道"大学学历能不能提高工资"。你把工资对是否上大学做一个简单回归，系数是正的，于是你得出结论：上大学导致工资提高。这个结论可靠吗？
+不一定。想想看：那些上大学的人，即使没上大学，他们的工资也可能本来就比没上大学的人高——因为他们能力更强、家庭背景更好、更自律。如果你把"能力溢价"错误地算成了"学历溢价"，这就是<strong>选择偏误（selection bias）</strong>。
+用数学来说：令 $D_i=1$ 表示上大学，$D_i=0$ 表示没上大学。一元回归的系数 $\beta_1 = E(Y_i|D_i=1) - E(Y_i|D_i=0)$，即两个组的平均工资差。但问题是——上大学的人如果没上，工资会是多少呢？我们定义：
+<ul><li>$Y_{1i}$：个体 $i$ 如果上大学的工资</li>
+<li>$Y_{0i}$：个体 $i$ 如果没上大学的工资</li>
+</ul>
+那么 $\beta_1$ 可以分解为：
+$$\beta_1 = \underbrace{E(Y_{1i}|D_i=1) - E(Y_{0i}|D_i=1)}_{\text{真正的因果效应（ATET）}} + \underbrace{[E(Y_{0i}|D_i=1) - E(Y_{0i}|D_i=0)]}_{\text{选择偏误}}$$
+第二项 $E(Y_{0i}|D_i=1) - E(Y_{0i}|D_i=0)$ 就是选择偏误。人话翻译：<strong>上大学的人如果不上的话，他们的工资也比没上大学的人高</strong>。这就说明：简单的均值比较不能识别因果效应——两组人在"没上大学"的基准线上就已经不同了。
+<h4>1. 全章方法谱系图</h4>
+整个计量经济学的方法演进，本质上是在回答一个问题：<strong>当处置（treatment）不是随机分配的时候，怎么估计因果效应？</strong> 不同的方法假定了不同的"替代随机化"的信息来源。
+<pre><code>OLS（基线：假设 Xi ⟂ εi）
+  │
+  ├─→ 面板固定效应 FE — 消除不随时间变化的遗漏变量
+  │     └─→ 动态面板 GMM — 处理"过去的 Y 影响现在的 Y"
+  │
+  ├─→ 工具变量 IV / 2SLS — 找"只通过 X 影响 Y"的外部变动源
+  │     └─→ 线性矩模型 GMM — IV 的泛化，统一框架
+  │
+  ├─→ 匹配 PSM / 回归调整 RA — 依可观测变量选择下的因果推断
+  │     └─→ DID 双重差分 — 利用面板+时间差分，消除不可观测混杂
+  │           └─→ 交叠 DID / CSDID — 处理"不同时间开始处置"的现代解法
+  │
+  ├─→ 聚类标准误 — "同一班级的学生彼此相关"时的正确推断
+  │
+  └─→ 高维方法（岭回归 / LASSO / PCA）— K > n 时的估计与降维</code></pre>
+每一种方法都在解决"前一方法解决不了"的问题。OLS 要求 X 和误差不相关（外生性）；当这个条件不成立时，如果你有面板数据，FE 可以消除不随时间变化的遗漏变量；如果你有工具变量，2SLS 可以利用外生的变动源；如果你只能观测到影响处置分配的变量，匹配和回归调整可以控制它们；如果你有面板和时间两个维度，DID 可以消除不随时间变化的不可观测混杂。
+<h4>2. 识别 vs 估计的本质区别</h4>
+<strong>识别（identification）</strong> 问的是："即使你有无限多的数据，参数能不能唯一确定？"<strong>估计（estimation）</strong> 问的是："有了有限样本，怎么把参数算出来？"
+比如，在 §1 的潜在结果框架中，ATE 定义为 $E(Y_{1i} - Y_{0i})$。你永远不能同时观测到同一个人的 $Y_{1i}$ 和 $Y_{0i}$——这就是<strong>因果推断的基本问题</strong>。如果没有任何假设，即使你有无限多的数据，ATE 也无法识别。只有施加了假设（如随机化、CIA、平行趋势等），ATE 才变得可识别。然后你才讨论用什么方法估计它。
+<strong>关键结论</strong>：识别是比估计更根本的问题。一个方法可能估计得很精确（标准误很小），但如果识别假设不成立，这个"精确"的估计毫无意义。这就是为什么这门课如此强调识别假设的原因。
+<h4>3. 老师 5 条重点与教材 10 个小节的映射</h4>
+<table>
+<tr>
+<th>老师重点</th>
+<th>对应小节</th>
+<th>核心内容</th>
+</tr>
+<tr>
+<td>★1 双重固定效应 & GMM & 动态面板</td>
+<td>§4, §5, §6</td>
+<td>GMM统一框架 → FE → 动态面板差分/系统GMM</td>
+</tr>
+<tr>
+<td>★2 随机实验 & 回归分析 & 因果关系（CATE）</td>
+<td>§1, §2</td>
+<td>潜在结果框架 → CIA/CMI → RA/PSM → CATE</td>
+</tr>
+<tr>
+<td>★3 模型复杂度 & 高维数据 & 神经网络</td>
+<td>§8, §9</td>
+<td>岭回归 → PCA降维 → 偏差-方差权衡</td>
+</tr>
+<tr>
+<td>★4 匹配 & 验证 & 面板数据分析</td>
+<td>§2, §5, §6, §7</td>
+<td>PSM四步法 → FE → DID → 平行趋势检验</td>
+</tr>
+<tr>
+<td>★5 识别条件 & 工具变量 & 双机器学习</td>
+<td>§1, §4, §7</td>
+<td>潜在结果可识别条件 → GMM识别 → DID识别</td>
+</tr>
+</table>
+<h4>4. 从 OLS 出发放松假设的完整链条</h4>
+OLS 的核心假设是 $E(\varepsilon_i|X_i)=0$——误差与解释变量不相关。从这条假设出发，逐一放松：
+<ul><li><strong>放松一点</strong>：如果存在可观测的遗漏变量 $X_i$，且控制 $X_i$ 后误差与 $D_i$ 不相关 → 多元回归、回归调整（§2）</li>
+<li><strong>再放松</strong>：如果存在不可观测的遗漏变量，但它们不随时间变化 → 面板固定效应（§5）</li>
+<li><strong>再放松</strong>：如果遗漏变量既不可观测又随时间变化，但有工具变量 → 2SLS/GMM（§4）</li>
+<li><strong>再放松</strong>：如果有面板数据，且平行趋势假设成立 → DID（§7）</li>
+<li><strong>再放松</strong>：如果变量数量接近甚至超过样本量 → 岭回归/PCA（§8-9）</li>
+</ul>
+<strong>这门课改变了什么认知</strong>：OLS 回归的系数不一定是因果效应，除非你证明了识别假设成立。整个方法谱系就是一部"寻找可信的识别假设"的历史。
+---
+
+<h3>三、习题</h3>
+<strong>Q0.1</strong> ⭐ 选择偏误与遗漏变量偏误是两个容易混淆的概念。请分别给出两者的定义，并用"大学学历对工资的因果效应"的例子说明二者的区别与联系。
+<details><summary>参考答案要点</summary>
+<ul><li><strong>选择偏误</strong>（selection bias）：$E(Y_{0i}|D_i=1) - E(Y_{0i}|D_i=0)$，源自处置分配的非随机性。上大学的人即使不上大学，能力带来的工资也高于没上大学的人。</li>
+<li><strong>遗漏变量偏误</strong>（OVB）：回归中未控制的变量既影响D又影响Y，导致OLS系数有偏。比如"能力"同时影响是否上大学和工资，但回归中未控制能力。</li>
+<li><strong>关系</strong>：OVB是选择偏误的一种来源——如果能力是唯一遗漏变量，OVB就表现为选择偏误。但选择偏误还可来自不可观测的异质性处置效应等其他来源。</li>
+<li><strong>关键区分</strong>：OVB可通过加入控制变量解决（如果遗漏变量可观测）；选择偏误在不可观测混杂存在时仅靠加控制变量无法解决，需要面板数据或工具变量等方法。</li>
+</ul>
+</details>
+<strong>Q0.2</strong> ⭐⭐ 画出教材第1-10章涉及的方法演进链（从OLS到DML），并说明每一步链上的方法解决了"前一步方法解决不了"的什么问题。
+<details><summary>参考答案要点</summary>
+演进链及每步动机： 1. <strong>OLS</strong> → 假设 $X_i \perp \varepsilon_i$（外生性），实际数据往往不满足 2. <strong>面板FE</strong> → 消除不随时间变化的遗漏变量（$\alpha_i$），但要求严格外生性 3. <strong>动态面板GMM</strong> → FE无法处理 $Y_{it-1}$ 作解释变量（Nickell偏误），差分GMM用滞后项作IV 4. <strong>IV/2SLS</strong> → 找"只通过X影响Y"的外部变动源，处理内生变量 5. <strong>线性矩模型GMM</strong> → IV/2SLS的统一框架，异方差下2SLS不是最优 6. <strong>PSM/RA</strong> → CIA假设成立时，用可观测变量恢复随机性；PSM不依赖函数形式 7. <strong>DID</strong> → CIA不成立时（存在不可观测混杂），利用面板时间差分消除不随时间变化的不可观测因素 8. <strong>交叠DID/CSDID</strong> → 传统TWFE在异时处置下有偏（负权重），现代方法只做"干净"比较 9. <strong>聚类标准误</strong> → 非因果识别方法，而是正确推断方法——组内相关的数据需要聚类到处置分配层面 10. <strong>岭回归/LASSO/PCA</strong> → K > n时OLS失效，正则化/降维处理高维问题 11. <strong>Double Lasso / DML</strong> → 让ML的灵活性不损害因果推断的可靠性
+</details>
+<strong>Q0.3</strong> ⭐⭐⭐ 选择一篇实证论文（建议从AER、QJE、Econometrica等期刊选取），完成以下分析：(1) 论文的研究问题与核心识别挑战是什么？(2) 论文采用的识别策略是什么？(3) 将该策略定位到本课程的方法谱系中，说明它在哪两个方法之间"补了位"。(4) 如果换一种识别策略（如用DID代替PSM），可能面临什么额外挑战？
+<details><summary>参考答案要点</summary>
+示例分析（以Card & Krueger (1994)为例）：
+(1) <strong>研究问题</strong>：最低工资上调是否减少就业？<strong>识别挑战</strong>：最低工资调整不是随机的，NJ州调整工资可能与当地经济状况相关。
+(2) <strong>识别策略</strong>：$2\times2$ DID——比较NJ（处理组）与PA（控制组）在最低工资调整前后的就业变化。通过双重差分消除不随时间变化的州特定效应和共同时间趋势。
+(3) <strong>谱系定位</strong>：位于"PSM/RA"和"交叠DID"之间。CIA不成立（存在不可观测的州特定因素），但平行趋势假设合理（邻近州的经济条件相似）。相比PSM降低了假设要求（不要求CIA），相比交叠DID则是最简单的$2\times2$情形。
+(4) <strong>替代策略的挑战</strong>：
+<ul><li>若用PSM：需要找到匹配变量使CIA成立——但存在不可观测的州特定因素（如政治氛围），CIA很可能不成立。</li>
+<li>若用IV：需要找到影响最低工资但不直接影响就业的变量——实践中很难找到。</li>
+<li>若用合成控制法：需要构造反事实NJ，但单一处理单元时的推断有挑战。</li>
+</ul>
+注意：回答时需引用实际论文（如Angrist & Krueger (1991)用出生季度作IV估计教育回报；LaLonde (1986)比较实验与非实验估计等）。
+</details>
+---
+
+</section>
+<section class="section-card" id="sec1">
+<h2><span class="sec-num">§1</span>潜在结果框架：因果效应的定义与选择偏误（教材 §3.8）<span class="imp imp-3">★★★ 核心中的核心（老师重点★2 的基石）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：给"因果效应"下一个严格的数学定义。在此之前，我们说"X 导致 Y"只是口语——这节告诉你因果效应到底是什么、怎么度量、OLS 什么时候能/不能估计它。</li>
+<li><strong>为什么需要它</strong>：整个因果推断大厦的地基。不理解潜在结果，就无法理解后面的 CIA、PSM、DID、DML。</li>
+</ul><li><strong>在谱系中的位置</strong>：全方法谱系的出发点——后续所有方法都是为了让 OLS 在更复杂的数据结构中逼近真正的因果效应。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★2，★5】
+<h4>1. 潜在结果的定义——"两个可能世界"</h4>
+我们先忘掉所有公式，想一个最简单的思想实验。你现在是世界上一个具体的人，你有大学学历，工资是每月 8000 元。我们想知道：大学学历让你多赚了多少钱？
+要回答这个问题，我们需要知道"如果你没有大学学历，你的工资会是多少"。但你已经有大学学历了，我们永远看不到那个"没有大学学历的你"的工资——这就叫<strong>反事实（counterfactual）</strong>。
+潜在结果框架就是给这个思想实验一个严格的数学表述。对每个个体 $i$，定义两个潜在结果：
+<ul><li>$Y_{1i}$：个体 $i$ 在"获得处置"（$D_i=1$）的可能世界中的结果</li>
+<li>$Y_{0i}$：个体 $i$ 在"未获得处置"（$D_i=0$）的可能世界中的结果</li>
+</ul>
+虽然你只活了一次，但这两个"可能世界"在逻辑上都存在。就像你在岔路口，无论你走了哪条路，另一条路上的风景虽然你看不到，但它依然"假设性地存在"。
+<h4>2. 观察结果与潜在结果的关系——POM 方程</h4>
+观测结果 $Y_i$ 和潜在结果 $(Y_{0i}, Y_{1i})$ 之间的联系可以用<strong>潜在结果模型（POM）</strong>来表达。这不跳步推导：
+<strong>第 1 步</strong>：如果 $D_i=1$，我们观测到的是 $Y_{1i}$；如果 $D_i=0$，我们观测到的是 $Y_{0i}$。所以：
+$$Y_i = \begin{cases} Y_{1i}, & \text{如果 } D_i = 1 \\ Y_{0i}, & \text{如果 } D_i = 0 \end{cases}$$
+<strong>第 2 步</strong>：用一个统一的等式来写这两种情况。注意到当 $D_i=1$ 时 $(1-D_i)Y_{0i}=0$，当 $D_i=0$ 时 $D_i Y_{1i}=0$，所以：
+$$Y_i = D_i \cdot Y_{1i} + (1-D_i) \cdot Y_{0i}$$
+<strong>第 3 步</strong>：将上式改写，加上一项 $D_i Y_{0i}$ 再减去它（这是加项减项技巧，后面 DID 也会用）：
+$$Y_i = D_i Y_{1i} + Y_{0i} - D_i Y_{0i} = Y_{0i} + D_i(Y_{1i} - Y_{0i})$$
+这就是 POM 方程 $Y_i = Y_{0i} + D_i(Y_{1i} - Y_{0i})$。<strong>人话翻译</strong>：你观测到的结果 = 没处置时的结果 + 处置哑变量 × 处置带来的改变。
+<h4>3. 个体处置效应——为什么永远无法直接观测</h4>
+定义个体处置效应 $\tau_i = Y_{1i} - Y_{0i}$。这是同一个人在两个可能世界中的结果之差——<strong>真正的"控制其他因素不变"的比较</strong>。
+但问题来了：对于任何一个具体的人，我们永远只能看到 $Y_{1i}$ 或 $Y_{0i}$ 中的一个，永远不能同时看到两个。这就是 <strong>Holland (1986) 所说的"因果推断的基本问题"（fundamental problem of causal inference）</strong>。
+既然个体处置效应无法直接观测，研究者转而关注<strong>平均</strong>处置效应——用群体的平均来弥补个体的不可知。
+<h4>4. ATE / ATET / ATENT —— 三个平均处置效应</h4>
+这三个参数的区别在于"对谁求平均"，用表来对比：
+<table>
+<tr>
+<th>参数</th>
+<th>定义</th>
+<th>人话翻译</th>
+</tr>
+<tr>
+<td>ATE</td>
+<td>$\tau_{ate} = E[Y_{1i} - Y_{0i}]$</td>
+<td>随机抽一个人，处置对他的平均效应</td>
+</tr>
+<tr>
+<td>ATET</td>
+<td>$\tau_{atet} = E[Y_{1i} - Y_{0i} \mid D_i=1]$</td>
+<td>在那些实际接受了处置的人中，处置的平均效应</td>
+</tr>
+<tr>
+<td>ATENT</td>
+<td>$\tau_{atent} = E[Y_{1i} - Y_{0i} \mid D_i=0]$</td>
+<td>在那些没接受处置的人中，如果给他们处置，平均效应是多少</td>
+</tr>
+</table>
+<strong>关键理解</strong>：ATE 的期望是针对全体人群的（无条件期望）；ATET 的条件期望 $E[\cdot \mid D_i=1]$ 意味着我们只看处理组的人——"那些上了大学的人，大学对他们来说平均有多大用？"；ATENT 只看控制组——"那些没上大学的人，如果让他们上大学，平均能多赚多少？"
+三个参数一般不一样，因为处置效应可能因人而异。比如，能力更强的人可能从上大学中获益更多（这是"比较优势"），此时 $\tau_{atet} > \tau_{ate} > \tau_{atent}$。
+<h4>5. OLS 系数 $\beta_1$ 的完整分解推导</h4>
+这是本节最重要的推导，每一步标注理由：
+<strong>第 1 步</strong>：根据一元回归的性质，$\beta_1$ 是两组均值之差（理由：对于只有截距和哑变量的回归，OLS 系数等于处理组和控制组被解释变量均值之差）：
+$$\beta_1 = E(Y_i \mid D_i=1) - E(Y_i \mid D_i=0)$$
+<strong>第 2 步</strong>：代入 POM 方程。当 $D_i=1$ 时 $Y_i = Y_{1i}$（理由：POM 中 $D_i=1$ 时只有 $Y_{1i}$ 项），当 $D_i=0$ 时 $Y_i = Y_{0i}$（理由：POM 中 $D_i=0$ 时只有 $Y_{0i}$ 项）：
+$$\beta_1 = E(Y_{1i} \mid D_i=1) - E(Y_{0i} \mid D_i=0)$$
+<strong>第 3 步</strong>：加一项 $E(Y_{0i} \mid D_i=1)$ 再减一项（理由：这是"加项减项"技巧，目的是把 ATET 分离出来）：
+$$\beta_1 = E(Y_{1i} \mid D_i=1) - E(Y_{0i} \mid D_i=1) + E(Y_{0i} \mid D_i=1) - E(Y_{0i} \mid D_i=0)$$
+<strong>第 4 步</strong>：第一组差就是 ATET 的定义（理由：$\tau_{atet} = E(Y_{1i} - Y_{0i} \mid D_i=1)$）：
+$$\beta_1 = \tau_{atet} + [E(Y_{0i} \mid D_i=1) - E(Y_{0i} \mid D_i=0)]$$
+<strong>关键结论</strong>：$\beta_1$ 不等于 ATET，而是 ATET 加上一个<strong>选择偏误项</strong>。
+<h4>6. 选择偏误的直观——"大学学历 vs 能力"</h4>
+选择偏误项 $E(Y_{0i} \mid D_i=1) - E(Y_{0i} \mid D_i=0)$ 到底是什么意思？
+<ul><li>$E(Y_{0i} \mid D_i=1)$：那些实际上了大学的人（$D_i=1$），如果他们<strong>没上</strong>大学（$Y_{0i}$），平均工资多少？</li>
+<li>$E(Y_{0i} \mid D_i=0)$：那些实际没上大学的人（$D_i=0$），他们实际没上大学的平均工资。</li>
+</ul>
+如果上大学的人能力本身就更强，那么即使他们没上大学，能力也会让他们赚更多——$E(Y_{0i} \mid D_i=1) > E(Y_{0i} \mid D_i=0)$，选择偏误为正。结果 OLS 会高估教育的回报。
+<strong>这就是为什么"统计显著"不等于"因果成立"</strong>：你看到的正系数可能只是能力差异的反映，而不是教育本身的效果。
+<h4>7. 同质处置效应下的 OLS 无偏条件</h4>
+假设处置效应对所有人相同：$\tau_i = \tau$（常数）。此时 POM 简化为：
+$$Y_i = Y_{0i} + \tau D_i$$
+令 $\beta_0 = E(Y_{0i})$（$Y_{0i}$ 的总体均值），定义 $\varepsilon_{0i} = Y_{0i} - \beta_0$（$Y_{0i}$ 偏离均值的部分），则：
+$$Y_i = \beta_0 + \tau D_i + \varepsilon_{0i}$$
+这不就是一元线性回归吗！但问题是：OLS 需要 $E(\varepsilon_{0i} \mid D_i) = 0$。代入 $\varepsilon_{0i}$ 的定义：
+$$E(\varepsilon_{0i} \mid D_i) = E(Y_{0i} - \beta_0 \mid D_i) = E(Y_{0i} \mid D_i) - \beta_0$$
+所以 OLS 无偏的条件是 $E(Y_{0i} \mid D_i) = E(Y_{0i})$，即 $Y_{0i}$ <strong>均值独立于</strong> $D_i$。大白话：不管上不上大学，你在"没上大学"那个可能世界里的工资期望是一样的。这就等价于<strong>没有选择偏误</strong>。
+<h4>8. 异质处置效应下的 OLS 无偏条件</h4>
+处置效应对不同人不同，记 $\varepsilon_{1i} = Y_{1i} - E(Y_{1i})$，$\varepsilon_{0i} = Y_{0i} - E(Y_{0i})$，则：
+$$\tau_i = Y_{1i} - Y_{0i} = \tau_{ate} + (\varepsilon_{1i} - \varepsilon_{0i})$$
+代入 POM：
+$$Y_i = Y_{0i} + D_i[\tau_{ate} + (\varepsilon_{1i} - \varepsilon_{0i})] = \beta_0 + \tau_{ate} D_i + \underbrace{D_i(\varepsilon_{1i} - \varepsilon_{0i}) + \varepsilon_{0i}}_{\varepsilon_i}$$
+这是一个一元回归，但误差项 $\varepsilon_i = D_i(\varepsilon_{1i} - \varepsilon_{0i}) + \varepsilon_{0i}$ 比同质情况复杂。
+OLS 无偏需要 $E(\varepsilon_i \mid D_i) = 0$：
+$$E(\varepsilon_i \mid D_i) = E[D_i(\varepsilon_{1i} - \varepsilon_{0i}) + \varepsilon_{0i} \mid D_i] = 0$$
+<strong>充分条件</strong>是 $E(\varepsilon_{1i} \mid D_i) = 0$ 且 $E(\varepsilon_{0i} \mid D_i) = 0$，即 $Y_{0i}$ 和 $Y_{1i}$ 都均值独立于 $D_i$。这比同质情况要求更强——连"上大学能带来的额外收益"也不能和"是否上大学"系统相关。
+<h4>9. $R^2$ 高低不代表因果推断的好坏</h4>
+从因果推断的角度看，大学学历哑变量对工资的 $R^2$ 通常很低（大部分工资差异是学历解释不了的）。但只要 $E(\varepsilon_{0i} \mid D_i) = 0$ 成立，回归依然可以估计因果效应。
+反过来，即使 $R^2$ 很高，如果遗漏了同时影响 $D_i$ 和 $Y_i$ 的变量，回归估计的也不是因果效应。<strong>$\boldsymbol{R^2}$ 衡量的是相关性的解释力，不是因果性的可信度</strong>。
+<h4>10. 随机化实验——为什么是黄金标准</h4>
+在随机化实验中，处置分配是扔硬币决定的。这意味着：
+$$(Y_{1i}, Y_{0i}) \perp D_i$$
+两个潜在结果都与处置独立——无论你的"天赋"如何，你被分配到处理组的概率都一样。此时选择偏误自动为 0：
+$$E(Y_{0i} \mid D_i=1) = E(Y_{0i} \mid D_i=0) = E(Y_{0i})$$
+因此 $\beta_1 = \tau_{ate}$，OLS 直接估计因果效应。这就是为什么随机化实验是因果推断的"黄金标准"——随机化自动杀死了选择偏误。
+<strong>这个发现改变了什么认知</strong>：回归系数不等于因果效应，除非处置分配是"好像随机"的。整个因果推断文献的核心任务，就是在观测数据中寻找那个让处置"好像随机"的机制——无论是通过控制变量、找工具变量、还是利用时间差分。
+---
+
+<h3>三、习题</h3>
+<strong>Q1.1</strong> ⭐ ATE、ATET、ATENT的定义辨析。三个参数分别适用于什么政策问题？给一个具体例子说明三者何时相等、何时不等。
+<details><summary>参考答案要点</summary>
+<ul><li><strong>ATE</strong>（平均处置效应）：$\tau_{ate} = E[Y_{1i} - Y_{0i}]$，适用于"如果所有人都接受处置"的政策评估——如全民医保的效果。</li>
+<li><strong>ATET</strong>（处理组平均处置效应）：$\tau_{atet} = E[Y_{1i} - Y_{0i} \mid D_i = 1]$，适用于评估已经实施的政策对实际参与者的影响——如实际入学者的教育回报。</li>
+<li><strong>ATENT</strong>（控制组平均处置效应）：$\tau_{atent} = E[Y_{1i} - Y_{0i} \mid D_i = 0]$，适用于评估"如果将政策扩大到未覆盖群体"的效果。</li>
+</ul>
+<strong>相等条件</strong>：在同质处置效应（$\tau_i = \tau$对所有i）下三者相等。此时处置效应不随个体特征变化。
+<strong>不等例子</strong>：职业培训项目中，选择参加的人往往是预期收益高的人（$\tau_i$大），因此 $\tau_{atet} > \tau_{ate} > \tau_{atent}$（存在"选择增益"）。反之如果项目瞄准最弱势群体，可能 $\tau_{atet} > \tau_{atent}$。
+</details>
+<strong>Q1.2</strong> ⭐⭐ 从潜在结果模型（POM）$Y_i = Y_{0i} + D_i(Y_{1i} - Y_{0i})$ 出发，完成以下5行推导链：从 $\beta_1 = E(Y_i|D_i=1) - E(Y_i|D_i=0)$ 出发，推出 $\beta_1 = \tau_{atet} +$ 选择偏误。每一步注明理由。
+<details><summary>参考答案要点</summary>
+$$
+\begin{aligned} \beta_1 &= E(Y_i \mid D_i=1) - E(Y_i \mid D_i=0) \quad &\text{(OLS系数 = 组间均值差)} \\ &= E(Y_{1i} \mid D_i=1) - E(Y_{0i} \mid D_i=0) \quad &\text{(D=1时}Y_i=Y_{1i},\; D=0\text{时}Y_i=Y_{0i}\text{)} \\ &= E(Y_{1i} \mid D_i=1) - E(Y_{0i} \mid D_i=1) \\ &\quad + E(Y_{0i} \mid D_i=1) - E(Y_{0i} \mid D_i=0) \quad &\text{(加减同一项}E(Y_{0i}|D_i=1)\text{，整理)} \\ &= \tau_{atet} + [E(Y_{0i} \mid D_i=1) - E(Y_{0i} \mid D_i=0)] \quad &\text{(前两项定义=ATET)} \\ &= \tau_{atet} + \text{选择偏误} \quad &\text{(后两项=处理组若未处置 vs 控制组未处置)} \end{aligned}
+$$
+<strong>易错点</strong>：第三步加减同一项是常见技巧，不能混淆 $E(Y_{0i}|D_i=1)$（处理组的反事实）和 $E(Y_{0i}|D_i=0)$（控制组的观测结果）。
+</details>
+<strong>Q1.3</strong> ⭐⭐ "R²低不代表回归没用"，这个结论与初等计量经济学教科书（如伍德里奇）的直觉可能相悖。请从因果推断的角度解释这一命题：(1) R²衡量的是什么？(2) 为什么R²低不影响因果效应的无偏估计？(3) 反过来，R²高为什么不能保证估计了因果效应？
+<details><summary>参考答案要点</summary>
+(1) <strong>R²衡量的是</strong>：X能解释的Y的样本变异占比——它是<strong>预测能力</strong>指标，不是因果识别指标。
+(2) <strong>R²低不影响因果推断</strong>：以大学学历（虚拟变量）对工资的回归为例，是否上大学只能解释工资变异的一小部分（因为工资还取决于行业、经验、运气等大量因素），R²必然很低。但只要 $E(Y_{0i}|D_i) = E(Y_{0i})$（即处置外生），OLS就是ATE的无偏估计——估计的一致性不依赖R²大小。<strong>因果关系关注的是组间均值差，而不是个体预测精度</strong>。
+(3) <strong>R²高不保证因果</strong>：如果加入大量控制变量后R²很高，但这些控制变量本身就是"坏控制"（bad controls）——即受处置影响的变量——则估计不仅有偏，而且可能比简单回归更差。例如，研究教育对工资的影响时控制"职业类型"，因为教育影响职业选择，控制它反而引入偏误（Angrist & Pischke, 2009, §3.2.3）。
+<strong>核心启示</strong>：R²是预测概念，因果推断关注的是外生性条件——两者在逻辑上完全正交。教材§3.8明确指出了这一点。
+</details>
+<strong>Q1.4</strong> ⭐⭐⭐ 阅读Angrist & Pischke《Mostly Harmless Econometrics》第2章关于随机化实验的讨论。回答：(1) 从选择偏误的角度，为什么随机分配保证OLS估计的一致性？(2) 如果随机化实验存在"不依从"（non-compliance），ITT和LATE分别估计什么？(3) 结合教材§3.8关于同质/异质处置效应下OLS无偏条件的讨论，说明为什么随机化实验的结论无法通过观测研究简单复制。
+<details><summary>参考答案要点</summary>
+(1) <strong>随机分配的作用</strong>：随机分配保证 $(Y_{1i}, Y_{0i}) \perp D_i$（潜在结果独立于处置），因此 $E(Y_{0i}|D_i=1) = E(Y_{0i}|D_i=0) = E(Y_{0i})$，选择偏误为0，OLS = ATE（同质情况）或满足无偏的充分条件（异质情况）。
+(2) <strong>ITT与LATE</strong>：
+<ul><li><strong>ITT</strong>（Intention-to-Treat）：比较"被随机分配到处理组"vs"被分配到控制组"的结果差异。估计的是"分配效应"而非"处置效应"。在存在不依从时，ITT是因果效应的下界（downward biased）。</li>
+<li><strong>LATE</strong>（Local Average Treatment Effect）：用随机分配作为工具变量，识别"依从者"（compliers）的处置效应。LATE = ITT/(依从率)。关键局限：LATE只反映那些"被随机分配改变行为"的子群体的因果效应，不能推广到全体。</li>
+</ul>
+(3) <strong>实验vs观测研究的差距</strong>：
+<ul><li>实验中随机分配直接抹去选择偏误——不需要假设CIA或平行趋势。</li>
+<li>观测研究中，即使控制了可观测变量，不可观测的选择（如能力、动机）仍然存在——这就是为什么LaLonde (1986)发现非实验方法无法复制实验结论的原因。</li>
+<li>教材§3.8指出，异质处置效应下OLS无偏的充分条件是 $Y_{0i}$ 和 $Y_{1i}$ 均值独立于 $D_i$——这在观测研究中几乎不可能满足。</li>
+</ul>
+<strong>参考文献</strong>：Angrist, J.D. & Pischke, J.-S. (2009). *Mostly Harmless Econometrics*, Chapter 2-3.
+</details>
+---
+
+</section>
+<section class="section-card" id="sec2">
+<h2><span class="sec-num">§2</span>回归调整与匹配：依可观测变量选择的因果推断（教材 §5.5）<span class="imp imp-3">★★★ 必考大题（老师重点★2 和 ★4 的交汇）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：§1 告诉我们，随机化实验是最理想的——但经济数据几乎都不是实验数据。如果不存在随机分配，但是所有影响处置分配的变量都是<strong>可观测的</strong>，怎么估计因果效应？</li>
+<li><strong>为什么需要它</strong>：现实中大多数观测研究都属于"依可观测变量选择"——你至少可以控制你看到的变量。</li>
+</ul><li><strong>在谱系中的位置</strong>：从 IA（独立假设，实验）→ CIA（条件独立假设，观测研究）→ CMI（条件均值独立，足够回归用）——假设一步步变弱，方法一步步变复杂。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★2，★4】
+<h4>1. IA → CIA → CMI 的假设链条</h4>
+§1 告诉我们，如果处置是随机分配的（IA 成立），OLS 直接估计因果效应。但现实中，经济数据几乎都不是实验数据。那怎么办？
+<strong>逐级放松假设</strong>——我们用"新财经选修课对工资的影响"作为例子：
+<strong>第 1 级：IA（独立性假设）</strong>
+$$(Y_{1i}, Y_{0i}) \perp D_i$$
+这是随机实验的理想情况。选修课分配完全随机——男女、文理科都一样概率选课。现实中这不可能，因为计算机专业的学生更可能选"新财经"课。
+<strong>第 2 级：CIA（条件独立性假设）</strong>
+$$(Y_{1i}, Y_{0i}) \perp D_i \mid X_i$$
+假设一旦我们固定了专业和性别（$X_i$），在同一个专业和性别内部，谁选不选"新财经"课是随机的。比如，在金融学专业的男学生中，选课好像是随机分配的。这比 IA 弱得多，因为人话是：<strong>"控制住可观测的特征之后，处置就好像是随机的了"</strong>。
+<strong>第 3 级：CMI（条件均值独立性假设）</strong>
+$$E(Y_{di} \mid X_i, D_i) = E(Y_{di} \mid X_i), \quad d=0,1$$
+CMI 只要求<strong>均值</strong>独立，不要求整个分布独立。比 CIA 更弱。人话：固定 X 之后，潜在结果的平均值和处置无关。对回归来说，CMI 已经够用了——因为回归只关心条件期望（均值）。
+<strong>为什么 CMI 比 CIA 更弱</strong>：CIA 要求 $P(Y_{1i} \le y \mid X_i, D_i) = P(Y_{1i} \le y \mid X_i)$ 对所有的 $y$ 都成立（整个分布独立）。CMI 只要求一阶矩相等。例如，即使固定了专业和性别后，选课和不选课学生的工资<strong>方差</strong>不同（分布不同），但只要<strong>均值</strong>相同，CMI 就成立，回归就可以用。
+<h4>2. "依可观测变量选择"的含义</h4>
+处置分配不是随机的，但所有影响处置分配的变量都是<strong>可观测的</strong>。比如：是否上大学——影响这个决策的家庭背景、能力测试成绩、父母学历——如果这些数据你都有，你就处在"依可观测变量选择"的世界里。
+在这个世界里，CMI 或 CIA 假设让你可以"控制"这些可观测变量，从而恢复因果推断。这个方法的核心是：<strong>用可观测的信息来"模拟"随机化</strong>。
+<h4>3. 同质处置效应下的回归调整（RA）</h4>
+假设 $\tau_i = \tau$（同质），且 CMI 成立。对 POM 方程取条件期望：
+$$E(Y_i \mid X_i, D_i) = E(Y_{0i} \mid X_i, D_i) + \tau D_i$$
+由 CMI（式 5.13），$E(Y_{0i} \mid X_i, D_i) = E(Y_{0i} \mid X_i)$（理由：CMI 说控制 X 后，$Y_{0i}$ 的均值不依赖 D）。如果再假设 $E(Y_{0i} \mid X_i)$ 具有线性形式 $E(Y_{0i} \mid X_i) = \alpha + X_i'\gamma$（这是额外施加的函数形式假设），则：
+$$E(Y_i \mid X_i, D_i) = \alpha + X_i'\gamma + \tau D_i$$
+对应的回归方程为：
+$$Y_i = \alpha + \tau D_i + X_i'\gamma + \varepsilon_i$$
+<strong>关键理解</strong>：$\gamma$ 不是我们关心的参数，它的作用是"吸收"$X_i$ 对 $Y_i$ 的影响，从而让 $\tau$ 能够干净地识别因果效应。在汇报结果时，$\gamma$ 的估计值通常不出现在正文中，但它的符号应该符合经济直觉——如果你发现"教育年限的系数为负"，你应该警觉。
+<h4>4. 异质处置效应下的回归调整——完整推导</h4>
+当处置效应因人而异时，$\tau_i$ 不是常数。我们关心 ATE：$\tau_{ate} = E(\tau_i)$。现在做<strong>完整的不跳步推导</strong>。
+<strong>第 1 步</strong>：设定两个 POM 方程（理由：$Y_{0i}$ 和 $Y_{1i}$ 各自受 X 的影响方式可能不同，需要分别建模）：
+$$Y_{0i} = \psi_0 + (X_i - \eta)'\gamma_0 + u_{0i}$$
+$$Y_{1i} = \psi_1 + (X_i - \eta)'\gamma_1 + u_{1i}$$
+其中 $\eta = E(X_i)$（总体均值）。这里将 $X_i$ 去均值的理由是：当 $X_i = \eta$ 时，截距 $\psi_0 = E(Y_{0i})$，$\psi_1 = E(Y_{1i})$。如果不做去均值，截距的含义就不清晰了。
+<strong>第 2 步</strong>：写出个体处置效应（理由：由定义 $\tau_i = Y_{1i} - Y_{0i}$）：
+$$\tau_i = [\psi_1 - \psi_0] + (X_i - \eta)'(\gamma_1 - \gamma_0) + [u_{1i} - u_{0i}]$$
+<strong>第 3 步</strong>：取期望得 ATE（理由：$E(X_i - \eta) = 0$，$E(u_{1i}) = E(u_{0i}) = 0$）：
+$$\tau_{ate} = E(\tau_i) = \psi_1 - \psi_0$$
+<strong>第 4 步</strong>：将 $Y_{0i}$ 和 $\tau_i$ 代入 POM 方程 $Y_i = Y_{0i} + D_i\tau_i$（理由：直接把第 1、2 步的结果代入）：
+$$Y_i = \psi_0 + (X_i - \eta)'\gamma_0 + u_{0i} + D_i[\tau_{ate} + (X_i - \eta)'(\gamma_1 - \gamma_0) + (u_{1i} - u_{0i})]$$
+<strong>第 5 步</strong>：展开并合并同类项（理由：代数运算）：
+$$Y_i = \psi_0 + \tau_{ate} D_i + (X_i - \eta)'\gamma_0 + D_i (X_i - \eta)'\delta + \varepsilon_i$$
+其中 $\delta = \gamma_1 - \gamma_0$（斜率差异），$\varepsilon_i = u_{0i} + D_i(u_{1i} - u_{0i})$。
+<strong>第 6 步</strong>：验证外生性。条件于 $X_i, D_i$，由 CMI：
+$$E(\varepsilon_i \mid X_i, D_i) = E(u_{0i} \mid X_i) + D_i \cdot E(u_{1i} - u_{0i} \mid X_i) = 0$$
+注意这里第二个等号用到了 CMI：$E(u_{0i} \mid X_i, D_i) = E(u_{0i} \mid X_i) = 0$。
+<strong>最终回归方程</strong>：由于 $\eta$ 未知，用样本均值 $\bar{X}$ 替代：
+$$Y_i = \psi_0 + \tau_{ate} D_i + (X_i - \bar{X})'\gamma_0 + D_i (X_i - \bar{X})'\delta + \varepsilon_i$$
+<strong>CATE 的概念</strong>：条件平均处置效应为：
+$$\tau(X_i) = \tau_{ATE} + (X_i - \bar{X})'\delta$$
+这是本节最重要的结论之一。<strong>人话翻译</strong>：处置效应不是一刀切的——不同特征的人从处置中获益不同。比如，如果 $\delta > 0$，意味着 X 越大的人从处置中获益越多。$\tau_{ATE}$ 是所有个体的平均，而 $\tau(X_i)$ 告诉你"<strong>你</strong>能从处置中获益多少"。【对应老师重点★2】
+<h4>5. 匹配方法的基本思想</h4>
+回归靠"函数形式"控制 X（假设 $Y_{0i}$ 和 X 的关系是线性的），匹配靠"找相似个体"控制 X（不给 X 和 Y 的关系施加函数形式假设）。两种哲学。
+匹配的逻辑简单到你不敢相信：对于处理组的每个人，从控制组中找一个"所有特征都差不多"的人，用那个人的 Y 作为"如果处理组的人没被处置"的反事实估计。
+<strong>分层框架</strong>：如果 X 是离散的，可以把样本按 X 的取值分成不同层，每层内计算 ATE(x)，然后加权平均：
+$$\tau_{ate} = \sum_x \text{ATE}(x) \cdot \Pr(X_i = x)$$
+<strong>维度灾难</strong>：如果 X 包含 K 个二元变量，就有 $2^K$ 层。K=20 时，层数超过 100 万——但你的样本可能只有几百。这就是"维度问题"——精确匹配在 X 维度稍高时根本不可行。
+<h4>6. 倾向得分匹配（PSM）——两条定理性质</h4>
+倾向得分的定义：$p(X) \equiv \Pr(D=1 \mid X)$。无论 X 有多少维，$p(X)$ 始终只有一维！
+<strong>定理 5.10 (a) 平衡性</strong>：$D \perp X \mid p(X)$
+<strong>为什么成立</strong>：倾向得分是 $D=1$ 的条件概率。在给定 $p(X)$ 的条件下，X 的分布在处理组和控制组之间是相同的——因为所有关于处置分配的信息已经被 $p(X)$ 吸收了，X 的剩余变动与 D 无关。
+<strong>用途</strong>：检验 PSM 的质量。匹配后计算处理组和控制组在每个 X 上的标准化均值差（SMD），如果 SMD < 0.1 说明匹配成功——两组在 X 上确实没有系统差异了。
+<strong>定理 5.10 (b) 非混杂性</strong>：若 CIA 成立，$(Y_1, Y_0) \perp D \mid p(X)$
+<strong>为什么成立</strong>：CIA 说 $(Y_1, Y_0) \perp D \mid X$。而 $p(X)$ 是 X 的函数（维度更低的汇总指标）。Rosenbaum & Rubin 证明，如果控制 X 足够恢复独立性，那么控制 $p(X)$（X 的一维汇总）也足够。
+<strong>用途</strong>：非混杂性保证用 $p(X)$ 匹配等价于用 X 匹配——$p(X)$ 继承了 X 的识别能力。
+<h4>7. PSM 实施四步法——每步为什么不能跳过</h4>
+<strong>第 1 步</strong>：用 Logit 或 Probit 估计 $p(X)$。为什么不能跳过：如果倾向得分模型设定错误（漏了重要的 X 或漏了交互项/平方项），后续所有步骤都建立在错误的匹配基础上。
+<strong>第 2 步</strong>：匹配。为什么必须仔细选匹配方式：不同的匹配方式（最近邻/半径/核）给出不同的匹配质量和样本量权衡，影响最终估计的精度和偏误。
+<strong>第 3 步</strong>：检验平衡性。<strong>这是最容易被跳过但最重要的步骤</strong>。如果匹配后处理组和控制组在 X 上仍有显著差异，说明第 1 步的倾向得分模型没有充分捕捉处置分配的决定因素。此时必须回到第 1 步，加入交互项、平方项或使用更灵活的模型重新估计。<strong>不满足平衡性 = 匹配失败 = 估计不可信</strong>。
+<strong>重合性 vs 平衡性</strong>：这是两个不同的要求。重合性 $0 < p(X) < 1$ 保证"有人可配"——对于任何特征组合，既有处理组也有控制组的人。平衡性保证"配对是好的"——匹配后的两组在特征上没有系统差异。即使重合性完美，平衡性也可能很差（见图 5.4 的直觉：两条密度曲线都有概率质量，但形状完全不同）。
+<strong>第 4 步</strong>：计算处置效应。利用匹配到的控制组个体的 Y 的加权平均作为反事实估计。
+<h4>8. 三种匹配方式的差异</h4>
+<table>
+<tr>
+<th>匹配方式</th>
+<th>$C(i)$</th>
+<th>$h(i,j)$</th>
+<th>特点</th>
+</tr>
+<tr>
+<td>1-1 最近邻</td>
+<td>单个最近个体</td>
+<td>1</td>
+<td>方差大（只用一个人），偏误小</td>
+</tr>
+<tr>
+<td>1-M 最近邻</td>
+<td>前 M 个最近个体</td>
+<td>$1/M$</td>
+<td>方差较小，但可能匹配到不太像的人（偏误增大）</td>
+</tr>
+<tr>
+<td>半径匹配</td>
+<td>所有 $\lvert p_i-p_j\rvert < r$ 的个体</td>
+<td>$1/n_{C(i)}$</td>
+<td>样本量最大，但取决于 r 的选择</td>
+</tr>
+</table>
+<h4>9. $\hat{Y}_{0i}$ 和 $\hat{Y}_{1i}$ 的估算通用公式</h4>
+对处理组的个体 $i$，反事实 $\hat{Y}_{0i}$ 是对匹配到的控制组个体 Y 的加权平均：
+$$\hat{Y}_{0i} = \sum_{j \in C(i)} h(i,j) \cdot Y_j$$
+对控制组的个体 $i$，反事实 $\hat{Y}_{1i}$ 是对匹配到的处理组个体 Y 的加权平均：
+$$\hat{Y}_{1i} = \sum_{j \in C(i)} h(i,j) \cdot Y_j$$
+<h4>10. Stata 命令</h4>
+<div class="stata-code">* 协变量匹配
+teffects nnmatch (depvar) (treatvar covars), atet
+
+* 倾向得分匹配
+teffects psmatch (depvar) (treatvar covars), atet
+
+* 非官方命令（功能更强）
+psmatch2 treatvar covars, outcome(depvar) logit ate
+
+* 平衡性诊断
+pstest covars, both graph</div>
+<h4>11. 回归 vs 匹配的权重差异</h4>
+两者都计算 ATE 的加权平均，但权重函数不同。回归的权重由 OLS 的代数性质决定（取决于 X 的方差-协方差结构），匹配的权重由 X 的经验分布决定。这就是 Angrist & Pischke 指出的：如果 X 的分布在处理组和控制组之间差异很大，回归实际上在进行"危险的线性外推"，而匹配会警告你"没有合适的人可以匹配"。
+<strong>这个发现改变了什么认知</strong>：匹配不只是一个"技术"，它迫使你面对一个残酷的事实——如果处理组和控制组在可观测特征上差异太大，无论用什么花哨的方法也救不回来。平衡性检验就是那个"诚实检查"。
+---
+
+<h3>三、习题</h3>
+<strong>Q2.1</strong> ⭐ CIA（条件独立假设）和CMI（条件均值独立）的区别是什么？为什么在回归框架下CMI就足够了？
+<details><summary>参考答案要点</summary>
+<ul><li><strong>CIA</strong>：$(Y_{1i}, Y_{0i}) \perp D_i \mid X_i$ ——整个潜在结果分布独立于处置（给定X）。这是非参数意义上的条件独立，要求分布层面的独立性。</li>
+<li><strong>CMI</strong>：$E(Y_{di}|X_i, D_i) = E(Y_{di}|X_i)$ ——只要求条件均值独立。这是更弱的条件，因为我们只关心期望，不关心高阶矩。</li>
+<li><strong>为什么CMI对回归足够</strong>：回归本质上是条件期望函数（CEF）的线性近似。OLS的一致性只需要 $E(\varepsilon_i|X_i, D_i)=0$，即误差项条件均值独立——这正是CMI保证的。CIA额外要求的分布独立性对回归来说"用力过猛"了。</li>
+<li><strong>直观</strong>：CIA说"控制X后，D的分配像是扔硬币"（完全随机）；CMI只说"控制X后，D的分配在均值意义上没有系统性偏误"——后者更容易在现实中近似成立。</li>
+</ul>
+</details>
+<strong>Q2.2</strong> ⭐ PSM的平衡性（balancing）和重合性（overlap）有什么区别？为什么二者不能相互替代？
+<details><summary>参考答案要点</summary>
+<ul><li><strong>重合性（overlap/common support）</strong>：$0 < \Pr(D=1|X) < 1$。要求对每个X取值，处理组和控制组个体同时存在——否则无法匹配。这是一个<strong>数据条件</strong>：某些X值下如果只有处理组或只有控制组，就无法计算处置效应。</li>
+<li><strong>平衡性（balancing）</strong>：$D \perp X \mid p(X)$ 或匹配后处理组和控制组的X分布相同。要求匹配过程确实消除了两组在X上的系统差异。这是<strong>匹配质量条件</strong>。</li>
+<li><strong>不可替代性</strong>：教材图5.4给出了经典例子——即使重合性完美（两组X的支撑完全重叠），平衡性也可能不成立（处理组X是双峰分布、控制组X是单峰分布）。此时匹配没有消除选择性。反之，如果某些X取值只有一个组的个体（不满足重合性），即使组内完美平衡也无法识别处置效应。</li>
+<li><strong>实际操作</strong>：重合性通过倾向得分分布图检验；平衡性通过标准化均值差（SMD < 0.1）检验。两者都是PSM必须通过的质量检查。</li>
+</ul>
+</details>
+<strong>Q2.3</strong> ⭐⭐ 为什么在异质处置效应下，回归调整（RA）需要在回归中加入 $D_i \times (X_i - \bar{X})$ 交互项？如果遗漏这个交互项会产生什么后果？
+<details><summary>参考答案要点</summary>
+<strong>原因</strong>（参考教材(5.15)-(5.16)推导）：
+在异质处置效应下，$Y_{0i}$ 和 $Y_{1i}$ 各有不同的CEF斜率：
+$$Y_{0i} = \psi_0 + (X_i - \eta)'\gamma_0 + u_{0i}$$
+$$Y_{1i} = \psi_1 + (X_i - \eta)'\gamma_1 + u_{1i}$$
+代入POM：$Y_i = Y_{0i} + D_i(Y_{1i} - Y_{0i})$，展开得到：
+$$Y_i = \psi_0 + \tau_{ate} D_i + (X_i-\eta)'\gamma_0 + D_i(X_i-\eta)'\delta + \varepsilon_i$$
+其中 $\delta = \gamma_1 - \gamma_0$。交互项 $D_i(X_i-\bar{X})$ 的系数 $\delta$ 捕捉了<strong>处置效应随X变化的异质性</strong>——不同特征的人处置效应不同（CATE = $\tau_{ate} + (X_i-\bar{X})'\delta$）。
+<strong>遗漏后果</strong>：
+<ul><li>如果真实 $\delta \neq 0$ 但遗漏交互项，则交互项被吸收到误差项中，$D_i$ 与误差项相关（因为 $D_i$ 与 $D_i(X_i-\eta)$ 相关），导致 $\hat{\tau}_{ate}$ 不一致。</li>
+<li>在实践中，$\delta$ 的符号和大小本身也有经济学含义——告诉我们"谁从政策中获益更多"。</li>
+</ul>
+<strong>注</strong>：$X_i$ 去均值是为了保证 $\psi_0 = E(Y_{0i})$ 和 $\psi_1 = E(Y_{1i})$，从而 $\tau_{ate} = \psi_1 - \psi_0$。
+</details>
+<strong>Q2.4</strong> ⭐⭐ 精确匹配（exact matching）的"维度诅咒"（curse of dimensionality）是什么？PSM如何通过倾向得分解决这一问题？
+<details><summary>参考答案要点</summary>
+<strong>维度诅咒</strong>：如果X包含K个虚拟变量，精确匹配需要将样本分为 $2^K$ 层——层数随K指数增长！当K=20时，层数=1,048,576，远超一般样本量。许多层只有处理组或只有控制组，无法计算ATE(x)。即使有连续变量，马氏距离匹配也面临高维空间中"几乎每个人都是独特的"的问题。
+<strong>PSM的解决方案</strong>： 1. <strong>降维</strong>：$p(X) = \Pr(D=1|X)$ ——无论X多少维，p(X)始终是标量（一维）。 2. <strong>理论保证</strong>（定理5.10）：    - <strong>平衡性</strong>：$D \perp X \mid p(X)$ ——匹配p(X)等价于匹配X    - <strong>非混杂性</strong>：若CIA成立，则 $(Y_1, Y_0) \perp D \mid p(X)$ ——p(X)继承了X的识别能力 3. <strong>操作</strong>：先估计p(X)（Logit/Probit），再按|p(X_i)-p(X_j)|匹配个体。
+<strong>胜利的关键</strong>：Rosenbaum & Rubin (1983)证明倾向得分是一个"平衡得分"（balancing score），它将高维匹配问题优雅地降为标量匹配问题。这是PSM最重要的理论贡献。
+</details>
+<strong>Q2.5</strong> ⭐⭐⭐ 结合Cunningham《Causal Inference: The Mixtape》第5章关于匹配方法的讨论，分析PSM在实际应用中的三种常见误用，并说明如何避免。
+<details><summary>参考答案要点</summary>
+<strong>误用一：过度依赖默认设定，不检验平衡性</strong>
+许多应用论文跑完<code>psmatch2</code>直接报告结果，跳过平衡性检验。这相当于假设"倾向得分模型被正确设定"——该假设几乎从未被验证。
+<ul><li><strong>避免方法</strong>：用<code>pstest</code>检验匹配后SMD是否<0.1；若不满足，回到模型设定步骤加入交互项或高阶项重新估计倾向得分（教材§5.5四步法中的第③步）。</li>
+</ul>
+<strong>误用二：混淆PSM与随机化实验</strong>
+PSM只控制可观测变量的选择偏误，不能消除不可观测混杂。但有些论文将PSM结果等同于"因果效应"，忽略CIA可能不成立的提示。
+<ul><li><strong>避免方法</strong>：做敏感性分析（Rosenbaum bounds, <code>rbounds</code>命令），检验"多强的不可观测混杂才能推翻结论"。如Gamma=1.5时结论不再显著，说明结果对CIA假设敏感。</li>
+<li>参考：Rosenbaum (2002), *Observational Studies*.</li>
+</ul>
+<strong>误用三：在重合性不好的区域强行外推</strong>
+尽管PSM不要求精确匹配，但如果共同支撑（common support）很窄，意味着大部分处理组个体找不到相似的控制组——此时"匹配"实际上在强推。
+<ul><li><strong>避免方法</strong>：画倾向得分分布图观察共同支撑；使用修剪（trimming）——只保留$p(X)$在重合区域内的样本。<code>psmatch2</code>中<code>common</code>选项可做。</li>
+</ul>
+<strong>Cunningham的关键警示</strong>："PSM is not magic——it is just another way of conditioning on observables, and it inherits all the limitations of the CIA assumption."
+</details>
+---
+
+</section>
+<section class="section-card" id="sec3">
+<h2><span class="sec-num">§3</span>聚类标准误：组内相关下的稳健推断（教材 §6.6）<span class="imp imp-2">★★ 常考（老师重点★1 中"维度匹配问题"的推断基础）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：OLS 默认每个观测独立。但如果你的数据是"同一个班级的学生"、"同一个公司的员工"、"同一个县的村庄"——同一聚类内的个体彼此相关，OLS 标准误会严重低估，t 检验会过度拒绝。</li>
+<li><strong>为什么需要它</strong>：面板数据自动形成聚类（同一个体不同年份的观测彼此相关）；政策评估经常聚类到州/县/学校层面。不用聚类标准误 ≈ 做错的统计推断。</li>
+</ul><li><strong>在谱系中的位置</strong>：不是因果识别方法，而是<strong>正确的推断方法</strong>——无论用什么方法估计参数，只要数据有聚类结构，就必须用聚类标准误。这是 §6.6 与前面因果推断章节的关键区别。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★1，★4】
+<h4>1. 聚类样本的定义</h4>
+OLS 默认每个观测独立。但如果你的数据是"同一班级的学生成绩"或"同一公司的员工工资"，班级/公司内部的个体彼此相关（同班学生共享老师质量、同公司员工共享企业文化），OLS 标准误会严重低估真实的不确定性，t 检验会过度拒绝——你以为显著的结果可能根本不显著。
+<strong>聚类样本</strong>：样本被分为 G 个聚类（如 G 个班级、G 个县），聚类间独立，聚类内允许任意形式的相关。
+<h4>2. 记号体系</h4>
+用双下标 $Y_{ig}$，$g=1,...,G$ 表示聚类，$i=1,...,n_g$ 表示聚类内个体。$\mathbf{Y}_g$ 是 $n_g \times 1$ 向量，$\mathbf{X}_g$ 是 $n_g \times K$ 矩阵。
+<h4>3. 聚类层面 OLS 表达式</h4>
+$$\hat{\beta}_{ols} = \left(\sum_{g=1}^G \mathbf{X}_g'\mathbf{X}_g\right)^{-1} \left(\sum_{g=1}^G \mathbf{X}_g'\mathbf{Y}_g\right)$$
+推导不跳步：个体层面 $\hat{\beta}_{ols} = (\sum_{g}\sum_{i} X_{ig}X_{ig}')^{-1}(\sum_{g}\sum_{i} X_{ig}Y_{ig})$。注意到 $\sum_i X_{ig}X_{ig}' = \mathbf{X}_g'\mathbf{X}_g$（理由：$\mathbf{X}_g$ 的每一行是 $X_{ig}'$，$\mathbf{X}_g'\mathbf{X}_g = \sum_i X_{ig}X_{ig}'$），同理 $\sum_i X_{ig}Y_{ig} = \mathbf{X}_g'\mathbf{Y}_g$。所以个体层面的求和等价于聚类层面的求和。
+<h4>4. 假设 6.1</h4>
+(a) $E(\varepsilon_g \mid \mathbf{X}) = \mathbf{0}$——聚类层面的外生性（每个聚类内的误差与所有 X 正交）。 (b) $E(\varepsilon_g \varepsilon_g' \mid \mathbf{X}) = \Omega_g$，聚类间 $E(\varepsilon_g \varepsilon_{g^*}' \mid \mathbf{X}) = \mathbf{0}$——聚类间独立，聚类内可以有任意异方差和相关结构。
+<h4>5. 聚类稳健方差公式</h4>
+$$\text{Var}(\hat{\beta}_{ols} \mid X) = (X'X)^{-1} \left(\sum_{g=1}^G \mathbf{X}_g' \Omega_g \mathbf{X}_g\right) (X'X)^{-1}$$
+为什么不是 $\sigma^2(X'X)^{-1}$？因为 $\Omega_g$ 不是 $\sigma^2 I$！当聚类内个体相关时，$\Omega_g$ 的非对角线元素不为零——这就是"聚类内的溢出效应"在方差中的体现。
+<h4>6. 聚类内相关的放大效应（Moulton 因子）</h4>
+假设等方差 $\sigma^2$、等相关系数 $\rho$、等聚类大小 $N$，则：
+$$\text{Var}(\hat{\beta}_{ols} \mid X) = (X'X)^{-1} \sigma^2 (1 + \rho(N-1))$$
+<strong>不跳步推导</strong>：在这种简单设定下，$\Omega_g = \sigma^2[(1-\rho)I_N + \rho \cdot \mathbf{1}_N\mathbf{1}_N']$（理由：对角线 = $\sigma^2$，非对角线 = $\sigma^2\rho$）。又假设同一聚类内的 $X_{ig}$ 都相同，则 $\mathbf{X}_g'\Omega_g\mathbf{X}_g = \sigma^2(1+\rho(N-1)) \cdot \mathbf{X}_g'\mathbf{X}_g$（理由：$\mathbf{1}_N'\mathbf{1}_N = N$）。代入方差公式即得 Moulton 因子。
+<strong>关键直觉</strong>：$\rho=0.1, N=50$ 时方差放大 5.9 倍！即使聚类内相关性很弱（$\rho=0.1$），只要聚类足够大，标准误就会被严重低估。这就是为什么"聚类到班级（50人）"和"不聚类"的标准误可以差 2.4 倍。
+<h4>7. 三种聚类稳健协方差估计量</h4>
+<table>
+<tr>
+<th>估计量</th>
+<th>公式特征</th>
+<th>适用场景</th>
+</tr>
+<tr>
+<td>CV1</td>
+<td>$\frac{n-1}{n-K} \cdot \frac{G}{G-1}$ 调整</td>
+<td>Stata 默认，大样本 OK</td>
+</tr>
+<tr>
+<td>CV2</td>
+<td>$\bar{e}_g = \mathbf{M}_{gg}^{-1/2} e_g$</td>
+<td>Bell-McCaffrey，修正了残差杠杆效应</td>
+</tr>
+<tr>
+<td>CV3</td>
+<td>Jackknife，$\tilde{e}_g = \mathbf{M}_{gg}^{-1} e_g$</td>
+<td>MacKinnon 推荐，小样本最可靠</td>
+</tr>
+</table>
+$G=n$ 时（每个聚类只有一个观测），CV1→HC1，CV2→HC2——三种都退化为异方差稳健标准误。
+<h4>8. Stata 命令与选型</h4>
+<div class="stata-code">* CV1（默认）
+reg y x, vce(cluster clustvar)
+
+* CV2（需安装）
+ssc install reg_sandwich
+reg_sandwich y x, cluster(clustvar)
+
+* CV3（小样本推荐，需安装）
+ssc install summclust
+summclust y x, cluster(clustvar)</div>
+<h4>9. 关键注意事项</h4>
+<ul><li>聚类数 $G < 20$ 时，聚类标准误不可靠（渐近理论需要 $G \to \infty$）</li>
+<li>聚类应该选"处置分配发生的层面"——政策在州层面变化就聚类到州，即使你有个人层面数据</li>
+<li>不要"多重聚类"而不做调整（如既聚类到州又聚类到年）——标准 Stata 命令不能处理双向聚类</li>
+</ul>
+<strong>这个发现改变了什么认知</strong>：统计推断的可信度不仅取决于你的点估计，还取决于你是否正确刻画了数据中的依赖结构。很多"显著"的结论可能只是因为标准误被低估了。
+---
+
+<h3>三、习题</h3>
+<strong>Q3.1</strong> ⭐ 为什么面板数据需要聚类标准误而不是普通稳健（HC）标准误？聚类标准误在什么情况下会退化到HC标准误？
+<details><summary>参考答案要点</summary>
+<strong>为什么需要聚类</strong>：面板数据中同一个体不同时期的观测彼此相关——今年的工资与去年的工资是相关的。普通HC标准误假设所有观测独立（只是异方差），忽略了这种时间维度的相关性，导致标准误被严重低估（Moulton因子效应）。
+<strong>退化条件</strong>：当聚类数G = 样本量n时（每个聚类只有一个观测），聚类内相关系数无法定义，CV1退化为HC1，CV2退化为HC2。
+<strong>直觉</strong>：聚类标准误是HC标准误的泛化——HC是对角协方差矩阵（只有异方差），聚类标准误允许块对角协方差矩阵（聚类内可以有任意形式的相关）。
+</details>
+<strong>Q3.2</strong> ⭐⭐ 在等方差 $\sigma^2$、等相关系数 $\rho$、等聚类大小 $N$ 的假设下，推导Moulton因子 $1 + \rho(N-1)$。解释为什么即使 $\rho$ 很小（如0.1），大聚类（N=50）仍会导致OLS标准误严重低估。
+<details><summary>参考答案要点</summary>
+<strong>推导</strong>（参考教材(6.16)）：
+假设聚类内$n_g = N$（等大小），$E(\varepsilon_{ig}^2|X) = \sigma^2$（等方差），$E[\varepsilon_{ig}\varepsilon_{jg}|X] = \sigma^2\rho$（等相关，$i \neq j$）。且聚类内$X_{ig}$取值相同。
+聚类g的误差协方差矩阵为：
+$$\Omega_g = \sigma^2[(1-\rho)I_N + \rho \cdot 1_N 1_N']$$
+代入 $\mathrm{Var}(\hat{\beta}_{ols}|X) = (X'X)^{-1}(\sum_g X_g'\Omega_g X_g)(X'X)^{-1}$，注意聚类内X相同→$X_g = 1_N \cdot X_g$（标量简化），可得：
+$$\mathrm{Var} = (X'X)^{-1}\sigma^2(1 + \rho(N-1))$$
+<strong>Moulton因子</strong> = $1 + \rho(N-1)$。
+<strong>数值直觉</strong>：$\rho=0.1, N=50$ → 因子 = 1 + 0.1×49 = 5.9。OLS默认标准误低估了约 $\sqrt{5.9} \approx 2.4$ 倍！这意味着t值被夸大2.4倍——原本不显著的结果可能变得显著。
+<strong>政策含义</strong>：聚类应该选在"处置分配发生的层面"。如果政策在州层面变化，就要聚类到州——即使每个州只有几十个观测。
+</details>
+<strong>Q3.3</strong> ⭐⭐⭐ 阅读MacKinnon, Nielsen & Webb (2022, "Cluster-Robust Inference: A Guide to Empirical Practice") 关于CV1/CV2/CV3小样本性质的比较。回答：(1) 三种估计量各自的修正逻辑是什么？(2) 为什么MacKinnon等推荐CV3？(3) 当聚类数G < 20时，聚类标准误面临什么挑战？有哪些补救方法？
+<details><summary>参考答案要点</summary>
+(1) <strong>修正逻辑</strong>：
+<ul><li><strong>CV1</strong>（Stata默认）：乘子修正 $\frac{n-1}{n-K} \cdot \frac{G}{G-1}$，基于"残差自由度为n-K"和"聚类数为G"的直觉调整。</li>
+<li><strong>CV2</strong>（Bell-McCaffrey）：用 $\bar{e}_g = M_{gg}^{-1/2} e_g$ 替代残差 $e_g$，本质是"杠杆调整残差"——调整每个观测对自身预测的影响。</li>
+<li><strong>CV3</strong>（Jackknife）：用 $\tilde{e}_g = M_{gg}^{-1} e_g$，基于留一聚类的思想。在$n_g$大的聚类使用高效算法（教材引用MacKinnon et al. [55]的summclust命令）。</li>
+</ul>
+(2) <strong>推荐CV3的理由</strong>：MacKinnon等的蒙特卡洛模拟显示，在G<50时CV1拒绝率远高于名义水平（过度拒绝），CV3在各种设置下拒绝率最接近名义水平。CV2介于两者之间。CV3的代价是当某些聚类$n_g$很大时计算成本高，但summclust解决了这个问题。
+(3) <strong>G<20时的挑战</strong>：
+<ul><li>所有聚类标准误在大样本（$G\to\infty$）下才是有效的。G<20时渐近理论不再可靠。</li>
+<li><strong>补救方法</strong>：</li>
+</ul>  - 使用野生Bootstrap（wild cluster bootstrap），不依赖G→∞的渐近逼近（<code>boottest</code>命令）
+  - 使用随机化推断（randomization inference），Fisher精确检验框架   - 如果数据允许，合并聚类到更高层面（如从学校聚类到学区）
+<strong>参考文献</strong>：MacKinnon, J.G., Nielsen, M.Ø., & Webb, M.D. (2022). Cluster-robust inference: A guide to empirical practice. *Journal of Econometrics*, 232(2), 272-299.
+</details>
+---
+
+</section>
+<section class="section-card" id="sec4">
+<h2><span class="sec-num">§4</span>线性矩模型与 GMM：工具变量法的统一框架（教材 §7.5.1 + §7.5.4）<span class="imp imp-3">★★★ 必考（老师重点★1 和 ★5 的理论基础）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：此前学的 IV 和 2SLS 是"特例"——这节告诉你它们都是 GMM 的特例。GMM 是一个统一的估计框架：只要你能写出总体矩条件（population moment conditions），就能构造 GMM 估计量。</li>
+<li><strong>为什么需要它</strong>：理解 GMM 才能理解为什么 2SLS 在异方差下不是最优的、为什么两阶段 GMM 比 2SLS 更有效、以及后面的差分 GMM 和系统 GMM 是怎么回事。</li>
+</ul><li><strong>在谱系中的位置</strong>：GMM 是 IV/2SLS 的泛化 → 差分 GMM 和系统 GMM 是 GMM 在动态面板中的具体应用。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★1，★5】
+<h4>1. 线性矩模型的定义</h4>
+在此之前，你学过 IV 和 2SLS——它们都是"找工具变量代替内生变量"。但 GMM 告诉你：这些方法都源自同一个思想——<strong>利用总体矩条件来识别和估计参数</strong>。
+线性矩模型的定义（定义 7.1）：结构方程 $Y_i = X_i'\beta + \varepsilon_i$，工具变量 $Z_i$（L 维），满足正交条件：
+$$E[Z_i \cdot (Y_i - X_i'\beta)] = \mathbf{0}$$
+定义矩函数 $\mathbf{g}_i = Z_i \cdot \varepsilon_i$。GMM 的核心思想是：<strong>在总体中，工具变量与误差应该不相关。在样本中，我们找一个 $\beta$ 使得样本矩 $\bar{g}_n(\beta) = \frac{1}{n}\sum_i Z_i(Y_i - X_i'\beta)$ 尽可能接近 0。</strong>
+<h4>2. 四个假设逐一解释</h4>
+<ul><li><strong>假设 7.1（正交条件）</strong>：$E(Z_i \varepsilon_i) = 0$——工具变量与误差不相关，这是 IV 的核心</li>
+<li><strong>假设 7.2（相关条件）</strong>：$\Sigma_{ZX}$ 列满秩——工具变量与内生变量相关（没有弱 IV 问题）</li>
+<li><strong>假设 7.3（遍历平稳）</strong>：大数定律成立，样本矩收敛到总体矩</li>
+<li><strong>假设 7.4（鞅差）</strong>：中心极限定理成立，$S = E(g_i g_i')$ 非奇异</li>
+</ul>
+<strong>与 OLS 假设的关键区别</strong>：OLS 要求 $E(X_i \varepsilon_i)=0$（解释变量与误差正交），GMM 只要求 $E(Z_i \varepsilon_i)=0$（工具变量与误差正交）。如果 $X_i$ 本身就是外生的，取 $Z_i = X_i$，GMM 就退化为 OLS。
+<h4>3. 可识别条件：$L \ge K$</h4>
+矩条件的个数 $L$ 必须不少于参数的个数 $K$。因为你要用 L 个方程解 K 个未知数。如果 $L < K$，方程不够，参数不可识别——这就是为什么工具变量不能比内生变量少！
+如果 $L = K$，恰好识别，GMM 退化为 IV。如果 $L > K$，过度识别，多余的矩条件提供了"检验工具变量外生性"的可能（Hansen J 检验）。
+<h4>4. GMM 估计量的定义</h4>
+目标函数（J 函数）：
+$$J(\tilde{\beta}, \hat{V}) = n \cdot \bar{g}_n(\tilde{\beta})' \hat{V} \bar{g}_n(\tilde{\beta})$$
+<strong>直觉</strong>：找一个 $\beta$，使样本矩 $\bar{g}_n(\beta)$ 尽可能接近 0（用加权距离衡量）。$\hat{V}$ 是权重矩阵——不同的 $\hat{V}$ 给出不同的 GMM 估计量。
+<h4>5. 线性 GMM 的解析解——完整推导</h4>
+<strong>第 1 步</strong>：展开样本矩（理由：按定义代入 $\mathbf{g}_i = Z_i(Y_i - X_i'\tilde{\beta})$）：
+$$\bar{g}_n(\tilde{\beta}) = \frac{1}{n}\sum_i Z_i Y_i - \left(\frac{1}{n}\sum_i Z_i X_i'\right)\tilde{\beta} \equiv S_{ZY} - S_{ZX} \cdot \tilde{\beta}$$
+其中 $S_{ZY}$ 是 $L \times 1$，$S_{ZX}$ 是 $L \times K$。
+<strong>第 2 步</strong>：代入 J 函数（理由：直接替换）：
+$$J(\tilde{\beta}, \hat{V}) = n \cdot (S_{ZY} - S_{ZX}\tilde{\beta})' \hat{V} (S_{ZY} - S_{ZX}\tilde{\beta})$$
+<strong>第 3 步</strong>：求一阶条件。对 $\tilde{\beta}$ 求导（理由：使用矩阵求导规则 $\frac{\partial (a - B\beta)'V(a - B\beta)}{\partial \beta} = -2B'V(a - B\beta)$）：
+$$\frac{\partial J}{\partial \tilde{\beta}} = -2n \cdot S_{ZX}'\hat{V}(S_{ZY} - S_{ZX}\tilde{\beta}) = 0$$
+<strong>第 4 步</strong>：解出 $\hat{\beta}(\hat{V})$（理由：$S_{ZX}'\hat{V}S_{ZX}$ 可逆需要 $L \ge K$ 且 $S_{ZX}$ 列满秩）：
+$$\hat{\beta}(\hat{V}) = (S_{ZX}'\hat{V}S_{ZX})^{-1} S_{ZX}'\hat{V}S_{ZY}$$
+这就是线性 GMM 的<strong>解析解</strong>。$S_{ZX}'\hat{V}S_{ZX}$ 是 $K \times K$，$S_{ZX}'\hat{V}S_{ZY}$ 是 $K \times 1$——矩阵维度完美匹配。
+<h4>6. 有效 GMM</h4>
+最优权重矩阵是 $\hat{V} \xrightarrow{p} S^{-1}$，其中 $S = E(g_i g_i')$。<strong>直觉</strong>：给方差大的矩条件更小的权重（因为它信息少，噪声大），方差小的矩条件更大的权重。
+<strong>两阶段 GMM</strong>：第一步用任意 $\hat{V}$（如单位阵 $I_L$）得到初步估计 → 计算残差 → 估计 $\hat{S}$ → 第二步用 $\hat{S}^{-1}$ 作为权重矩阵。这就像是"先用粗糙的估计学习噪声结构，再用学到的东西做精细估计"。
+<h4>7. 条件同方差下 2SLS = 有效 GMM——不跳步证明</h4>
+假设 7.6：$E(\varepsilon_i^2 \mid Z_i) = \sigma^2$，此时：
+$$S = E(\varepsilon_i^2 Z_i Z_i') = \sigma^2 \cdot E(Z_i Z_i') \equiv \sigma^2 \cdot \Sigma_{ZZ}$$
+将 $\hat{V} = (\hat{\sigma}^2 S_{ZZ})^{-1}$ 代入 GMM 解析式（理由：这是 $S^{-1}$ 的样本类比）：
+<strong>第 1 步</strong>：代入：
+$$\hat{\beta} = \left(S_{ZX}'(\hat{\sigma}^2 S_{ZZ})^{-1}S_{ZX}\right)^{-1} S_{ZX}'(\hat{\sigma}^2 S_{ZZ})^{-1}S_{ZY}$$
+<strong>第 2 步</strong>：$\hat{\sigma}^2$ 是标量，可以提到外面（理由：$(\hat{\sigma}^2)^{-1}$ 在两个括号中同时出现，一个是逆的外面，一个是逆的里面）：
+$$= \left(\frac{1}{\hat{\sigma}^2} S_{ZX}' S_{ZZ}^{-1} S_{ZX}\right)^{-1} \frac{1}{\hat{\sigma}^2} S_{ZX}' S_{ZZ}^{-1} S_{ZY}$$
+<strong>第 3 步</strong>：$\hat{\sigma}^2$ 抵消！(理由：$\left(\frac{1}{c}A\right)^{-1}\frac{1}{c}B = c A^{-1}\frac{1}{c}B = A^{-1}B$)：
+$$= (S_{ZX}' S_{ZZ}^{-1} S_{ZX})^{-1} S_{ZX}' S_{ZZ}^{-1} S_{ZY} = \hat{\beta}_{2SLS}$$
+<strong>关键结论</strong>：条件同方差下，2SLS = 有效 GMM；条件异方差下，2SLS 不是最优的——两阶段 GMM 更有效。
+<h4>8. 定理 7.5 四条逐条人话解读</h4>
+(a) 假设 7.1-7.3 成立 → 2SLS 一致（样本越大越准）；加上假设 7.4 → 2SLS 渐近正态（可以算标准误做 t 检验）。
+(b) 条件同方差下，2SLS = 有效 GMM——2SLS 是最优的。
+(c) 在此条件下，有一套公式可以一致估计方差——Stata 里汇报的标准误就是用的它。
+(d) 可以构造 t 检验和 Wald 检验——和 OLS 一样做假设检验。
+<h4>9. Stata 命令</h4>
+<div class="stata-code">* 2SLS（条件同方差下最优）
+ivregress 2sls y x1 (x2 = z1 z2)
+
+* 两阶段 GMM（异方差下最优）
+ivregress gmm y x1 (x2 = z1 z2)</div>
+<strong>这个发现改变了什么认知</strong>：2SLS 不是"一种方法"，而是 GMM 大家庭中在特定假设（条件同方差）下的一个成员。一旦你理解了 GMM 的统一框架，差分 GMM、系统 GMM 都不过是"给矩条件换了个形式"而已。这就是理论统一带来的认知红利。【对应老师重点★1】
+---
+
+<h3>三、习题</h3>
+<strong>Q4.1</strong> ⭐ GMM和2SLS的关系是什么？在什么条件下2SLS恰好等于有效GMM？
+<details><summary>参考答案要点</summary>
+<strong>关系</strong>：
+<ul><li>2SLS是GMM的特例——GMM是IV方法的统一框架</li>
+<li>2SLS = $\hat{\beta}(S_{ZZ}^{-1})$，即用 $S_{ZZ}^{-1}$ 作为GMM权重矩阵</li>
+<li>两阶段GMM = $\hat{\beta}(\hat{S}^{-1})$，用有效权重矩阵</li>
+</ul>
+<strong>2SLS = 有效GMM的条件</strong>：条件同方差假设 7.6 成立，即 $E(\varepsilon_i^2|Z_i) = \sigma^2$。
+<strong>推导直觉</strong>（教材(7.5.4)）：
+<ul><li>同方差下 $S = E(g_i g_i') = \sigma^2 \cdot E(Z_i Z_i') = \sigma^2 \Sigma_{ZZ}$</li>
+<li>$S^{-1} = (\sigma^2 \Sigma_{ZZ})^{-1} \propto \Sigma_{ZZ}^{-1}$</li>
+<li>代入 $\hat{\beta}(\hat{V})$ → $\hat{\sigma}^2$ 消去 → 恰好得到 $\hat{\beta}_{2SLS}$</li>
+</ul>
+<strong>异方差下的差异</strong>：条件异方差时 $S \neq \sigma^2 \Sigma_{ZZ}$，最优权重不再是 $\Sigma_{ZZ}^{-1}$，两阶段GMM比2SLS更有效。定理7.5对此做了完整总结。
+</details>
+<strong>Q4.2</strong> ⭐⭐ 从GMM目标函数 $J(\tilde{\beta}, \hat{V}) = n \cdot \bar{g}_n(\tilde{\beta})' \hat{V} \bar{g}_n(\tilde{\beta})$ 出发，推导线性GMM估计量 $\hat{\beta}(\hat{V})$ 的解析解。标注每一步的矩阵维度（L=矩条件数，K=参数数）。
+<details><summary>参考答案要点</summary>
+<strong>步骤1</strong>：表达样本矩
+$$\bar{g}_n(\tilde{\beta}) = \frac{1}{n}\sum_{i=1}^n Z_i(Y_i - X_i'\tilde{\beta}) = S_{ZY} - S_{ZX} \cdot \tilde{\beta}$$
+维度：$\bar{g}_n \in \mathbb{R}^{L}$，$S_{ZY} \in \mathbb{R}^{L}$，$S_{ZX} \in \mathbb{R}^{L \times K}$
+<strong>步骤2</strong>：代入目标函数
+$$J = n \cdot (S_{ZY} - S_{ZX}\tilde{\beta})'\hat{V}(S_{ZY} - S_{ZX}\tilde{\beta})$$
+其中 $\hat{V} \in \mathbb{R}^{L \times L}$ 对称正定。
+<strong>步骤3</strong>：一阶条件
+$$\frac{\partial J}{\partial \tilde{\beta}} = -2n \cdot S_{ZX}'\hat{V}(S_{ZY} - S_{ZX}\hat{\beta}) = 0$$
+→ $S_{ZX}'\hat{V}S_{ZX}\hat{\beta} = S_{ZX}'\hat{V}S_{ZY}$
+<strong>步骤4</strong>：可识别性 $S_{ZX}'\hat{V}S_{ZX} \in \mathbb{R}^{K \times K}$。由假设7.2（$\Sigma_{ZX}$列满秩）和 $\hat{V}$ 正定 → $S_{ZX}'\hat{V}S_{ZX}$ 可逆。
+<strong>步骤5</strong>：解析解
+$$\hat{\beta}(\hat{V}) = (S_{ZX}'\hat{V}S_{ZX})^{-1} S_{ZX}'\hat{V}S_{ZY}$$
+<strong>易错点</strong>：可逆性要求 $L \ge K$（矩条件数 ≥ 参数数）——即工具变量不能比内生变量少。这是"秩条件"在GMM框架下的体现。
+</details>
+<strong>Q4.3</strong> ⭐⭐⭐ 阅读Hansen (1982, "Large Sample Properties of Generalized Method of Moments Estimators") 关于最优权重矩阵的讨论。解释为什么 $S^{-1}$（其中 $S = E(g_i g_i')$）是最优的GMM权重矩阵。提示：从协方差矩阵的矩阵不等式角度给出论证思路。
+<details><summary>参考答案要点</summary>
+<strong>最优性的含义</strong>：在所有可选的权重矩阵V中，$V = S^{-1}$ 使GMM估计量的渐近协方差矩阵最小（在矩阵意义下）。即对任意正定V：
+$$\mathrm{Avar}(\hat{\beta}(S^{-1})) \preceq \mathrm{Avar}(\hat{\beta}(V))$$
+<strong>论证思路</strong>：
+1. <strong>渐近协方差的一般形式</strong>（参考教材(7.30)推导）：
+$$\mathrm{Avar}(\hat{\beta}(V)) = (\Sigma_{ZX}'V\Sigma_{ZX})^{-1}\Sigma_{ZX}'VSV\Sigma_{ZX}(\Sigma_{ZX}'V\Sigma_{ZX})^{-1}$$
+当 $V = S^{-1}$：$\mathrm{Avar}(\hat{\beta}(S^{-1})) = (\Sigma_{ZX}'S^{-1}\Sigma_{ZX})^{-1}$
+2. <strong>证明核心</strong>：需要证明对任意正定V，
+$$(\Sigma_{ZX}'V\Sigma_{ZX})^{-1}\Sigma_{ZX}'VSV\Sigma_{ZX}(\Sigma_{ZX}'V\Sigma_{ZX})^{-1} \succeq (\Sigma_{ZX}'S^{-1}\Sigma_{ZX})^{-1}$$
+这等价于证明 $(\Sigma_{ZX}'V\Sigma_{ZX})^{-1}\Sigma_{ZX}'V \succeq (\Sigma_{ZX}'S^{-1}\Sigma_{ZX})^{-1}\Sigma_{ZX}'S^{-1}$ 前乘某个矩阵...
+3. <strong>直觉（Hansen原文的核心）</strong>：$S = E(g_i g_i')$ 是矩条件 $g_i$ 的协方差矩阵。$S^{-1}$ 给方差大的矩条件更小的权重（因为它信息更少），方差小的矩条件更大的权重——这符合"逆方差加权"的最优原则。
+4. <strong>实际操作</strong>：两阶段GMM——    - 第一阶段用任意 $\hat{V}$（如单位阵）→ 得到一致估计 $\hat{\beta}_1$    - 用 $\hat{\beta}_1$ 计算残差 → 估计 $\hat{S} = \frac{1}{n}\sum_i \hat{g}_i \hat{g}_i'$    - 第二阶段用 $\hat{V} = \hat{S}^{-1}$ → 得到有效GMM
+<strong>Hansen (1982)的历史地位</strong>：这篇论文不仅证明了$S^{-1}$的最优性，还建立了GMM的完整大样本理论——是计量经济学史上引用最高的论文之一。
+</details>
+---
+
+</section>
+<section class="section-card" id="sec5">
+<h2><span class="sec-num">§5</span>固定效应模型：消除不随时间变化的遗漏变量（教材 §8.2）<span class="imp imp-3">★★★ 必考大题（老师重点★1 的基石 + ★4 的面板分析基础）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：你有面板数据（N 个个体 × T 期）。你担心存在不随时间变化的遗漏变量（如"企业文化"、"个人能力"）同时影响 X 和 Y。固定效应模型通过<strong>组内离差变换</strong>消除这些不随时间变化的因素。</li>
+<li><strong>为什么需要它</strong>：横截面 OLS 无法处理不可观测异质性。面板数据的核心优势就是让你"跟自己比"。</li>
+</ul><li><strong>在谱系中的位置</strong>：面板方法链的起点。混合回归 → 固定效应 → 随机效应 → 动态面板。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★1，★4】
+<h4>1. 从混合回归到 FE 的动机</h4>
+混合回归把所有数据混在一起跑 OLS：$Y_{it} = \alpha + X_{it}'\beta + \varepsilon_{it}$。问题：如果存在个体异质性 $\alpha_i$（如"企业文化"、"个人能力"），且 $\alpha_i$ 与 $X_{it}$ 相关（能力强的个体更可能接受培训、能力强的企业更可能投资 R&D），那么混合回归的 $\varepsilon_{it}$ 实际上包含 $\alpha_i$，导致 $E(X_{it}\varepsilon_{it}) \neq 0$——内生性。
+所以我们需要：$Y_{it} = \alpha_i + X_{it}'\beta + \varepsilon_{it}$——每个个体有自己的截距 $\alpha_i$，代表了所有不随时间变化的个体特征。如果 $\alpha_i$ 与 $X_{it}$ 相关，我们就称之为<strong>固定效应模型</strong>。
+<h4>2. 组内离差变换——不跳步推导</h4>
+<strong>核心思想</strong>：既然 $\alpha_i$ 不随时间变化，那我们可以用"个体自己跟自己比"来消掉它。
+<strong>第 1 步</strong>：写出个体 i 在时间 t 的方程（式 8.5）：
+$$Y_{it} = \alpha_i + X_{it}'\beta + \varepsilon_{it}$$
+<strong>第 2 步</strong>：取个体 i 在 T 个时间点上的均值（式 8.7）：
+$$\bar{Y}_i = \frac{1}{T}\sum_t Y_{it} = \frac{1}{T}\sum_t (\alpha_i + X_{it}'\beta + \varepsilon_{it}) = \alpha_i + \bar{X}_i'\beta + \bar{\varepsilon}_i$$
+<strong>注意</strong>：$\frac{1}{T}\sum_t \alpha_i = \alpha_i$，因为 $\alpha_i$ 不随时间变化！这就是为什么能消掉它。
+<strong>第 3 步</strong>：(8.5) 减去 (8.7)，逐项抵消：
+$$Y_{it} - \bar{Y}_i = (\alpha_i - \alpha_i) + (X_{it} - \bar{X}_i)'\beta + (\varepsilon_{it} - \bar{\varepsilon}_i)$$
+<strong>第 4 步</strong>：$\alpha_i - \alpha_i = 0$！定义离差变量 $\dot{Y}_{it} = Y_{it} - \bar{Y}_i$，$\dot{X}_{it} = X_{it} - \bar{X}_i$，$\dot{\varepsilon}_{it} = \varepsilon_{it} - \bar{\varepsilon}_i$，得到：
+$$\dot{Y}_{it} = \dot{X}_{it}'\beta + \dot{\varepsilon}_{it}$$
+<strong>$\boldsymbol{\alpha_i}$ 被消去了！</strong> 这就是组内离差变换（within transformation）——把每个个体的每个观测都减去他自身的均值，相当于只看个体"相对于自己的平均水平"的变化。
+<h4>3. 矩阵表示与 $M_T$ 矩阵</h4>
+去均值操作可以用矩阵优雅地表达。定义：
+<ul><li>$P_T = 1_T(1_T'1_T)^{-1}1_T'$：这是投影矩阵，$P_T Y_i$ 就是 $\bar{Y}_i \cdot 1_T$（把所有 T 个值都变成均值）</li>
+<li>$M_T = I_T - P_T$：这是<strong>去均值矩阵</strong>，$M_T Y_i = Y_i - \bar{Y}_i \cdot 1_T = \dot{Y}_i$</li>
+</ul>
+$M_T$ 的三个性质：
+<ul><li><strong>幂等</strong>：$M_T^2 = M_T$（去均值两次 = 去均值一次——均值的均值还是均值）</li>
+<li><strong>对称</strong>：$M_T' = M_T$</li>
+<li><strong>零化常向量</strong>：$M_T 1_T = 0$（因为常向量的离差全是 0——没有波动）</li>
+</ul>
+<h4>4. FE 估计量的表达式</h4>
+对 $\dot{Y}_{it} = \dot{X}_{it}'\beta + \dot{\varepsilon}_{it}$ 做 OLS：
+$$\hat{\beta}_{fe} = \left(\sum_i \dot{X}_i'\dot{X}_i\right)^{-1} \left(\sum_i \dot{X}_i'\dot{Y}_i\right) = \left(\sum_i X_i' M_T X_i\right)^{-1} \left(\sum_i X_i' M_T Y_i\right)$$
+<h4>5. $V_{fe} \succeq V_{pool}$ 的直观含义</h4>
+在球形扰动假设下：
+<ul><li>$V_{fe}^0 = \sigma_\varepsilon^2 (\sum_i \dot{X}_i'\dot{X}_i)^{-1}$</li>
+<li>$V_{pool} = \sigma_\varepsilon^2 (\sum_i X_i'X_i)^{-1}$</li>
+</ul>
+$V_{fe}^0 \succeq V_{pool}$ 意味着 FE 估计量的方差<strong>不小于</strong>混合回归估计量的方差。<strong>用人话解释为什么不小于</strong>：组内离差变换只保留了"个体内部的变异"（$\dot{X}_{it}$）而扔掉了"个体间的变异"（$\bar{X}_i$）。数据变异少了，估计就更难——这就好比只用"一个人的上升下降"来推断趋势，而不是用"不同人的高低"——前者信息更少，所以估计更不精确。
+<strong>这是 FE 的代价</strong>：消除遗漏变量偏误的代价是牺牲了一部分效率（方差变大）。但在有内生性的情况下，混合回归虽然方差小，但偏误大，MSE（偏误$^2$+方差）可能不比 FE 小。
+<h4>6. LSDV 估计量</h4>
+引入 N-1 个个体哑变量：
+$$Y_{it} = \gamma_0 + \sum_{m=2}^N \gamma_m D_{mi} + X_{it}'\beta + \varepsilon_{it}$$
+数学上 LSDV = FE（完全等价）。当 N 小时可以直接跑 LSDV，N 大时用 FE（组内估计）更省计算资源——不用创建 999 个虚拟变量。
+<h4>7. $\sigma_\varepsilon^2$ 的估计与自由度</h4>
+$$\hat{\sigma}_\varepsilon^2 = \frac{1}{n - (N + K)} \sum_i \sum_t \hat{\varepsilon}_{it}^2$$
+<strong>自由度调整 $N+K$ 的原因</strong>：从 LSDV 的视角看，你估计了 N 个截距 + K 个斜率 = $N+K$ 个参数，损失了这么多自由度。
+<h4>8. 聚类到个体的稳健标准误</h4>
+$$\hat{V}_{fe}^{cluster} = \left(\sum_i \dot{X}_i'\dot{X}_i\right)^{-1} \left(\sum_i \dot{X}_i' \hat{\varepsilon}_i \hat{\varepsilon}_i' \dot{X}_i\right) \left(\sum_i \dot{X}_i'\dot{X}_i\right)^{-1}$$
+小样本调整：$\frac{N}{N-1}$（CV1 型）和 $\frac{n-1}{n-N-K} \cdot \frac{N}{N-1}$（CV3 型，最保守）。
+<h4>9. 三种 Stata 命令的标准误对比</h4>
+<table>
+<tr>
+<th>命令</th>
+<th>标准误类型</th>
+<th>$R^2$ 汇报</th>
+<th>适用场景</th>
+</tr>
+<tr>
+<td><code>reg y x i.id, cluster(id)</code></td>
+<td>CV1（聚类）</td>
+<td>LSDV的$R^2$</td>
+<td>N较小时</td>
+</tr>
+<tr>
+<td><code>xtreg y x, fe</code></td>
+<td>默认球形(8.17)；<code>vce(robust)</code>=CV1(8.18)</td>
+<td>组内/组间/总体三种</td>
+<td>标准用法</td>
+</tr>
+<tr>
+<td><code>areg y x, absorb(id) cluster(id)</code></td>
+<td>CV3（最保守，8.20）</td>
+<td>LSDV的$R^2$（最大）</td>
+<td>需要最保守推断时</td>
+</tr>
+</table>
+<strong>为什么 areg 的标准误最大</strong>：areg 的 cluster 选项用的是 (8.20) 的调整因子，比 xtreg 的 vce(robust) 更保守——同样的数据和模型，areg 汇报的 p 值更大，更不容易拒绝原假设。
+<h4>10. 时不变变量的命运</h4>
+性别、种族、出生年份——这些不随时间变化的变量在组内离差变换中被一并消去了。FE 无法估计它们的系数。如果你关心这些变量的效应，需要用随机效应模型（但 RE 有更强的假设）。
+<strong>这个发现改变了什么认知</strong>：面板数据的核心优势是"跟自己比"——消除所有不随时间变化的混淆因素。但这个优势是有代价的：你只能估计时变变量的效应，而且你扔掉了"个体间"的变异，导致方差更大。这就是 FE 的"权衡"。【对应老师重点★4】
+---
+
+<h3>三、习题</h3>
+<strong>Q5.1</strong> ⭐ 组内离差变换的几何直觉是什么？为什么通过"减去个体均值"就能消去 $\alpha_i$？
+<details><summary>参考答案要点</summary>
+<strong>几何直觉</strong>：
+<ul><li>$\alpha_i$ 是个体特定的"基线水平"——每个个体的截距不同，反映不随时间变化的特征（如"企业文化"、"个人能力"）。</li>
+<li>组内离差变换 = 将每个个体的数据中心化——把每个观测值平移到各自个体均值的位置。</li>
+<li>几何上：$\alpha_i$ 是个体i在Y轴方向的平移量。减去个体均值相当于将所有个体的时序路径平移到原点——平移后个体间的"形状差异"保留了，但"水平差异"被消除了。</li>
+</ul>
+<strong>代数推导</strong>（不跳步）：
+$$Y_{it} = \alpha_i + X_{it}'\beta + \varepsilon_{it} \quad \text{(8.5)}$$
+$$\bar{Y}_i = \alpha_i + \bar{X}_i'\beta + \bar{\varepsilon}_i \quad \text{(8.7, 取个体时间均值)}$$
+$$Y_{it} - \bar{Y}_i = (X_{it} - \bar{X}_i)'\beta + (\varepsilon_{it} - \bar{\varepsilon}_i) \quad \text{(8.8, 相减)}$$
+$\alpha_i$ 在减法中被消去——因为它不随时间变化，在原方程和均值方程中完全相同。
+<strong>矩阵视角</strong>：$M_T = I_T - 1_T(1_T'1_T)^{-1}1_T'$ 是去均值矩阵。$M_T \cdot 1_T = 0$ → 左乘 $M_T$ 消去所有只随个体变化的成分（含 $\alpha_i$）。
+</details>
+<strong>Q5.2</strong> ⭐ 为什么时不变变量（如性别、种族、出生年份）的系数在固定效应模型中无法估计？这是FE的缺陷还是特征？什么情况下应该用随机效应（RE）代替FE？
+<details><summary>参考答案要点</summary>
+<strong>无法估计的原因</strong>：时不变变量 $Z_i$（如性别）在进行组内离差变换时被消去了：
+$$\dot{Z}_i = Z_i - \bar{Z}_i = Z_i - Z_i = 0$$
+$Z_i$ 完全被 $\alpha_i$ 吸收。从LSDV角度看，$Z_i$ 与个体虚拟变量完美共线——无法分离两者效应。
+<strong>是缺陷还是特征</strong>：
+<ul><li>从因果推断角度看，这是<strong>特征</strong>而非缺陷——FE不要求知道 $\alpha_i$ 是什么，只需要消去它。如果不能接受无法估计时不变变量的系数，说明FE的识别假设不适合该研究问题。</li>
+<li>从描述性分析角度看，这是<strong>缺陷</strong>——如果我们确实关心性别等变量的效应。</li>
+</ul>
+<strong>应改用RE的情况</strong>：
+<ul><li>$\alpha_i$ 与 $X_{it}$ 不相关时（可用Hausman检验验证），RE更有效（利用了组间变异）。</li>
+<li>研究者关心时不变变量的系数。</li>
+<li>注意：如果Hausman检验拒绝 $H_0$（$\alpha_i$ 与 $X_{it}$ 相关），RE不一致——即使研究者关心时不变变量也不能用RE，只能考虑Hausman-Taylor估计量等其他方法。</li>
+</ul>
+</details>
+<strong>Q5.3</strong> ⭐⭐ 证明在矩阵意义下 $V_{fe}^0 \succeq V_{pool}$（即在球形扰动假设下，FE估计量的协方差矩阵不小于混合回归估计量的协方差矩阵）。给出矩阵不等式成立的直觉——为什么FE的方差更大？
+<details><summary>参考答案要点</summary>
+<strong>待证</strong>：$\sigma_\varepsilon^2(\sum_i \dot{X}_i'\dot{X}_i)^{-1} \succeq \sigma_\varepsilon^2(\sum_i X_i'X_i)^{-1}$
+即证：$\sum_i \dot{X}_i'\dot{X}_i \preceq \sum_i X_i'X_i$
+由于 $\dot{X}_i = M_T X_i$，$M_T = I_T - P_T$，且 $M_T$ 幂等。故：
+$$\dot{X}_i'\dot{X}_i = X_i'M_T X_i = X_i'X_i - X_i'P_T X_i$$
+$P_T = 1_T(1_T'1_T)^{-1}1_T'$ 半正定 → $X_i'P_T X_i \succeq 0$（半正定）
+因此 $X_i'X_i - \dot{X}_i'\dot{X}_i = X_i'P_T X_i \succeq 0$ → $X_i'X_i \succeq \dot{X}_i'\dot{X}_i$ → 对i求和后不等号保持。
+<strong>直觉</strong>：组内离差变换"吃掉了"数据的组间（between）变异——只用了"个体内部随时间的变化"来识别参数。组间变异是"免费的午餐"但在FE中不能吃（因为组间变异可能与 $\alpha_i$ 混杂）。用更少的信息估计 → 方差更大 → <strong>这是消除遗漏变量偏误必须付出的代价</strong>。
+<strong>推论</strong>：如果T很小（如T=2或3），FE的方差可能大到使估计不精确——此时需权衡"偏误-方差"的取舍。
+</details>
+<strong>Q5.4</strong> ⭐⭐⭐ 比较Stata中 <code>xtreg, fe</code>、<code>areg, absorb(id)</code>、<code>reghdfe</code> 三种命令在聚类标准误处理上的差异。为什么 <code>areg, cluster(id)</code> 汇报的标准误通常最大？在什么情况下应该使用 <code>reghdfe</code>？
+<details><summary>参考答案要点</summary>
+<strong>三种命令的差异</strong>：
+<table>
+<tr>
+<th>命令</th>
+<th>默认标准误</th>
+<th>聚类修正</th>
+<th>备注</th>
+</tr>
+<tr>
+<td><code>xtreg, fe</code></td>
+<td>球形扰动(8.17)</td>
+<td><code>vce(cluster id)</code>→CV1型(8.18)</td>
+<td>汇报三种R²</td>
+</tr>
+<tr>
+<td><code>areg, absorb(id)</code></td>
+<td>球形扰动(8.17)</td>
+<td><code>cluster(id)</code>→CV3型(8.20)</td>
+<td>多乘$\frac{n-1}{n-N-K}$</td>
+</tr>
+<tr>
+<td><code>reghdfe</code></td>
+<td>默认CV1</td>
+<td>支持多种vce</td>
+<td>可吸收多维FE</td>
+</tr>
+</table>
+<strong>areg标准误最大的原因</strong>：<code>areg, cluster(id)</code>使用最保守的CV3修正（教材(8.20)）：
+$$\hat{V}_{fe,2}^{cluster} = \left(\frac{n-1}{n-N-K}\right)\left(\frac{N}{N-1}\right)\hat{V}_{fe}^{cluster}$$
+因子 $\frac{n-1}{n-N-K}$ 当 N+K 接近 n 时很大（自由度修正最保守）。
+<strong>使用reghdfe的场景</strong>：
+<ul><li>多维固定效应（如个体+时间+行业×年份）</li>
+<li>高维固定效应（N很大，<code>areg</code>/<code>xtreg</code>内存不足）</li>
+<li>需要灵活的标准误选项（如multi-way clustering）</li>
+<li><code>reghdfe</code>基于迭代加权去均值算法，N大时远快于LSDV</li>
+</ul>
+<strong>建议</strong>：
+<ul><li>简单面板（单维FE）→ <code>xtreg, fe vce(cluster id)</code>足够</li>
+<li>需要保守推断 → <code>areg, absorb(id) cluster(id)</code></li>
+<li>多维FE/大N → <code>reghdfe, absorb(id year) vce(cluster id)</code></li>
+</ul>
+<strong>参考文献</strong>：Correia, S. (2016). A feasible estimator for linear models with multi-way fixed effects. Working Paper.
+</details>
+---
+
+</section>
+<section class="section-card" id="sec6">
+<h2><span class="sec-num">§6</span>动态面板数据模型：当过去影响现在（教材 §8.6）<span class="imp imp-3">★★★ 必考大题——本章最核心的节（老师重点★1 的核心）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：经济行为有惯性——今年的消费取决于去年的消费、企业的规模有持续性。如果在 FE 模型中加入 $Y_{it-1}$ 作为解释变量，组内离差变换会制造新的内生性——这就是 Nickell 偏误。这节讲怎么解决它。</li>
+<li><strong>为什么需要它</strong>：几乎所有经济面板数据都有动态性。忽略动态性 = 模型设定错误；用了 FE 处理动态面板 = 不一致。</li>
+</ul><li><strong>在谱系中的位置</strong>：FE → 加入 $Y_{it-1}$ → Nickell 偏误 → Anderson-Hsiao → 差分 GMM → 系统 GMM。这是一条完整的演进链。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★1】
+<h4>1. Nickell 偏误——问题的根源</h4>
+经济行为有惯性：今年的消费取决于去年的消费、企业的规模有持续性。如果在 FE 模型中加入 $Y_{it-1}$：
+$$Y_{it} = \gamma Y_{it-1} + \alpha_i + \varepsilon_{it}$$
+<strong>你以为</strong>：用组内离差消掉 $\alpha_i$ 就能一致估计 $\gamma$。 <strong>实际发生的事</strong>：组内离差变换制造了新的内生性！
+以 T=3 为例，组内离差后只剩一个差分方程（因为 T=3 时减去均值后两个方程退化为一个）：
+$$\Delta Y_{i3} = \gamma \Delta Y_{i2} + \Delta \varepsilon_{i3}$$
+其中 $\Delta Y_{i3} = Y_{i3} - Y_{i2}$，$\Delta Y_{i2} = Y_{i2} - Y_{i1}$。
+现在计算 $E(\Delta Y_{i2} \Delta \varepsilon_{i3})$——如果它不等于 0，OLS 就有内生性。<strong>不跳步展开</strong>：
+$$E(\Delta Y_{i2} \Delta \varepsilon_{i3}) = E[(Y_{i2} - Y_{i1})(\varepsilon_{i3} - \varepsilon_{i2})]$$
+展开括号（乘法分配律）：
+$$= E(Y_{i2}\varepsilon_{i3}) - E(Y_{i1}\varepsilon_{i3}) - E(Y_{i2}\varepsilon_{i2}) + E(Y_{i1}\varepsilon_{i2})$$
+<strong>逐项分析</strong>：
+<ul><li>$E(Y_{i2}\varepsilon_{i3}) = 0$（理由：t=2 的数据在 t=3 之前，未来误差与过去数据无关）</li>
+<li>$E(Y_{i1}\varepsilon_{i3}) = 0$（理由同上：$Y_{i1}$ 是更早的数据，与未来误差 $\varepsilon_{i3}$ 无关）</li>
+<li>$E(Y_{i1}\varepsilon_{i2}) = 0$（理由：$Y_{i1}$ 不含 $\varepsilon_{i2}$，且 $\varepsilon_{i2}$ 与过去无关）</li>
+<li>$E(Y_{i2}\varepsilon_{i2}) = \sigma_\varepsilon^2 \neq 0$（理由：$Y_{i2}$ 由 $\varepsilon_{i2}$ 生成——$Y_{i2} = \gamma Y_{i1} + \alpha_i + \varepsilon_{i2}$，所以 $Y_{i2}$ 与 $\varepsilon_{i2}$ 的协方差就是 $\text{Var}(\varepsilon_{i2}) = \sigma_\varepsilon^2$）</li>
+</ul>
+<strong>因此</strong>：$E(\Delta Y_{i2} \Delta \varepsilon_{i3}) = -\sigma_\varepsilon^2 \neq 0$——$\Delta Y_{i2}$ 与 $\Delta \varepsilon_{i3}$ 负相关！
+<strong>为什么内生性</strong>：组内离差让 $Y_{i2}$ 减去 $\bar{Y}_i$，而 $\bar{Y}_i$ 里包含 $\varepsilon_{i2}$；同时 $\Delta \varepsilon_{i3}$ 里包含 $-\varepsilon_{i2}$。两者都跟 $\varepsilon_{i2}$ 有关，所以它们相关——内生性就这么被制造出来了。
+<strong>偏误的大小</strong>：Nickell 偏误 = $O(1/T)$。$T=5$ 时 $\gamma$ 约被低估 20%，$T=30$ 时偏误不到 2%。但 Hansen 的结论是：<strong>无论 T 多大，FE 都不是一致估计量</strong>——只要偏误的阶数和一致估计需要的阶数矛盾。
+<h4>2. Anderson-Hsiao 估计量</h4>
+<strong>核心直觉</strong>：差分消除 $\alpha_i$ → 用 $Y_{it-2}$ 作为 $\Delta Y_{it-1}$ 的工具变量。
+验证外生性：
+$$E(Y_{it-2} \Delta \varepsilon_{it}) = E(Y_{it-2} \varepsilon_{it}) - E(Y_{it-2} \varepsilon_{it-1})$$
+如果 $\varepsilon_{it}$ 无自相关：两项都为 0（理由：$Y_{it-2}$ 只依赖 $\varepsilon_{it-2}$ 及更早的误差，与 $\varepsilon_{it}$ 和 $\varepsilon_{it-1}$ 都不相关）→ $Y_{it-2}$ 是有效 IV。
+如果 $\varepsilon_{it}$ 有一阶自相关：$E(Y_{it-2} \varepsilon_{it-1}) \neq 0$（因为 $Y_{it-2}$ 和 $\varepsilon_{it-1}$ 都包含以前的信息，且通过 $\varepsilon_{it-2}$ 和 $\varepsilon_{it-1}$ 的自相关产生关联）→ $Y_{it-2}$ 不再是有效 IV！
+<strong>弱 IV 问题的完整推导链</strong>：
+第一阶段回归：$\Delta Y_{it-1} = \alpha Y_{it-2} + \nu_{it}$
+$$\alpha = \frac{E(\Delta Y_{it-1} Y_{it-2})}{E(Y_{it-2}^2)}$$
+由 $Y_{it-1} = \gamma Y_{it-2} + \alpha_i + \varepsilon_{it-1}$，两边减 $Y_{it-2}$：
+$$\Delta Y_{it-1} = (\gamma-1)Y_{it-2} + \alpha_i + \varepsilon_{it-1}$$
+代入求 $\alpha$：
+$$\alpha = (\gamma-1) + \frac{E(Y_{it-2} \cdot \alpha_i)}{E(Y_{it-2}^2)}$$
+在平稳假设下：
+$$E(Y_{it-2} \cdot \alpha_i) = \frac{\sigma_\alpha^2}{1-\gamma}, \quad E(Y_{it-2}^2) = \frac{\sigma_\alpha^2}{(1-\gamma)^2} + \frac{\sigma_\varepsilon^2}{1-\gamma^2}$$
+最终：
+$$\alpha = (\gamma-1)\left(\frac{\tau}{\tau + \sigma_\alpha^2/\sigma_\varepsilon^2}\right), \quad \tau = \frac{1-\gamma}{1+\gamma}$$
+<strong>结论</strong>：$\gamma \to 1$ 或 $\sigma_\alpha^2/\sigma_\varepsilon^2$ 大 → $\alpha \approx 0$ → <strong>弱 IV</strong>。Anderson-Hsiao 在 $\gamma$ 接近 1 时（如 GDP、资产等高度持续变量）几乎完全失效。
+<h4>3. 差分 GMM（Arellano-Bond）</h4>
+<strong>核心思想</strong>：不同时间点有不同数量的有效工具变量——t=3 时只有 $Y_{i1}$ 能做 IV，t=4 时有 $(Y_{i1}, Y_{i2})$，...，把所有可用 IV 在 GMM 框架下一起使用。
+<strong>工具变量矩阵 $Z_i$（块对角结构）</strong>：
+$$Z_i = \begin{bmatrix}
+(Y_{i1}, \Delta X_{i3}') & \mathbf{0} & \dots & \mathbf{0} \\ \mathbf{0} & (Y_{i1}, Y_{i2}, \Delta X_{i4}') & \dots & \mathbf{0} \\ \vdots & \vdots & \ddots & \vdots \\ \mathbf{0} & \mathbf{0} & \dots & (Y_{i1}, \dots, Y_{i,T-2}, \Delta X_{iT}') \end{bmatrix}$$
+<strong>逐块解释</strong>：
+<ul><li>第 1 行对应 t=3 的方程：IV 只有 $Y_{i1}$（滞后一期）+ 严格外生的 $\Delta X_{i3}$</li>
+<li>第 2 行对应 t=4：IV 有 $(Y_{i1}, Y_{i2})$（滞后两期和一期的）+ $\Delta X_{i4}$</li>
+<li>最后一行对应 t=T：IV 有 $(Y_{i1}, \dots, Y_{i,T-2})$（全部可用滞后项）</li>
+<li>块对角的结构意味着不同方程的 IV 彼此隔离——每个方程只用自己时间点合法的 IV</li>
+</ul>
+IV 总数：$L = K(T-2) + (T-1)(T-2)/2$，以 $O(T^2)$ 增长。矩条件：$E(Z_i' \Delta \varepsilon_i) = \mathbf{0}$。
+<strong>一步 vs 两步 GMM</strong>：一步假设同方差（等价于 2SLS），两步用一步残差估计 S 得到更有效的权重。两步的标准误有下偏，需要 Windmeijer 小样本修正。
+<h4>4. 三类变量的处理差异</h4>
+<table>
+<tr>
+<th>变量类型</th>
+<th>条件</th>
+<th>$\Delta X_{it}$ 的 IV</th>
+<th>举例</th>
+</tr>
+<tr>
+<td>严格外生</td>
+<td>$E(X_{it}\varepsilon_{is})=0,\forall t,s$</td>
+<td>$\Delta X_{it}$ 自身</td>
+<td>性别（差分消掉），宏观经济指数</td>
+</tr>
+<tr>
+<td>前定</td>
+<td>$E(X_{it}\varepsilon_{is})=0, s \ge t$</td>
+<td>$X_{i,t-1}, X_{i,t-2}, \dots$</td>
+<td>工作周数（今年的周数可能与去年的冲击相关）</td>
+</tr>
+<tr>
+<td>内生</td>
+<td>$E(X_{it}\varepsilon_{it})\neq 0$</td>
+<td>$X_{i,t-2}, X_{i,t-3}, \dots$</td>
+<td>工会状态（和工资冲击同时决定）</td>
+</tr>
+</table>
+<strong>前定变量的验证</strong>：为什么 $\Delta X_{it}$ 内生？
+$$E(\Delta X_{it} \Delta \varepsilon_{it}) = E[(X_{it} - X_{i,t-1})(\varepsilon_{it} - \varepsilon_{i,t-1})] = -E(X_{it}\varepsilon_{i,t-1}) \neq 0$$
+因为 $X_{it}$ 可能与<strong>上一期</strong>的误差 $\varepsilon_{i,t-1}$ 相关（前定只保证了与当期及未来的误差不相关），所以差分后反而创造了相关性。
+<h4>5. 系统 GMM（Blundell-Bond）——解决弱 IV</h4>
+<strong>为什么需要系统 GMM</strong>：$\gamma \to 1$ 时，$Y_{it-2}$ 与 $\Delta Y_{it-1}$ 几乎不相关——差分 GMM 的 IV 变成弱 IV，估计极不稳定。
+<strong>核心创新</strong>：为<strong>水平方程</strong>（原始方程 $Y_{it} = \gamma Y_{it-1} + \alpha_i + \varepsilon_{it}$）也找 IV——用 $\Delta Y_{it-1}$ 作为 $Y_{it-1}$ 的 IV！
+<strong>为什么 $\Delta Y_{it-1}$ 可以做水平方程的 IV</strong>：
+<ul><li>相关性：$\Delta Y_{it-1}$ 与 $Y_{it-1}$ 显然相关（差分包含滞后值）</li>
+<li>外生性：需要 $E(\Delta Y_{it-1} \varepsilon_{it}) = 0$。在 $\varepsilon_{it}$ 无自相关时成立（$\Delta Y_{it-1}$ 只依赖 $\varepsilon_{it-1}$ 及更早的冲击，与当期 $\varepsilon_{it}$ 不相关）</li>
+<li>还需要的条件：$E(\Delta Y_{it-1} \alpha_i) = 0$——这要求初值条件成立：</li>
+</ul>$$E\left[\left(Y_{i1} - \frac{\alpha_i}{1-\gamma}\right)\alpha_i\right] = 0$$
+<strong>初值条件的直观</strong>：个体在起始时刻的观测值偏离其长期稳态（$\alpha_i/(1-\gamma)$）的程度，与个体的固定效应 $\alpha_i$ 不相关。用大白话说："起步比别人高"这件事，和"你的基本能力"没有系统关系。这在平稳过程的场景下近似成立。
+<strong>系统 GMM = 差分方程矩条件 + 水平方程矩条件 → 联合 GMM 估计</strong>。蒙特卡洛模拟一致表明：$\gamma \to 1$ 时，系统 GMM 远优于差分 GMM。
+<h4>6. 诊断检验——不可跳过</h4>
+<strong>自相关检验（estat abond）</strong>：
+<ul><li>$\varepsilon_{it}$ 无自相关 $\Rightarrow$ $\Delta\varepsilon_{it}$ 必有一阶自相关（$\text{Cov}(\Delta\varepsilon_{it}, \Delta\varepsilon_{it-1}) = -\sigma_\varepsilon^2 \neq 0$）</li>
+<li>所以<strong>一阶 p<0.05 是正常的</strong>，不说明 $\varepsilon_{it}$ 有自相关</li>
+<li><strong>二阶及以上 p>0.05</strong> → $\varepsilon_{it}$ 无自相关假设通过</li>
+<li>如果二阶 p<0.05 → $\varepsilon_{it}$ 有 MA(1) 自相关 → 需要用 xtdpd 或调整 IV 的滞后阶数</li>
+</ul>
+<strong>过度识别检验（Hansen/Sargan）</strong>：
+<ul><li>Sargan：同方差假设下有效；Hansen：异方差下也有效</li>
+<li>原假设：所有工具变量都是外生的</li>
+<li>p>0.05 → 通过检验，没有证据表明 IV 有问题</li>
+<li><strong>但如果 IV 数量很大（T 大），Hansen 检验的功效会下降</strong>——这是"多弱 IV"问题的另一面</li>
+</ul>
+<h4>7. 弱工具变量与多弱工具变量问题</h4>
+<ul><li><strong>弱 IV</strong>：$\gamma \to 1$ 或 $\sigma_\alpha^2/\sigma_\varepsilon^2$ 大 → 差分 GMM 的 IV 弱</li>
+<li><strong>多弱 IV</strong>：T 大时 IV 数 $O(T^2)$ → 用 <code>maxldep(#)</code> 限制滞后阶数</li>
+</ul>
+<h4>8. Stata 命令族</h4>
+<div class="stata-code">* 差分 GMM
+xtabond depvar indepvars, lags(#) twostep vce(robust) maxldep(#)
+
+* 系统 GMM
+xtdpdsys depvar indepvars, lags(#) twostep vce(robust) maxldep(#)
+
+* 允许 MA 误差
+xtdpd ...
+
+* 功能最强的非官方命令
+xtabond2 depvar L.depvar indepvars, gmmstyle(L.depvar, lag(2 4)) ///
+    ivstyle(indepvars) twostep robust
+
+* 诊断
+estat abond        // 自相关检验
+estat sargan       // 过度识别检验（同方差）</div>
+<h4>9. 完整综合案例解读</h4>
+Cameron & Trivedi 的工资动态面板（mus208psid.dta，595 户主 × 7 年）。模型含滞后两期工资 + 严格外生变量（occ, south, smsa, ind）+ 前定变量（wks）+ 内生变量（ms, union）。
+<strong>变量分类的思考</strong>：
+<ul><li>occ（职业类型）、south、smsa——相对稳定的结构特征，认为是严格外生</li>
+<li>wks（工作周数）——今年的周数受去年冲击影响，前定</li>
+<li>ms（婚姻状态）、union（工会）——与工资冲击同期相关，内生</li>
+</ul>
+差分 GMM 结果汇报后，estat abond 应该显示一阶显著（正常）、二阶不显著（无自相关通过）。
+<h4>10. 三类变量的 Stata 设定</h4>
+<div class="stata-code">* 严格外生变量 - 直接放在 indepvars 位置
+* 前定变量 - pre(varlist, lagstruct(lags, endlags))
+* 内生变量 - endogenous(varlist, lagstruct(lags, endlags))</div>
+<strong>这个发现改变了什么认知</strong>：动态面板让你认识到"时间"是一把双刃剑——过去的 Y 既是重要的解释变量（因为经济行为有惯性），又是内生性的来源（因为组内离差会让滞后期与差分误差相关）。GMM 通过巧妙利用"更远的过去"作为 IV，让你在不假设严格外生性的情况下估计动态效应。这是 21 世纪头二十年面板计量最重要的发展。【对应老师重点★1】
+---
+
+<h3>三、习题</h3>
+<strong>Q6.1</strong> ⭐ Nickell偏误的来源是什么？为什么T越大偏误越小，但Hansen仍然建议"无论T多大都不能在动态面板中使用FE"？
+<details><summary>参考答案要点</summary>
+<strong>Nickell偏误的来源</strong>：在动态面板 $Y_{it} = \gamma Y_{it-1} + \alpha_i + \varepsilon_{it}$ 中，组内离差变换后：
+$$\Delta Y_{i3} = \gamma \Delta Y_{i2} + \Delta\varepsilon_{i3}$$
+但 $\Delta Y_{i2} = Y_{i2} - Y_{i1}$ 包含 $\varepsilon_{i2}$，而 $\Delta\varepsilon_{i3} = \varepsilon_{i3} - \varepsilon_{i2}$ 也包含 $\varepsilon_{i2}$ → 解释变量与误差项相关 → 内生性。
+<strong>偏误阶数</strong>：Nickell (1981)证明偏误为 $O(1/T)$。T=5时偏误约-20%（低估 $\gamma$）。T→∞时偏误消失。
+<strong>为什么FE不能用</strong>：Hansen指出，Nickell偏误在 $\gamma$ 接近1时非常严重（此时 $Y_{it-1}$ 接近单位根），即使T=30也不能忽略。更重要的是，对于给定的面板T，偏误的方向和大小取决于 $\gamma$ 和 $\sigma_\alpha^2/\sigma_\varepsilon^2$——你无法知道偏误有多大。因此，"宁可用差分GMM（T固定时一致）也不用FE（T固定时不一致）"。
+</details>
+<strong>Q6.2</strong> ⭐ 差分GMM（Arellano-Bond）和系统GMM（Blundell-Bond）的核心区别是什么？系统GMM多了哪些矩条件？
+<details><summary>参考答案要点</summary>
+<strong>核心区别</strong>：
+<table>
+<tr>
+<th></th>
+<th>差分GMM</th>
+<th>系统GMM</th>
+</tr>
+<tr>
+<td>变换</td>
+<td>一阶差分（消$\alpha_i$）</td>
+<td>差分+水平方程联合</td>
+</tr>
+<tr>
+<td>差分方程IV</td>
+<td>$Y_{it-2}, Y_{it-3}, \dots$</td>
+<td>同差分GMM</td>
+</tr>
+<tr>
+<td>水平方程IV</td>
+<td>无</td>
+<td>$\Delta Y_{it-1}$ 作 $Y_{it-1}$ 的IV</td>
+</tr>
+<tr>
+<td>外生条件</td>
+<td>$\varepsilon_{it}$无自相关</td>
+<td>$\varepsilon_{it}$无自相关 + 初值条件</td>
+</tr>
+</table>
+<strong>系统GMM多出的矩条件</strong>：
+$$E[\Delta Y_{it-1}(Y_{it} - \gamma Y_{it-1} - \beta'X_{it})] = 0, \quad t = 3,\dots,T$$
+$$E[\Delta X_{it}(Y_{it} - \gamma Y_{it-1} - \beta'X_{it})] = 0$$
+第一个矩条件用"变化的滞后"作为"水平的变量"的IV——这个直觉很精妙：$\Delta Y_{it-1}$ 是"最近的增量"，与水平值 $Y_{it-1}$ 相关，但如果 $\varepsilon_{it}$ 无自相关，与当期误差 $\varepsilon_{it}$ 不相关。
+<strong>优劣</strong>：系统GMM在 $\gamma\to1$ 或 $\sigma_\alpha^2/\sigma_\varepsilon^2$ 大时显著优于差分GMM（缓解弱IV问题）。
+</details>
+<strong>Q6.3</strong> ⭐⭐ 推导 $E(\Delta Y_{it-1} \Delta\varepsilon_{it}) = -\sigma_\varepsilon^2$。详细展开每一步，解释为什么四项中只有一项非零。该非零项的经济含义是什么？
+<details><summary>参考答案要点</summary>
+<strong>推导</strong>：
+$$\begin{aligned}
+E(\Delta Y_{it-1} \Delta\varepsilon_{it}) &= E[(Y_{it-1} - Y_{it-2})(\varepsilon_{it} - \varepsilon_{it-1})] \\ &= E(Y_{it-1}\varepsilon_{it}) - E(Y_{it-1}\varepsilon_{it-1}) - E(Y_{it-2}\varepsilon_{it}) + E(Y_{it-2}\varepsilon_{it-1}) \end{aligned}$$
+<strong>逐项分析</strong>：
+<ul><li>$E(Y_{it-1}\varepsilon_{it}) = 0$：未来误差与过去数据不相关（forward uncorrelatedness）</li>
+<li>$E(Y_{it-2}\varepsilon_{it}) = 0$：同上</li>
+<li>$E(Y_{it-2}\varepsilon_{it-1}) = 0$：$Y_{it-2}$ 只含 $\varepsilon_{it-2}$ 及更早的误差，与 $\varepsilon_{it-1}$ 不相关（假设无自相关）</li>
+<li>$E(Y_{it-1}\varepsilon_{it-1}) = \sigma_\varepsilon^2$：$Y_{it-1}$ 直接包含 $\varepsilon_{it-1}$（因为 $Y_{it-1} = \gamma Y_{it-2} + \alpha_i + \varepsilon_{it-1}$），故 $E[(\alpha_i + \varepsilon_{it-1} + \dots)\varepsilon_{it-1}] = \sigma_\varepsilon^2$</li>
+</ul>
+<strong>结论</strong>：$E(\Delta Y_{it-1}\Delta\varepsilon_{it}) = 0 - \sigma_\varepsilon^2 - 0 + 0 = -\sigma_\varepsilon^2$
+<strong>经济含义</strong>：上一期收入的"增量"包含了上一期冲击的信息，而这个信息恰好与差分方程中误差项里的同一冲击相关——制造了内生性。这是"差分变换内生性"的核心机制。
+</details>
+<strong>Q6.4</strong> ⭐⭐ 为什么 $\varepsilon_{it}$ 无自相关是差分GMM一致性的必要条件？如果 $\varepsilon_{it}$ 存在一阶自相关（AR(1)），哪些工具变量会失效？如何调整工具变量选择？
+<details><summary>参考答案要点</summary>
+<strong>为什么是必要条件</strong>：
+差分GMM用 $Y_{it-2}$ 作为 $\Delta Y_{it-1}$ 的IV，需要：
+$$E(Y_{it-2}\Delta\varepsilon_{it}) = E(Y_{it-2}\varepsilon_{it}) - E(Y_{it-2}\varepsilon_{it-1}) = 0$$
+若 $\varepsilon_{it}$ 有AR(1)结构：$\varepsilon_{it} = \rho\varepsilon_{it-1} + \eta_{it}$，则 $Y_{it-2}$（通过 $\varepsilon_{it-2}$ 影响）与 $\varepsilon_{it-1}$ 相关 → $E(Y_{it-2}\varepsilon_{it-1}) \neq 0$ → 外生性条件不满足。
+失效的IV：
+<ul><li>$Y_{it-2}$ 不再有效（与 $\varepsilon_{it-1}$ 相关，这是AR(1)下最近的滞后期）</li>
+<li>更高阶 $Y_{it-3}$ 在AR(1)下仍有效（与 $\varepsilon_{it-1}$ 不相关）</li>
+<li>但如果AR(2)，$Y_{it-3}$ 也失效，需 $Y_{it-4}$</li>
+</ul>
+<strong>检验与调整</strong>：
+<ul><li><code>estat abond</code>：检验 $\Delta\varepsilon_{it}$ 的自相关。即使 $\varepsilon_{it}$ 无自相关，一阶p<0.05正常（因为差分制造了一阶自相关）。关键是二阶p>0.05。</li>
+<li>若AR(1)成立：在<code>xtabond</code>中增加<code>lags(#)</code>（如从2改为3）→ 使模型中包含更高阶滞后，保证IV有效。</li>
+<li>或用<code>xtdpd</code>命令允许MA误差结构。</li>
+</ul>
+</details>
+<strong>Q6.5</strong> ⭐⭐⭐ 结合Blundell & Bond (1998, "Initial Conditions and Moment Restrictions in Dynamic Panel Data Models") 的蒙特卡洛结果，比较差分GMM和系统GMM在以下情况下的表现：(1) $\gamma=0.5$, $\sigma_\alpha^2/\sigma_\varepsilon^2=1$；(2) $\gamma=0.9$, $\sigma_\alpha^2/\sigma_\varepsilon^2=1$；(3) $\gamma=0.5$, $\sigma_\alpha^2/\sigma_\varepsilon^2=4$；(4) $\gamma=0.9$, $\sigma_\alpha^2/\sigma_\varepsilon^2=4$。说明系统GMM在哪种情况下优势最明显，为什么。
+<details><summary>参考答案要点</summary>
+基于Blundell & Bond (1998)的模拟结果：
+(1) <strong>$\gamma=0.5$, $\sigma_\alpha^2/\sigma_\varepsilon^2=1$</strong>：两种方法表现都较好。差分GMM偏误小，系统GMM略有效率优势。这是"容易"的情况——$\gamma$不大，个体异质性也不强。
+(2) <strong>$\gamma=0.9$, $\sigma_\alpha^2/\sigma_\varepsilon^2=1$</strong>：差分GMM出现较大的向下偏误（$\gamma$接近1 → 弱IV），系统GMM表现显著更好——偏误和RMSE都远小于差分GMM。这是系统GMM发挥优势的典型场景。
+(3) <strong>$\gamma=0.5$, $\sigma_\alpha^2/\sigma_\varepsilon^2=4$</strong>：差分GMM偏误增大（教材(8.36)：$\alpha$的分母含$\sigma_\alpha^2/\sigma_\varepsilon^2$，该比值越大→$\alpha$越小→弱IV）。系统GMM利用水平矩条件缓解了弱IV，偏误更小。
+(4) <strong>$\gamma=0.9$, $\sigma_\alpha^2/\sigma_\varepsilon^2=4$</strong>：最困难的情况。差分GMM严重不一致（$\gamma$→1和$\sigma_\alpha^2/\sigma_\varepsilon^2$大同时作用→极端弱IV），系统GMM虽也有偏误但显著改善。<strong>系统GMM优势在此最明显</strong>。
+<strong>核心机制</strong>：
+<ul><li>差分GMM第一阶段的系数 $\alpha = (\gamma-1)\frac{\tau}{\tau + \sigma_\alpha^2/\sigma_\varepsilon^2}$（教材(8.36)）</li>
+<li>$\gamma \to 1$ → $\tau = (1-\gamma)/(1+\gamma) \to 0$ → $\alpha \to 0$ → 弱IV</li>
+<li>$\sigma_\alpha^2/\sigma_\varepsilon^2$ 大 → 分母大 → $\alpha \to 0$ → 弱IV</li>
+<li>系统GMM的水平矩条件绕过了这一问题——$\Delta Y_{it-1}$与$Y_{it-1}$的相关性不依赖$\gamma$和$\sigma_\alpha^2/\sigma_\varepsilon^2$。</li>
+</ul>
+<strong>实证建议</strong>：如果 $\hat{\gamma} > 0.8$，应优先使用系统GMM，并报告一步和两步结果以及Hansen检验。
+</details>
+<strong>Q6.6</strong> ⭐⭐⭐ 使用<code>xtabond2</code>复现教材例8.2的工资动态面板分析（mus208psid.dta）。完成：(1) 写出完整的Stata程序；(2) 讨论三类变量（严格外生/前定/内生）的设定依据；(3) 解读<code>estat abond</code>和Hansen检验的结果；(4) 比较差分GMM和系统GMM的估计结果有何差异，解释差异的来源。
+<details><summary>参考答案要点</summary>
+(1) <strong>Stata程序</strong>（差分GMM）：
+<div class="stata-code">use mus208psid.dta, clear
+xtset id year
+
+* 差分GMM（两步+Windmeijer修正）
+xtabond2 lwage L.lwage L2.lwage occ south smsa ind ///
+    wks L.wks ms union, ///
+    gmmstyle(lwage, lag(2 4)) ///
+    gmmstyle(wks ms union, lag(2 3)) ///
+    ivstyle(occ south smsa ind) ///
+    noleveleq twostep robust
+estat abond</div>
+<strong>系统GMM</strong>：
+<div class="stata-code">xtabond2 lwage L.lwage L2.lwage occ south smsa ind ///
+    wks L.wks ms union, ///
+    gmmstyle(lwage, lag(2 4)) ///
+    gmmstyle(wks ms union, lag(2 3)) ///
+    ivstyle(occ south smsa ind) ///
+    twostep robust
+estat abond</div>
+(2) <strong>变量分类依据</strong>：
+<ul><li><strong>严格外生</strong>（occ, south, smsa, ind）：职业类型、地域等结构性变量——不太可能受工资冲击的反向影响。满足 $E(X_{it}\varepsilon_{is})=0, \forall t,s$。</li>
+<li><strong>前定</strong>（wks）：上一年工作周数——可能受上期工资冲击影响（$E(wks_{it}\varepsilon_{it-1})\neq0$），但不与当期和未来误差相关（$E(wks_{it}\varepsilon_{it})=0$）。</li>
+<li><strong>内生</strong>（ms, union）：婚姻状态和工会身份——可能与当期工资冲击同时决定，甚至存在反向因果。$E(X_{it}\varepsilon_{it}) \neq 0$。</li>
+</ul>
+(3) <strong>诊断检验解读</strong>：
+<ul><li><code>estat abond</code>：一阶p≈0.00（正常，差分制造一阶自相关），二阶p>0.05（关键——不拒绝"$\varepsilon_{it}$无二阶自相关"的$H_0$）。</li>
+<li>Hansen检验p>0.05：不拒绝"工具变量整体有效"的$H_0$。注意：如果p接近1.0（>0.9），可能提示"工具变量太多"导致检验效力弱——考虑用<code>laglimit</code>限制IV数量。</li>
+<li>C检验（如报告）：检验子集IV的有效性。</li>
+</ul>
+(4) <strong>差分vs系统GMM差异</strong>：
+<ul><li>通常系统GMM的$\hat{\gamma}$更大（因为缓解了差分GMM的向下偏误）。</li>
+<li>系统GMM的标准误通常更小（更多矩条件→更有效率）。</li>
+<li>差异来源：如果$\gamma$接近1或$\sigma_\alpha^2/\sigma_\varepsilon^2$很大，差分GMM偏误严重→两种方法差异大。如果差异小，说明弱IV问题不严重。</li>
+<li><strong>注意</strong>：如果两种方法结果差异大，应该更信任系统GMM（假设检验通过）——并讨论原因。</li>
+</ul>
+</details>
+---
+
+</section>
+<section class="section-card" id="sec7">
+<h2><span class="sec-num">§7</span>双重差分（DID）：利用时间和组别差异识别政策效应（教材 §8.7）<span class="imp imp-3">★★★ 必考大题（老师重点★2 和 ★4 的交汇，近年方法论发展最快的领域）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：CIA 不成立时（存在不可观测混杂），回归调整和匹配都不可用。DID 利用面板数据的时间维度——"处理组政策前后的差异"减去"控制组前后的差异"——消除不随时间变化的不可观测因素。</li>
+<li><strong>为什么需要它</strong>：政策评估的"标准方法"。从 Card-Krueger（1994）的最低工资研究到现代的交叠 DID，DID 是实证微观经济学的核心工具。</li>
+</ul><li><strong>在谱系中的位置</strong>：CIA 不成立 → 需要面板 + 平行趋势假设 → $2\times 2$ DID → TWFE → 多期多组 DID → Bacon 分解揭示 TWFE 问题 → CSDID/Sun-Abraham 等现代解法。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★2，★4，★5】
+<h4>1. $2\times 2$ 型 DID 的基本逻辑 —— Card-Krueger 案例</h4>
+1992 年 11 月，美国新泽西州（NJ）将最低工资从 $4.25 提高到 $5.05，邻近的宾夕法尼亚州（PA）维持 $4.25。Card 和 Krueger 想研究：提高最低工资会不会减少就业？
+<strong>简单的想法</strong>：比较 NJ 州政策前后快餐店的员工数量变化。问题是——即使没有政策，就业也可能因为圣诞季等原因而变化（时间趋势）。
+<strong>DID 的解法</strong>：找一个"没有政策但其他方面相似的"参照组（PA 州），用 PA 州的变化来估计时间趋势，然后从 NJ 州的变化中减掉：
+$$\hat{\delta} = [\bar{Y}_{NJ}^{post} - \bar{Y}_{NJ}^{pre}] - [\bar{Y}_{PA}^{post} - \bar{Y}_{PA}^{pre}]$$
+<strong>逐项解释</strong>：
+<ul><li>第一个 $[\cdot]$：NJ 州的变化 = <strong>政策效应 + 时间趋势</strong></li>
+<li>第二个 $[\cdot]$：PA 州的变化 = <strong>纯时间趋势</strong>（因为没有政策变化）</li>
+<li>相减 = 净政策效应（如果平行趋势假设成立）</li>
+</ul>
+<h4>2. 从潜在结果角度理解 DID——不跳步分解</h4>
+用潜在结果写出 DID 参数：
+$$\delta = [E(Y_{NJ} \mid \text{Post}) - E(Y_{NJ} \mid \text{Pre})] - [E(Y_{PA} \mid \text{Post}) - E(Y_{PA} \mid \text{Pre})]$$
+<strong>第 1 步</strong>：将观测结果替换为潜在结果（理由：NJ 在处置后为 $Y_{NJ}^1$，其余为 $Y^0$）：
+$$\delta = [E(Y_{NJ}^1 \mid \text{Post}) - E(Y_{NJ}^0 \mid \text{Pre})] - [E(Y_{PA}^0 \mid \text{Post}) - E(Y_{PA}^0 \mid \text{Pre})]$$
+<strong>第 2 步</strong>：加项减项 $E(Y_{NJ}^0 \mid \text{Post})$（理由：把第一个中括号拆成 ATET + 时间趋势）：
+$$\delta = \underbrace{[E(Y_{NJ}^1 \mid \text{Post}) - E(Y_{NJ}^0 \mid \text{Post})]}_{\text{ATET}} + \underbrace{[E(Y_{NJ}^0 \mid \text{Post}) - E(Y_{NJ}^0 \mid \text{Pre})]}_{\text{NJ的时间趋势}} - \underbrace{[E(Y_{PA}^0 \mid \text{Post}) - E(Y_{PA}^0 \mid \text{Pre})]}_{\text{PA的时间趋势}}$$
+<strong>第 3 步</strong>：如果<strong>平行趋势假设</strong>成立，即"没有政策的话，NJ 的时间趋势 = PA 的时间趋势"：
+$$E(Y_{NJ}^0 \mid \text{Post}) - E(Y_{NJ}^0 \mid \text{Pre}) = E(Y_{PA}^0 \mid \text{Post}) - E(Y_{PA}^0 \mid \text{Pre})$$
+那么后两项抵消，$\delta = \text{ATET}$。
+<h4>3. DID 的回归实现——TWFE 验证</h4>
+回归方程：
+$$Y_{it} = \alpha + \gamma \cdot NJ_i + \lambda \cdot D_t + \delta \cdot (NJ_i \times D_t) + \varepsilon_{it}$$
+<strong>四种情况的条件期望</strong>——不跳步计算：
+<table>
+<tr>
+<th>情况</th>
+<th>$E(Y_{it}\mid...)$</th>
+<th>参数解释</th>
+</tr>
+<tr>
+<td>PA, 调整前 ($NJ=0, D=0$)</td>
+<td>$\alpha$</td>
+<td>PA基线</td>
+</tr>
+<tr>
+<td>PA, 调整后 ($NJ=0, D=1$)</td>
+<td>$\alpha + \lambda$</td>
+<td>= 基线 + 时间趋势</td>
+</tr>
+<tr>
+<td>NJ, 调整前 ($NJ=1, D=0$)</td>
+<td>$\alpha + \gamma$</td>
+<td>= 基线 + NJ固有差异</td>
+</tr>
+<tr>
+<td>NJ, 调整后 ($NJ=1, D=1$)</td>
+<td>$\alpha + \gamma + \lambda + \delta$</td>
+<td>= 基线 + NJ差异 + 趋势 + 政策</td>
+</tr>
+</table>
+DID 估计量：
+$$[(\alpha+\gamma+\lambda+\delta) - (\alpha+\gamma)] - [(\alpha+\lambda) - \alpha] = [\lambda+\delta] - [\lambda] = \delta$$
+<strong>验证成功</strong>：回归中的交互项系数 $\delta$ 恰好等于 $2\times 2$ DID 估计量。
+Card-Krueger 的 Stata 复现结果：$\hat{\delta} = 2.75$（标准误 1.34），在 5% 水平显著——最低工资提高<strong>没有减少</strong>就业，反而略有增加。这个结论颠覆了传统经济学的预测。
+<h4>4. TWFE（双向固定效应模型）</h4>
+更一般的设定：
+$$Y_{it} = \delta \cdot D_{it} + \alpha_i + \lambda_t + \varepsilon_{it}$$
+其中 $D_{it} = NJ_i \times D_t$（对 Card-Krueger 特例）。这个形式比 (8.41) 更容易推广到多期多处置对象——只要定义了 $D_{it}$（个体 $i$ 在 $t$ 时刻是否被处置），加入个体固定效应 $\alpha_i$ 和时间固定效应 $\lambda_t$，就能估计处置效应。
+可以加入时变控制变量 $X_{it}$ 来提高精度和控制时变混杂。<strong>但要小心</strong>：$X_{it}$ 本身不能是处置的结果（不能是"坏控制"），否则会引入偏误。
+<h4>5. 安慰剂检验——DID 的体检</h4>
+平行趋势假设不可直接检验（因为反事实 $E(Y_{NJ}^0 \mid \text{Post})$ 观测不到），但可以用安慰剂检验来间接评估。
+<strong>时间安慰剂</strong>：把政策时间前移到"真政策"之前的某个时刻 → 如果 DID 估计显著，说明处理组和控制组在政策前就已经有不同趋势 → 平行趋势可能不成立。用 <code>didplacebo</code> 实现。
+<strong>个体安慰剂</strong>：保持真实政策时间，随机打乱处置状态 → 做 500 次"假 DID" → 真实估计应落在分布的尾部（明显不同于随机分布的极端值）。如果真实估计不突出，说明效果可能是噪声。
+<strong>混合安慰剂</strong>：同时随机化时间和个体。
+<h4>6. 事件研究——动态 DID</h4>
+$$Y_{it} = \alpha_i + \lambda_t + \sum_{\ell=-m}^{-1} \delta_\ell^{lead} D_{it}^\ell + \sum_{\ell=1}^{q} \delta_\ell^{lag} D_{it}^\ell + \varepsilon_{it}$$
+两个作用：
+<ul><li>$\delta_\ell^{lead}$（处理前系数）≈ 0 → 平行趋势的间接证据</li>
+<li>$\delta_\ell^{lag}$ 捕捉处置效应的动态演化（是逐渐增强还是衰减？）</li>
+</ul>
+<code>estat grangerplot</code> 可视化。
+<h4>7. DDD（三重差分）</h4>
+引入第三层差分——比如，除了 NJ vs PA、前后时间，再加上低收入 vs 高收入人群。DDD = 低收入的 DID 减去高收入的 DID：
+$$\beta_7 = \delta_{L=1}^{2\times 2} - \delta_{L=0}^{2\times 2}$$
+<strong>逻辑</strong>：如果政策只应该影响低收入人群，那么以高收入人群为样本做的 DID 应该不显著。如果它显著了，说明你的 DID 设计可能有问题。
+<h4>8. 交叠 DID 与 Bacon 分解</h4>
+<strong>核心问题</strong>：不同个体在不同时间开始接受处置时，TWFE 的 $\hat{\delta}^{DD}$ 是什么？
+<strong>Bacon 分解定理的回答</strong>：$\hat{\delta}^{DD}$ = 所有可能的 $2\times 2$ DID 的加权平均。
+<strong>四种 $2\times 2$ DID 类型</strong>（图 8.6）：
+<table>
+<tr>
+<th>类型</th>
+<th>处理组</th>
+<th>控制组</th>
+<th>时间区间</th>
+<th>可信度</th>
+</tr>
+<tr>
+<td>(a) 早处置 vs 从未处置</td>
+<td>k</td>
+<td>U</td>
+<td>全部时期</td>
+<td>✅ 干净比较</td>
+</tr>
+<tr>
+<td>(b) 晚处置 vs 从未处置</td>
+<td>$\ell$</td>
+<td>U</td>
+<td>全部时期</td>
+<td>✅ 干净比较</td>
+</tr>
+<tr>
+<td>(c) 早处置 vs 晚处置（晚未处置时）</td>
+<td>k</td>
+<td>$\ell$</td>
+<td>[1, $\ell$)</td>
+<td>⚠️ 需要平行趋势</td>
+</tr>
+<tr>
+<td>(d) 晚处置 vs 早处置（早已处置后）</td>
+<td>$\ell$</td>
+<td>k</td>
+<td>(k, T]</td>
+<td>❌ <strong>禁止比较</strong></td>
+</tr>
+</table>
+<strong>为什么 (d) 是禁止的</strong>：此时"控制组"k 已经处于处置状态了！你把一个已经被处置的组当作"控制组"——这相当于用"处置后的变化"减去"处置后的变化"，结果毫无意义。
+<strong>Bacon 权重的公式结构</strong>：
+$$s = \frac{(\text{有效样本占比})^2 \times (\text{有效样本中处置的样本方差})}{\text{处置变量的样本总方差}}$$
+<strong>直观</strong>：$\bar{D}_k(1-\bar{D}_k)$ 最大当 $\bar{D}_k=0.5$ → 处置发生在 T/2 时权重最大。处置发生得太早或太晚的群组，权重反而小——因为处置变量的方差小（几乎全是 1 或几乎全是 0）。
+<h4>9. $\hat{\delta}^{DD}$ 的概率极限分解（8.47）</h4>
+$$\underset{N \to \infty}{\text{plim}} \hat{\delta}^{DD} = \text{VWATET} + \text{VWCT} - \Delta\text{ATET}$$
+三项含义：
+<ul><li><strong>VWATET</strong>（方差加权 ATET）：各种 ATET 按处置方差加权的平均——<strong>这是你想估计的东西</strong></li>
+<li><strong>VWCT</strong>（方差加权共同趋势）：各种非平行趋势偏误的加权平均——平行趋势成立时 = 0</li>
+<li><strong>$\Delta\text{ATET}$</strong>（处置效应时变偏误）：来自(d)类型比较的偏误——即使 VWCT=0，如果组内处置效应随时间变化（$\Delta\text{ATET} \neq 0$），TWFE 也有偏！</li>
+</ul>
+<strong>关键洞察</strong>：即使平行趋势成立，如果处置效应不是常数（比如政策效果随时间增强），TWFE 的 $\hat{\delta}^{DD}$ 也不一致！这就是为什么交叠 DID 中需要谨慎使用传统 TWFE 的原因。
+<h4>10. De Chaisemartin & d'Haultfœuille 分解——"负权重"问题</h4>
+TWFE 估计量可以写成：
+$$E[\hat{\delta}^{DD}] = E\left[\sum_{(i,t): D_{it}=1} w_{it} \cdot \Delta_{i,t}^g\right]$$
+<strong>问题</strong>：$w_{it}$ 可能取<strong>负值</strong>——即使所有 $\Delta_{i,t}^g > 0$（政策对所有人在所有时间都是正面影响），$\hat{\delta}^{DD}$ 也可能 < 0！用 <code>twowayfeweights</code> 命令可以诊断负权重问题。
+<h4>11. Sun & Abraham 事件研究的"污染"问题</h4>
+TWFE 估计的 $\hat{\delta}_\ell$（处置后 $\ell$ 期的效应）被<strong>其他期的效应"污染"</strong>：
+$$E[\hat{\delta}_\ell] = E\left[\sum_g w_{g,\ell} \cdot \Delta_{g,\ell} + \sum_{\ell' \neq \ell} \sum_g w_{g,\ell'} \cdot \Delta_{g,\ell'}\right]$$
+第二项就是"污染"——你以为你在估计 $\ell$ 期的效应，实际上你的估计量里混入了 $\ell'$ 期的效应。这会导致：即使平行趋势成立，$\hat{\delta}_\ell$ 也可能显著（假阳性）；即使 $\hat{\delta}_\ell$ 不显著，平行趋势也可能不成立（假阴性）。
+<h4>12. 现代 DID 方法——Callaway & Sant'Anna 等</h4>
+<strong>一句话核心思想</strong>：只做"干净"的比较——用从未处置组或尚未处置组作为控制组，避免"禁止的比较"。
+CSDID 的 ATET 定义：
+$$\text{ATET}(g, t) = E[Y_{it} - Y_{i,g-1} \mid G_i = g] - E[Y_{it} - Y_{i,g-1} \mid G_i = g'], \quad g' > t \ge g$$
+控制组 $g'$ 在 t 时刻<strong>尚未</strong>接受处置——这是一个干净的比较。
+<strong>Stata 命令</strong>：<code>csdid</code>（Callaway & Sant'Anna）、<code>did_multiplegt</code>（De Chaisemartin & d'Haultfœuille）、<code>eventstudyinteract</code>（Sun & Abraham）。
+<strong>综合案例</strong>：美国 37 个州先后引入无过错离婚法，Stevenson & Wolfers 用 TWFE 估计对女性自杀的影响。Bacon 分解显示，"晚处置 vs 早处置"的对比获得了 26.5% 的权重——这正是禁止的比较。现代 DID 方法修正后，结论可能变化。
+<strong>这个发现改变了什么认知</strong>：DID 不是你以前以为的"两期两组的简单方法"。在交叠处置的情况下，TWFE 的估计量是一个复杂的加权平均，而且有些权重是负的。过去几十年的实证研究如果使用了 TWFE 处理交叠 DID，其结论可能需要重新审视。2020-2023 年的方法论革命让 DID 从"最直观的因果推断方法"变成了"需要最小心实施的方法"。【对应老师重点★4】
+---
+
+<h3>三、习题</h3>
+<strong>Q7.1</strong> ⭐ DID的平行趋势假设（parallel trends assumption）是什么？为什么该假设不可直接检验？常用的间接检验方法有哪些？
+<details><summary>参考答案要点</summary>
+<strong>平行趋势假设</strong>：在不存在政策处置的情况下，处理组和控制组的结果变量具有相同的时间变化趋势。数学上：
+$$\Delta Y_{treat}^0 = \Delta Y_{control}^0$$
+即教材(8.40)中后两个差分相互抵消。
+<strong>不可直接检验的原因</strong>：平行趋势涉及处理组的反事实路径 $E(Y_{treat}^0|Post)$——这是根本无法观测的（fundamental problem of causal inference）。我们只能观测到处理组接受处置后的实际结果 $E(Y_{treat}^1|Post)$，永远不知道如果它没有接受处置会怎样。
+<strong>间接检验方法</strong>（不可能直接检验，但可找证据支持）： 1. <strong>事件研究</strong>：检验处置前各期的系数是否为0（pretrends test）。如果处置前趋势平行，则处置后也更可能平行。 2. <strong>时间安慰剂</strong>：假设政策在更早的时间点发生（如提前3期），"假政策"应该不显著。 3. <strong>个体安慰剂</strong>：随机打乱处置状态做置换检验——真实估计应落在分布尾部。 4. <strong>使用替代控制组</strong>：换一个理论上不受政策影响但趋势相似的对照组。 5. <strong>加入个体特定线性趋势</strong>：如果加入趋势前后$\hat{\delta}$变化不大→平行趋势更可信。
+</details>
+<strong>Q7.2</strong> ⭐ 安慰剂检验（placebo test）有哪几种形式？各自检验什么假设？在什么情况下即使通过安慰剂检验，DID的因果解释仍然存疑？
+<details><summary>参考答案要点</summary>
+<strong>三种形式</strong>（教材§8.7.1）：
+<table>
+<tr>
+<th>类型</th>
+<th>设计</th>
+<th>检验的假设</th>
+<th>Stata命令</th>
+</tr>
+<tr>
+<td>时间安慰剂</td>
+<td>假设政策提前发生</td>
+<td>处置前趋势平行</td>
+<td><code>didplacebo, pbotime(1(1)3)</code></td>
+</tr>
+<tr>
+<td>个体安慰剂</td>
+<td>随机分配处置状态（500次）</td>
+<td>处置效应非偶然</td>
+<td><code>didplacebo, pbounit</code></td>
+</tr>
+<tr>
+<td>混合安慰剂</td>
+<td>同时随机化时间和个体</td>
+<td>综合稳健性</td>
+<td><code>didplacebo, pbomix(1)</code></td>
+</tr>
+</table>
+<strong>即使通过安慰剂检验仍存疑的情况</strong>： 1. <strong>平行趋势假设本身不可检验</strong>：所有安慰剂检验都是间接证据——处置前平行不代表处置后平行（如果存在时变不可观测混杂）。 2. <strong>预期效应</strong>：如果个体预知政策并提前调整行为——处置前趋势已有分歧，但安慰剂检验（前移政策时间）仍然不显著。 3. <strong>低统计效力</strong>：样本量小可能导致安慰剂检验"不显著"仅仅因为标准误大。 4. <strong>溢出效应（SUTVA violation）</strong>：控制组受到政策影响——安慰剂检验无法检测。
+</details>
+<strong>Q7.3</strong> ⭐⭐ 在Bacon分解中，"禁止比较"（forbidden comparison）是指什么？为什么TWFE在处理异时处置（staggered adoption）时会出现负权重？
+<details><summary>参考答案要点</summary>
+<strong>"禁止比较"</strong>（Goodman-Bacon, 2021）：用"已接受处置的组"作为"正在接受处置的组"的控制组。
+具体来说（Bacon分解中的第四种$2\times2$ DID）：晚处置组（$\ell$）与早处置组（$k$）比较时，用的是早处置组已接受处置后的数据作为"控制"——但这个"控制组"本身已被处置！这是$\hat{\delta}_{k\ell}^{2\times2,\ell}$的问题。
+<strong>为什么会出问题</strong>：
+$$\delta_{k\ell}^{2\times2,\ell} = ATET_\ell^{post} + \text{非平行趋势偏误} - [ATET_k^{post(\ell)} - ATET_k^{mid(k,\ell)}]$$
+最后一项是"早处置组的处置效应在后期减去前期的差异"——即使没有非平行趋势偏误，只要早处置组的处置效应随时间变化（$\Delta ATET \neq 0$），这个估计量就不是单纯的ATET。
+<strong>负权重的来源</strong>（De Chaisemartin & d'Haultfoeuille, 2020）：TWFE估计量是$w_{it} \cdot \Delta_{it}^g$的加权平均，其中$w_{it}$来自回归$D_{it} = \alpha_i + \lambda_t + \varepsilon_{it}$的残差。当"已处置组被用作控制组"时，某些$w_{it}$为负——即使所有$\Delta_{it}^g > 0$，加权平均也可能$<0$。
+<strong>教材(8.47)的结论</strong>：$\text{plim }\hat{\delta}^{DD} = VWATET + VWCT - \Delta ATET$。即使VWCT=0，若$\Delta ATET \neq 0$（组内处置效应时变），TWFE就是有偏的。
+</details>
+<strong>Q7.4</strong> ⭐⭐ DDD（三重差分）在什么情况下使用？推导 $\beta_7 = \delta_t - \delta_c$ 的含义，并说明为什么 $\beta_7 = \delta_{L=1}^{2\times2} - \delta_{L=0}^{2\times2}$ 可以理解为一种安慰剂分析。
+<details><summary>参考答案要点</summary>
+<strong>使用场景</strong>： 1. 存在多个对照维度时——如州$\times$收入水平 2. 怀疑$2\times2$ DID的平行趋势假设不成立——引入额外的差分维度 3. "如果$2\times2$ DID的逻辑成立，那么在不该有处置效应的子样本中应该检测不到效应"——DDD将这一直觉形式化
+<strong>推导 $\beta_7 = \delta_t - \delta_c$</strong>（教材(8.44)）：
+<ul><li>$\delta_t$：NJ州低收入vs高收入员工的DID = 州内处理组的变化减去州内对照组的变化</li>
+<li>$\delta_c$：PA州低收入vs高收入员工的DID = 控制州内处理组的变化减去控制州内对照组的变化</li>
+<li>$\beta_7 = \delta_t - \delta_c$：NJ的"DID"减去PA的"DID"</li>
+</ul>
+<strong>理解为安慰剂分析</strong>（教材(8.45)）：
+$$\beta_7 = \delta_{L=1}^{2\times2} - \delta_{L=0}^{2\times2}$$
+在高收入群体（L=0）中，最低工资政策不应该有影响 → $\delta_{L=0}^{2\times2}$ 应该≈0。如果它显著不为0，说明$2\times2$ DID的识别假设可能不成立（存在未被差分消去的混杂）。如果$\beta_7$与$\delta_{L=1}^{2\times2}$差异很大，说明单纯的DID分析高估或低估了真实效应。
+<strong>表8.4的直观</strong>：DDD = 三重差分 = 差分的差分再差分。如果"平行趋势"只在一重差分层面成立，DDD比DID更稳健（因为用了更多的差分来消除不同类型的趋势）。
+</details>
+<strong>Q7.5</strong> ⭐⭐⭐ 选取一篇近年发表的使用交叠DID的实证论文（如利用中国低碳试点、自贸区设立、环境规制等政策背景的文章），用Bacon分解的逻辑分析：(1) 识别论文中的几种$2\times2$ DID对比类型；(2) 哪些对比可能涉及"禁止比较"？(3) 如果存在禁止比较，偏误的方向可能是正的还是负的？为什么？(4) 如果改用Callaway-Sant'Anna方法，预期结果会有什么变化？
+<details><summary>参考答案要点</summary>
+示例分析框架（以中国低碳城市试点为例，三批：2010/2012/2017）：
+(1) <strong>四种$2\times2$ DID对比</strong>：
+<ul><li>第一批试点地 vs 从未试点地（$\hat{\delta}_{kU}$）</li>
+<li>第二批试点地 vs 从未试点地（$\hat{\delta}_{\ell U}$）</li>
+<li>第一批试点地 vs 第二批试点地（试点前）（$\hat{\delta}_{k\ell}^k$）</li>
+<li>第二批试点地 vs 第一批试点地（第一批已试点后）（$\hat{\delta}_{k\ell}^\ell$）← <strong>禁止比较</strong></li>
+</ul>
+(2) <strong>禁止比较</strong>：第四种——用"已经试点多年的第一批城市"作为"正在试点的第二批城市"的对照组。这就等于假设"第一批城市的试点效应在2012-2017年间不再变化"——这在经济上极不可能。
+(3) <strong>偏误方向</strong>：
+<ul><li>如果政策效应随时间递减（常见于试点→推广的模式），第一批在后期效应变小→作为"控制"时拉高了基准 → $\hat{\delta}_{k\ell}^\ell$ 向下偏误 → 整体TWFE低估真实效应。</li>
+<li>如果政策效应随时间递增（如累积学习效应），则TWFE可能高估。</li>
+<li>教材(8.47)：$\text{plim }\hat{\delta}^{DD} = VWATET - \Delta ATET$。如果 $\Delta ATET > 0$（处效效应随时间增强），则TWFE低估。</li>
+</ul>
+(4) <strong>改用CS方法</strong>：
+<ul><li>CS方法只用从未处置组或尚未处置组作为对照 → 避免"禁止比较"</li>
+<li>分群组报告 $\widehat{ATET}(g, t)$ → 可以直观看到效应异质性</li>
+<li>预期：CS估计的ATET可能大于TWFE（如果禁止比较导致向下偏误），且动态效应模式更清晰。</li>
+</ul>
+<strong>建议阅读</strong>：de Chaisemartin, C. & d'Haultfoeuille, X. (2020). Two-way fixed effects estimators with heterogeneous treatment effects. *AER*.
+</details>
+<strong>Q7.6</strong> ⭐⭐⭐ 比较Callaway-Sant'Anna (2021) 和 Sun-Abraham (2021) 两种异质稳健DID估计量：(1) 两者在定义 $\widehat{ATET}(g, t)$ 时有什么不同？(2) 对"从未处置组"的依赖有何差异？(3) 在处理协变量和加权方式上有何不同？(4) 在实证应用中应如何选择？
+<details><summary>参考答案要点</summary>
+(1) <strong>ATET(g,t)定义</strong>：
+<ul><li><strong>CS</strong>：$\widehat{ATET}(g,t) = \frac{1}{N_g}\sum_{i:G_i=g}[Y_{it}-Y_{i,g-1}] - \frac{1}{N_{\mathcal{G}_{comp}}}\sum_{i:G_i\in\mathcal{G}_{comp}}[Y_{it}-Y_{i,g-1}]$</li>
+</ul>  - 两种对照选择：从未处置组($\mathcal{G}_{comp}=\{\infty\}$)或尚未处置组($\mathcal{G}_{comp}=\{g':g'>t\}$)
+<ul><li><strong>SA</strong>：类似但 $\mathcal{G}_{comp}$ 优先用从未处置组，若无则用最后处置的组（$\max_i G_i$）</li>
+</ul>
+(2) <strong>对从未处置组的依赖</strong>：
+<ul><li><strong>CS</strong>：如果使用"notyet"选项（对照=从未处置 + 尚未处置），不必须有从未处置组。但如果只有尚未处置组，T的末端（所有组都已处置后）无法估计ATET(g,t)。</li>
+<li><strong>SA</strong>：如果没有从未处置组，用最后被处置的组作为对照——但此时对照组的处置前数据可能很少。</li>
+</ul>
+(3) <strong>协变量与加权</strong>：
+<ul><li><strong>CS</strong>：允许引入协变量通过IPW（逆概率加权）或回归调整。提供了多种加权方式（等权、按群组大小加权等）。有<code>agg(simple)</code>和<code>agg(event)</code>等汇总选项。</li>
+<li><strong>SA</strong>：通过标准事件研究交互项框架。更自然地在regression框架下操作（允许<code>absorb()</code>语法）。</li>
+</ul>
+(4) <strong>如何选择</strong>：
+<ul><li>有丰富的从未处置组 → 两者都可以，CS更灵活</li>
+<li>没有从未处置组但有许多尚未处置组 → CS（notyet选项）</li>
+<li>研究者希望沿用类似TWFE的回归框架 → SA（<code>eventstudyinteract</code>熟悉感更强）</li>
+<li>需要详细的动态效应和异质性分析 → CS（默认输出更多诊断信息）</li>
+<li>N很大 → SA（<code>reghdfe</code>引擎可能更快）</li>
+</ul>
+<strong>Stata实现对比</strong>：
+<ul><li>CS：<code>csdid Y, ivar(id) time(t) gvar(cohort) notyet agg(event)</code></li>
+<li>SA：<code>eventstudyinteract Y Dt*, absorb(i.id i.t) cohort(cohort)</code></li>
+</ul>
+<strong>参考文献</strong>：Callaway, B. & Sant'Anna, P.H.C. (2021). Difference-in-Differences with multiple time periods. *Journal of Econometrics*; Sun, L. & Abraham, S. (2021). Estimating dynamic treatment effects in event studies with heterogeneous treatment effects. *Journal of Econometrics*.
+</details>
+---
+
+</section>
+<section class="section-card" id="sec8">
+<h2><span class="sec-num">§8</span>岭回归：ℓ2 正则化与偏差-方差权衡（教材 §10.3）<span class="imp imp-2">★★ 常考（老师重点★3 的基础组件）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：当 $K$ 较大（接近甚至超过 $n$）时，$X'X$ 接近奇异，OLS 的方差极大。岭回归通过对系数大小施加 $\ell_2$ 惩罚来稳定估计。</li>
+<li><strong>为什么需要它</strong>：高维数据的第一个正则化方法，理解偏差-方差权衡的最简单入口。</li>
+</ul><li><strong>在谱系中的位置</strong>：从 OLS（无惩罚）→ 岭回归（$\ell_2$ 惩罚）→ LASSO（$\ell_1$ 惩罚，自动选变量）→ Elastic Net（混合惩罚）。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★3】
+<h4>1. 岭回归估计量的定义</h4>
+当 $K$ 较大或 $K > n$ 时，$X'X$ 接近奇异甚至不可逆——OLS 的方差爆炸。岭回归在 $X'X$ 上加一个正定矩阵 $\lambda I_K$：
+$$\hat{\beta}_{ridge} = (X'X + \lambda I_K)^{-1} X'Y, \quad \lambda > 0$$
+<h4>2. 为什么 $(X'X + \lambda I_K)$ 一定可逆——谱分解推导</h4>
+<strong>第 1 步</strong>：谱分解（定理 6.1）——任何对称矩阵可以分解为 $X'X = \mathcal{U} \Lambda \mathcal{U}'$，其中 $\mathcal{U}$ 正交（$\mathcal{U}'\mathcal{U}=I$），$\Lambda = \text{diag}(\lambda_1, \dots, \lambda_K)$，$\lambda_j \ge 0$ 是特征值。
+<strong>第 2 步</strong>：$\lambda I_K = \lambda \cdot \mathcal{U} I_K \mathcal{U}' = \lambda \cdot \mathcal{U}\mathcal{U}'$（理由：$\mathcal{U}$ 正交，$\mathcal{U}I_K\mathcal{U}' = \mathcal{U}\mathcal{U}' = I_K$）。
+<strong>第 3 步</strong>：
+$$X'X + \lambda I_K = \mathcal{U}\Lambda\mathcal{U}' + \lambda\mathcal{U}\mathcal{U}' = \mathcal{U}(\Lambda + \lambda I_K)\mathcal{U}'$$
+<strong>第 4 步</strong>：$\Lambda + \lambda I_K = \text{diag}(\lambda_1+\lambda, \dots, \lambda_K+\lambda)$。由于 $\lambda > 0$ 且 $\lambda_j \ge 0$，所有特征值 $\ge \lambda > 0$ → 矩阵正定满秩 → 一定可逆。
+<strong>直观</strong>：$\lambda$ 给每个特征值加了"安全垫"，保证没有一个特征值为 0。
+<h4>3. MSE 分解公式——不跳步推导</h4>
+令 $\hat{f}(x_0)$ 是对 $f(x_0)$ 的估计。MSE 的定义：
+$$\text{MSE} = E[\hat{f}(x_0) - f(x_0)]^2$$
+<strong>第 1 步</strong>：加一项减一项 $E(\hat{f}(x_0))$（理由：这是"加项减项"技巧的核心）：
+$$= E\{[\hat{f} - E(\hat{f})] + [E(\hat{f}) - f]\}^2$$
+<strong>第 2 步</strong>：展开平方：
+$$= E[\hat{f} - E(\hat{f})]^2 + [E(\hat{f}) - f]^2 + 2E\{[\hat{f} - E(\hat{f})] \cdot [E(\hat{f}) - f]\}$$
+<strong>第 3 步</strong>：交叉项 = 0（理由：$E(\hat{f}) - f$ 是常数，可以提到期望外面，而 $E[\hat{f} - E(\hat{f})] = 0$）：
+$$\text{MSE} = \underbrace{E[\hat{f} - E(\hat{f})]^2}_{\text{Variance}} + \underbrace{[E(\hat{f}) - f]^2}_{\text{Bias}^2}$$
+这就是著名的 <strong>Bias-Variance 分解</strong>。
+<h4>4. 结构风险最小化视角</h4>
+<ul><li><strong>经验风险</strong> = 残差平方和（训练集上的损失）——OLS 最小化这个</li>
+<li><strong>结构风险</strong> = 残差平方和 + $\lambda \cdot \|b\|_2^2$（惩罚大系数）</li>
+</ul>
+岭回归 = 在经验风险的基础上加了一个对系数大小的惩罚。惩罚项 $\lambda\|b\|_2^2$ 倾向于把系数拉向 0。
+<h4>5. 约束优化形式的等价性与几何直觉</h4>
+岭回归等价于：
+$$\min_b (Y - Xb)'(Y - Xb) \quad \text{s.t.} \quad \|b\|_2^2 \le t^2$$
+<strong>几何直觉</strong>：OLS 在整个 $\mathbb{R}^K$ 里找最优解；岭回归在一个半径为 $t$ 的 $\ell_2$ 球里找最优解。当 OLS 解在球外时，岭回归把解"拉回"球面上——这就是"收缩"（shrinkage）。
+<h4>6. 偏差-方差权衡</h4>
+<ul><li>$\lambda = 0$：$\hat{\beta}_{ridge} = \hat{\beta}_{OLS}$——无偏，但方差大（$K$ 大时尤其严重）</li>
+<li>$\lambda \to \infty$：$\hat{\beta}_{ridge} \to 0$——偏差大（全缩到 0 了），但方差小（0 的方差是 0）</li>
+<li>最优 $\lambda$：让 MSE = Bias$^2$ + Variance 最小化</li>
+</ul>
+<strong>这就像是"稳妥"和"激进"的权衡</strong>：OLS 激进地利用每一个 X 的信息，可能过拟合；$\lambda$ 越大越稳妥，宁可"欠拟合"也不冒险。
+<h4>7. 尺度不变性问题</h4>
+岭回归不具有尺度不变性——如果把 $X$ 的某列乘以 10，惩罚项的贡献会变，岭回归的结果会变。所以<strong>必须先标准化</strong> $X$ 的每一列（均值为 0，方差为 1）。
+<h4>8. 与 LASSO 的关键区别</h4>
+$\ell_2$ 惩罚：$\|b\|_2^2 = \sum b_j^2$——系数被压缩但<strong>不精确为零</strong>。 $\ell_1$ 惩罚（LASSO）：$\|b\|_1 = \sum |b_j|$——可以<strong>精确为零</strong>，自动选变量。
+<strong>几何原因</strong>：$\ell_2$ 球是圆的，与残差平方和等值线相切时通常不会在坐标轴上；$\ell_1$ 球是菱形的，角在坐标轴上，切点容易落在轴上（系数 = 0）。
+<strong>这个发现改变了什么认知</strong>：放弃一点无偏性（接受一些偏差）可以大幅降低方差，从而降低整体预测误差（MSE）。这是机器学习"偏差-方差权衡"思想在计量经济学中的最简单体现。【对应老师重点★3】
+---
+
+<h3>三、习题</h3>
+<strong>Q8.1</strong> ⭐ 岭回归的正则化参数 $\lambda$ 应如何选择？如果 $\lambda$ 选择过大会有什么后果？过小呢？请说明交叉验证和准则函数两种选 $\lambda$ 方法的基本逻辑。
+<details><summary>参考答案要点</summary>
+<strong>$\lambda$ 的含义</strong>：控制惩罚强度。$\lambda=0$ → OLS（无惩罚）；$\lambda\to\infty$ → 所有系数→0。
+<strong>过大</strong>：偏差主导，系数过度收缩→欠拟合，预测效果差 <strong>过小</strong>：方差主导，接近OLS→过拟合，样本外泛化差
+<strong>两种选$\lambda$方法</strong>： 1. <strong>K折交叉验证（CV）</strong>：    - 将数据分为K份，依次用K-1份训练、1份验证    - 对每个候选$\lambda$，计算平均CV误差    - 选择使CV误差最小的$\lambda$（或1-SE规则：选CV误差在1个标准误内最简单的模型对应的$\lambda$）    - 优点：不依赖分布假设；缺点：计算量大
+2. <strong>准则函数法</strong>（AIC/BIC/GIC）：    - 惩罚似然或残差平方和 + 自由度惩罚项    - $AIC(\lambda) = n\log(RSS/n) + 2\cdot df(\lambda)$，其中 $df(\lambda) = tr[X(X'X+\lambda I)^{-1}X']$ 是有效自由度    - 选择使准则最小的$\lambda$    - 优点：计算快（不需要数据分割）；缺点：依赖渐近理论
+<strong>实践</strong>：在R中使用<code>glmnet</code>+<code>cv.glmnet</code>；在Stata中使用<code>lassopack</code>或<code>elasticregress</code>。
+</details>
+<strong>Q8.2</strong> ⭐⭐ 用谱分解（spectral decomposition）证明 $X'X + \lambda I_K$（$\lambda > 0$）一定是可逆的。为什么这个结论在 $K > n$ 时也成立？
+<details><summary>参考答案要点</summary>
+<strong>谱分解</strong>（教材(10.3)推导）：
+$X'X$（$K\times K$）是对称半正定矩阵 → 存在正交矩阵 $\mathcal{U}$ 和对角阵 $\Lambda$：
+$$X'X = \mathcal{U}\Lambda\mathcal{U}'$$
+其中 $\Lambda = \text{diag}(\lambda_1, \dots, \lambda_K)$，$\lambda_j \ge 0$（半正定性保证）。
+注意 $\lambda I_K = \lambda \cdot \mathcal{U}\mathcal{U}'$（因为$\mathcal{U}$正交）。
+$$\begin{aligned}
+X'X + \lambda I_K &= \mathcal{U}\Lambda\mathcal{U}' + \lambda\mathcal{U}\mathcal{U}' \\ &= \mathcal{U}(\Lambda + \lambda I_K)\mathcal{U}' \end{aligned}$$
+$X'X$的特征值全$\ge 0$，加$\lambda > 0$后 → 全部特征值$\ge \lambda > 0$ → 严格正定 → 满秩 → 可逆。
+<strong>$K > n$ 时也成立</strong>：当 $K > n$ 时，$X'X$ 最多有 $n$ 个非零特征值（因为 $\text{rank}(X'X) \le \text{rank}(X) \le n$），其余 $K-n$ 个特征值为0。但是 $X'X + \lambda I_K$ 的所有特征值都 $\ge \lambda > 0$ → 即使原始 $X'X$ 是奇异的，加了 $\lambda I_K$ 后就变为满秩了。
+<strong>这个证明是岭回归的核心</strong>：$\lambda I_K$起到"给协方差矩阵的对角线注入稳定性"的作用——无论原始数据有多少共线性，岭回归总是有唯一解。
+</details>
+<strong>Q8.3</strong> ⭐⭐ 从 $MSE = Bias^2 + Variance$ 的角度解释岭回归为什么可能优于OLS。特别说明：(1) 岭回归的偏差来自哪里？(2) 方差的减少来自哪里？(3) 在什么条件下MSE改善最大？
+<details><summary>参考答案要点</summary>
+<strong>MSE分解</strong>（教材(10.1)）：$MSE = [E(\hat{f}) - f]^2 + Var(\hat{f})$
+(1) <strong>偏差来源</strong>：岭回归将系数向0收缩——即使真实系数不为0，估计值也被"压低"了。$\lambda$越大，偏差越大。具体地：
+$$E(\hat{\beta}_{ridge}) = (X'X + \lambda I)^{-1}X'X\beta \neq \beta$$
+（OLS是无偏的，$\lambda=0$时括号中两项消去$=I$。）
+(2) <strong>方差减少来源</strong>：岭回归的协方差矩阵为：
+$$Var(\hat{\beta}_{ridge}) = \sigma^2(X'X + \lambda I)^{-1}X'X(X'X + \lambda I)^{-1}$$
+与OLS的 $Var(\hat{\beta}_{ols}) = \sigma^2(X'X)^{-1}$ 相比：
+<ul><li>$X'X$的小特征值方向方差极大（因为取倒数后极大）</li>
+<li>$\lambda I$ 使所有特征值至少为$\lambda$，小特征值方向的方差被大幅压缩</li>
+<li>当 $X'X$ 接近奇异时（特征值极小），OLS方差→∞，岭回归方差保持有限</li>
+</ul>
+(3) <strong>MSE改善最大条件</strong>：
+<ul><li>$X'X$ 有很小的特征值（高共线性或 $K$ 接近 $n$）</li>
+<li>信噪比（SNR）不太高——噪声大时方差主导MSE，收缩帮助大</li>
+<li>实际上这就是文献中常见的结论：<strong>岭回归在多重共线性严重或 $K$ 接近甚至超过 $n$ 时表现最好</strong></li>
+</ul>
+<strong>直觉</strong>：岭回归 = "用可接受的小偏差换取方差的大幅减少"。当OLS因为共线性方差爆炸时，这个交易非常划算。
+</details>
+<strong>Q8.4</strong> ⭐⭐⭐ 比较岭回归（$\ell_2$ 惩罚）和LASSO（$\ell_1$ 惩罚）的几何直觉。从约束优化问题的可行域形状出发，解释为什么LASSO产生稀疏解（部分系数精确为零）而岭回归不产生。用K=2情况画图辅助说明。
+<details><summary>参考答案要点</summary>
+<strong>约束优化形式</strong>：
+<ul><li>岭回归：$\min_b (Y-Xb)'(Y-Xb)$ s.t. $\|b\|_2^2 = b_1^2 + b_2^2 \le t^2$（圆形/球形约束）</li>
+<li>LASSO：$\min_b (Y-Xb)'(Y-Xb)$ s.t. $\|b\|_1 = |b_1| + |b_2| \le t$（菱形约束）</li>
+</ul>
+<strong>几何直觉（K=2）</strong>： 1. OLS解是残差平方和的全局最小值点（无约束）。 2. 约束将解限制在某个可行域内：    - $\ell_2$约束：以原点为圆心、$\sqrt{t}$为半径的圆盘    - $\ell_1$约束：以原点为中心的菱形（旋转45°的正方形） 3. 残差平方和的等高线是椭圆（以OLS解为中心） 4. 最优解 = 等高线与可行域边界的<strong>切点</strong>（或首次相交的点）
+<strong>为什么LASSO产生稀疏解</strong>：
+<ul><li>$\ell_1$菱形边界有"尖角"（K个尖角位于坐标轴上）</li>
+<li>当等高线首次碰到菱形时，如果OLS解不在第一象限方向，接触点很可能在某个尖角上</li>
+<li>在尖角上 $\to b_1=0$ 或 $b_2=0$ → 稀疏！</li>
+<li>岭回归的圆没有尖角 → 等高线与圆相切通常不在坐标轴上 → 系数被压缩但不为零</li>
+</ul>
+<strong>数学本质</strong>：$\ell_1$惩罚的次梯度在零点允许非零值——这使得零成为最优解的一个"吸引子"。在KKT条件中，当 $|X_j'(Y-Xb)| < \lambda$ 时，$\hat{\beta}_j^{lasso} = 0$。岭回归的KKT条件没有这个性质——导数在零点恰好为0，不会"主动"把系数推到零。
+<strong>实际影响</strong>：LASSO = 估计 + 变量选择，结果简洁可解释；岭回归 = 纯收缩，保留所有变量但压缩系数。Elastic Net = 两者的混合。
+<strong>参考文献</strong>：Tibshirani, R. (1996). Regression shrinkage and selection via the lasso. *JRSS-B*; Hastie, T., Tibshirani, R., & Friedman, J. (2009). *The Elements of Statistical Learning*, §3.4.
+</details>
+---
+
+</section>
+<section class="section-card" id="sec9">
+<h2><span class="sec-num">§9</span>主成分分析（PCA）：高维数据的降维利器（教材 §10.6）<span class="imp imp-2">★★ 常考（老师重点★3 的降维工具）</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li><strong>这节解决什么问题</strong>：当 $K$ 很大时，变量间高度相关，直接建模会导致多重共线性和过拟合。PCA 通过线性变换把高维 X 压缩成少数几个"主成分"，保留大部分信息的同时降低维度。</li>
+<li><strong>为什么需要它</strong>：降维是处理高维数据的另一种策略（与正则化互补）。PCA 在金融（利率期限结构）、宏观（因子模型）中有广泛应用。</li>
+</ul><li><strong>在谱系中的位置</strong>：正则化（岭回归/LASSO）的替代方案——正则化在原始变量上收缩，PCA 先降维再估计。</li>
+
+<h3>二、重点内容申明</h3>
+【对应老师重点★3】
+<h4>1. PCA 的核心思想</h4>
+你有 K 个高度相关的解释变量。与其在 K 维空间里和多重共线性搏斗，不如把 K 维压缩到 p 维（$p \ll K$），保留大部分信息的同时大幅降低维度。
+PCA 找的是 X 的低维线性变换 $WX$，使得信息尽可能保留。$W$ 是 $p \times K$ 矩阵，每一行是一个"方向"。
+<h4>2. 两个原则</h4>
+<ul><li><strong>方差最大</strong>：主成分的方差尽可能大——方差大 = 信息多（变量如果所有人的值都一样，那它没信息）</li>
+<li><strong>不相关</strong>：主成分之间协方差为 0——已经反映了的信息不要重复反映</li>
+</ul>
+<h4>3. 第一主成分的推导——拉格朗日法完整步骤</h4>
+<strong>问题</strong>：最大化 $\text{Var}(w'X) = w'\Sigma w$，约束 $w'w = 1$（否则让 $w$ 无限大，方差就无限大了，没法比较）。
+<strong>第 1 步</strong>：构造拉格朗日函数：
+$$\mathcal{L}(w, \lambda) = w'\Sigma w - \lambda(w'w - 1)$$
+<strong>第 2 步</strong>：对 $w$ 求导（矩阵求导规则：$\frac{\partial}{\partial w}(w'\Sigma w) = 2\Sigma w$，$\frac{\partial}{\partial w}(w'w) = 2w$）：
+$$\frac{\partial \mathcal{L}}{\partial w} = 2\Sigma w - 2\lambda w$$
+<strong>第 3 步</strong>：令导数为 0（一阶条件）：
+$$\Sigma w = \lambda w$$
+<strong>第 4 步</strong>：这是特征方程！$w$ 是 $\Sigma$ 的特征向量，$\lambda$ 是对应的特征值。
+<strong>第 5 步</strong>：此时 $\text{Var}(w'X) = w'\Sigma w = w'(\lambda w) = \lambda \cdot w'w = \lambda$——<strong>特征值就是主成分的方差</strong>。
+<strong>第 6 步</strong>：要最大化方差，选最大的特征值 $\lambda_1$，$w_1$ 是其对应的特征向量。第一主成分 = $w_1'X$。
+<strong>第二主成分</strong>：最大化 $w'\Sigma w$，约束 $w'w = 1$ 且 $w_1'\Sigma w = 0$（与第一主成分不相关）。结果是第二大特征值对应的特征向量。
+<h4>4. 定理 10.1（PCA 定理）</h4>
+第 $i$ 主成分 = $\Sigma$ 的第 $i$ 大特征值 $\lambda_i$ 对应的特征向量 $w_i$ 乘以 $X$。$\text{Var}(w_i'X) = \lambda_i$，$\text{Cov}(w_i'X, w_j'X) = 0$（$i \neq j$）。
+<h4>5. 方差贡献率与 $p$ 的选择</h4>
+所有主成分的方差之和 = 原变量方差之和 = $\text{tr}(\Sigma) = \sum \lambda_i$。
+第 $i$ 主成分的方差贡献率 = $\lambda_i / \sum_{j=1}^K \lambda_j$。
+选 $p$：给定阈值 $c$（如 0.85 或 0.95），选满足 $\sum_{i=1}^p \lambda_i / \sum_{j=1}^K \lambda_j \ge c$ 的最小 $p$。
+<h4>6. 样本主成分分析</h4>
+实际中 $\Sigma$ 未知，用样本协方差 $S$ 替代。定理 10.2 完全平行于定理 10.1——把 $\Sigma$ 换成 $S$ 就行。
+<strong>标准化</strong>：变量度量单位不同时，标准化后协方差矩阵 = 相关系数矩阵，消除量纲影响。
+<h4>7. 碎石图</h4>
+横轴：主成分次序（1, 2, ..., K），纵轴：特征值。形状像"碎石坡"——前几个特征值大，后面陡降后趋于平坦。"拐点"（elbow）就是合适的 $p$。
+<h4>8. R 语言实现</h4>
+<pre><code>data <- as.matrix(data[, -1])
+pca <- prcomp(data, scale = TRUE)
+library(factoextra)
+fviz_eig(pca, addlabels = TRUE, ylim = c(0, 100))</code></pre>
+<h4>9. 主成分回归（PCR）</h4>
+先用 PCA 降维（得到前 p 个主成分），再用这些主成分做回归。这比直接对原始变量做回归更稳定——主成分之间不相关（正交），不存在多重共线性。
+<strong>这个发现改变了什么认知</strong>：PCA 告诉你，高维数据中真正有用的"方向"往往很少——6 个不同期限的国债收益率，第一个主成分就解释了 96.4% 的波动。大多数时候，K 个变量只是在用不同的方式表述同一个底层故事。【对应老师重点★3】
+---
+
+<h3>三、习题</h3>
+<strong>Q9.1</strong> ⭐ 在PCA的第一主成分优化问题中，为什么需要约束 $w'w = 1$？如果去掉这个约束会怎样？
+<details><summary>参考答案要点</summary>
+<strong>优化问题</strong>：$\max_w w'\Sigma w$ ——没有约束的话，只要不断放大 $w$ 的长度，方差就可以无限增大 → 没有最大值。
+<strong>约束 $w'w = 1$</strong> 的作用：将 $w$ 限制在单位球面上，这样最大化的是<strong>方向</strong>上的方差，而不是长度上的。本质上是在问："在哪个<strong>方向</strong>上，数据的投影方差最大？"
+<strong>如果去掉约束</strong>：解为 $w \to \infty$ ——无上界，优化问题无意义。实际上任何特征向量乘以任意常数仍是特征向量，但方差会变化——约束使特征向量成为"标准正交"的，方差恰好等于特征值。
+<strong>几何意义</strong>：$w'w=1$ 意味着 $w$ 是一个旋转矩阵（的正交行）——PCA本质上是在找数据协方差结构的最优旋转方向，归一化确保旋转不伸缩。
+</details>
+<strong>Q9.2</strong> ⭐⭐ 用拉格朗日乘子法推导第一主成分对应的 $w_1$ 是 $\Sigma$ 最大特征值对应的特征向量。从 $\mathcal{L}(w, \lambda) = w'\Sigma w - \lambda(w'w - 1)$ 出发，推导完整的一阶条件并解释 $\lambda$ 的经济/统计含义。
+<details><summary>参考答案要点</summary>
+<strong>推导</strong>（教材§10.6.1）：
+<strong>步骤1</strong>：构造拉格朗日函数
+$$\mathcal{L}(w, \lambda) = w'\Sigma w - \lambda(w'w - 1)$$
+<strong>步骤2</strong>：一阶条件
+$$\frac{\partial\mathcal{L}}{\partial w} = 2\Sigma w - 2\lambda w = 0$$
+→ $\Sigma w = \lambda w$
+<strong>步骤3</strong>：识别 这是一个特征值问题！$w$ 是 $\Sigma$ 的特征向量，$\lambda$ 是对应的特征值。
+<strong>步骤4</strong>：确定哪个特征向量
+$$\text{Var}(w'X) = w'\Sigma w = w'(\lambda w) = \lambda \cdot w'w = \lambda$$
+目标函数值恰好等于特征值。为最大化方差，应选最大的特征值 → $w_1$ = $\Sigma$ 的最大特征值 $\lambda_1$ 对应的特征向量。
+<strong>$\lambda$ 的含义</strong>：$\lambda_1$ = 第一主成分的方差 = 数据在第一个主方向上的变异量。$\lambda_1/\sum_{i=1}^K \lambda_i$ = 第一主成分解释的总方差比例。
+<strong>推广到第二主成分</strong>：加入约束 $w_1'\Sigma w = 0$（与第一主成分不相关）→ 解为第二大特征值对应的特征向量。依此类推。
+</details>
+<strong>Q9.3</strong> ⭐⭐ 证明所有主成分的方差之和等于原变量方差之和：$\sum_{i=1}^K Var(w_i'X) = \sum_{i=1}^K Var(X_i)$。解释这个等式的含义——它说明了PCA保留信息的什么性质？
+<details><summary>参考答案要点</summary>
+<strong>证明</strong>（利用定理10.1和矩阵迹的性质）：
+$$\begin{aligned}
+\sum_{i=1}^K \text{Var}(w_i'X) &= \sum_{i=1}^K \lambda_i \quad &\text{(定理10.1：每个主成分方差=对应特征值)} \\ &= \text{tr}(\Sigma) \quad &\text{(矩阵的迹=特征值之和)} \\ &= \text{tr}(E[(X-\mu)(X-\mu)']) \\ &= E[\text{tr}((X-\mu)(X-\mu)')] \\ &= E[(X-\mu)'(X-\mu)] \quad &\text{(迹的循环不变性)} \\ &= \sum_{i=1}^K E[(X_i - \mu_i)^2] = \sum_{i=1}^K \text{Var}(X_i) \end{aligned}$$
+<strong>含义</strong>： 1. <strong>信息守恒</strong>：PCA没有"创造"或"毁灭"信息——它只是将总方差重新分配到了各主成分上。前 $p$ 个主成分"集中"了大部分方差。 2. <strong>方差贡献率</strong>：$\frac{\sum_{i=1}^p \lambda_i}{\sum_{i=1}^K \lambda_i}$ 表示用 $p$ 个主成分替代 $K$ 个原始变量时"保留了多少信息"。 3. <strong>选择 $p$ 的依据</strong>：如果前2个主成分贡献了95%的方差 → 用2维代替K维损失的信息很少（只丢了5%的总变异）。
+<strong>示例</strong>：教材例10.1中，6个期限的国债收益率第一主成分贡献96.4%的方差——6个利率几乎可以被1个因子（"利率水平因子"）完美概括。
+</details>
+<strong>Q9.4</strong> ⭐⭐⭐ PCA和因子分析（Factor Analysis, FA）的区别与联系。从模型结构、目的、可识别性三个维度比较，并说明在经济学实证中分别适用于什么场景。
+<details><summary>参考答案要点</summary>
+<strong>模型结构对比</strong>：
+<table>
+<tr>
+<th></th>
+<th>PCA</th>
+<th>因子分析（FA）</th>
+</tr>
+<tr>
+<td>模型</td>
+<td>$Y = W'X$（$W$正交）</td>
+<td>$X = \Lambda F + \varepsilon$（$\Lambda$载荷矩阵）</td>
+</tr>
+<tr>
+<td>方向</td>
+<td>X → 主成分（降维）</td>
+<td>公因子 → X（生成模型）</td>
+</tr>
+<tr>
+<td>方差分解</td>
+<td>总方差 = 所有主成分方差之和</td>
+<td>$\text{Var}(X_i) = h_i^2 + \psi_i$（共性+特殊方差）</td>
+</tr>
+<tr>
+<td>误差项</td>
+<td>无（精确降维）</td>
+<td>有（$\varepsilon$特殊因子，各变量独有）</td>
+</tr>
+<tr>
+<td>尺度</td>
+<td>依赖变量尺度</td>
+<td>尺度不变（基于相关矩阵）</td>
+</tr>
+</table>
+<strong>目的对比</strong>：
+<ul><li>PCA：<strong>降维</strong>——找方差最大的方向，用少数成分替代原始变量，方差保留最大化。</li>
+<li>FA：<strong>结构发现</strong>——寻找少数不可观测的"潜变量"（latent variables）来解释观测变量间的相关性。</li>
+</ul>
+<strong>可识别性</strong>：
+<ul><li>PCA：唯一确定（特征向量确定到符号）。</li>
+<li>FA：需要额外的约束条件（$\Lambda'\Psi^{-1}\Lambda$为对角阵等），旋转不唯一（正交旋转→简化结构，斜交旋转→允许因子相关）。</li>
+</ul>
+<strong>经济学应用场景</strong>：
+<ul><li><strong>PCA适用</strong>：国债收益率期限结构（Level/Slope/Curvature三因子），宏观经济指标降维，构建综合指标</li>
+<li><strong>FA适用</strong>：心理学/教育学中的智商测量（g因子），消费者信心指数，公司治理质量指数</li>
+<li><strong>选择原则</strong>：</li>
+</ul>  - 目的为降维/预处理 → PCA
+  - 目的为发现潜变量结构 → FA   - 如果特殊方差 $\psi_i$ 可忽略 → 两者结果接近（PCA ≈ 主因子法FA）
+<strong>参考文献</strong>：Jolliffe, I.T. (2002). *Principal Component Analysis*, Chapter 7; Johnson, R.A. & Wichern, D.W. (2007). *Applied Multivariate Statistical Analysis*, Chapter 9.
+</details>
+---
+
+</section>
+<section class="section-card" id="sec10">
+<h2><span class="sec-num">§10</span>全章总结：方法决策树与综合习题<span class="imp imp-3">★★★ 考前必看</span></h2>
+
+<h3>一、脉络梳理</h3>
+<ul><li>从 §0 到 §9，覆盖了现代计量经济学从经典 OLS 到前沿 DML 的完整方法链</li>
+</ul><li>这节把所有方法串起来，给出一个"遇到什么问题 → 用什么方法"的决策框架</li>
+
+<h3>二、重点内容申明</h3>
+<h4>1. 五条核心小结</h4>
+1. <strong>因果推断的核心是识别，不是估计</strong>——即使你有无限数据，不施加假设就无法识别因果效应。方法的选择本质上是"你愿意相信什么假设"。 2. <strong>从随机实验到观测研究，假设一条比一条弱，方法一个比一个复杂</strong>——IA→CIA→CMI→平行趋势→IV→GMM，每一步都是对现实的妥协。 3. <strong>面板数据是因果推断的利器，但不是免费的午餐</strong>——FE 消除不随时间变化的遗漏变量，但丢掉了时不变变量的信息和个体间的变异；动态面板 GMM 处理惯性，但弱 IV 和诊断是必须的。 4. <strong>交叠 DID 的革命改变了实证研究的实践</strong>——TWFE 不适用于异质处置效应，Bacon/CSDID/Sun-Abraham 等现代方法必须进入标准工具箱。 5. <strong>高维世界需要正则化和降维</strong>——岭回归/LASSO/PCA 不是为了"好看"，而是当 $K > n$ 时，没有它们你根本无法估计。
+<h4>2. 完整方法决策树</h4>
+<pre><code>数据：N 个个体 × T 期 × K 个变量
+│
+├── 关心因果效应
+│   ├── 处置外生（随机实验）→ 直接比较均值【★2】
+│   ├── 依可观测选择（CIA成立）【★2,★4】
+│   │   ├── 低维离散X → 精确匹配 + 分层
+│   │   ├── 线性CEF → 回归调整(RA)【注意CATE的交互项】
+│   │   └── 高维X → PSM（必须验平衡性！）
+│   ├── 不可观测混杂（CIA不成立）
+│   │   ├── 面板+处置前后 → DID（验平行趋势！）【★4】
+│   │   │   ├── 2×2经典 → TWFE
+│   │   │   ├── 多期同时间处置 → TWFE+事件研究
+│   │   │   └── 交叠处置 → CSDID/Sun-Abraham【★5】
+│   │   ├── 有IV → 2SLS/面板IV【★5】
+│   │   │   └── 异方差 → 两阶段GMM
+│   │   └── 面板+动态 → 差分GMM/系统GMM【★1】
+│   │       └── 弱IV → 系统GMM
+│   └── 高维混杂(p>n) → Double Lasso / DML【★3】
+└── 关心预测 → LASSO/Ridge/Elastic Net / RF/Boosting/NN【★3】</code></pre>
+<strong>选每条路的前提条件</strong>：
+<ul><li>走匹配路线：你需要所有影响处置分配的变量都可观测（CIA），且存在重合区域</li>
+<li>走 DID 路线：你需要面板数据 + 平行趋势假设 + 无预期效应</li>
+<li>走 IV 路线：你需要找到一个"只通过 X 影响 Y"的工具变量（排他性约束）</li>
+<li>走 GMM 路线：你需要 $\varepsilon_{it}$ 无自相关，且足够多的滞后项可做 IV</li>
+</ul>
+<h4>3. 核心方法检查清单</h4>
+<table>
+<tr>
+<th>方法</th>
+<th>识别假设</th>
+<th>不可忽略的检验</th>
+<th>常见陷阱</th>
+</tr>
+<tr>
+<td>OLS</td>
+<td>$E(\varepsilon\mid X)=0$</td>
+<td>无（假设不可检验）</td>
+<td>遗漏变量偏误</td>
+</tr>
+<tr>
+<td>RA/PSM</td>
+<td>CIA/CMI</td>
+<td>平衡性检验(SMD<0.1)</td>
+<td>重合性差、倾向得分误设</td>
+</tr>
+<tr>
+<td>IV/2SLS</td>
+<td>正交+相关条件</td>
+<td>第一阶段F>10, Hansen J</td>
+<td>弱IV、排他性不成立</td>
+</tr>
+<tr>
+<td>FE</td>
+<td>严格外生性</td>
+<td>Hausman检验</td>
+<td>时变遗漏变量仍存在</td>
+</tr>
+<tr>
+<td>差分GMM</td>
+<td>$\varepsilon_{it}$ 无自相关</td>
+<td>AR(2)检验, Hansen</td>
+<td>弱IV(γ→1时)</td>
+</tr>
+<tr>
+<td>系统GMM</td>
+<td>同上+初值条件</td>
+<td>AR(2), Hansen, C检验</td>
+<td>过多IV</td>
+</tr>
+<tr>
+<td>DID</td>
+<td>平行趋势</td>
+<td>安慰剂检验, 事件研究</td>
+<td>交叠处置的TWFE偏误</td>
+</tr>
+<tr>
+<td>CSDID</td>
+<td>条件平行趋势</td>
+<td>事件研究</td>
+<td>控制变量的选择</td>
+</tr>
+</table>
+<h4>4. 速记口诀</h4>
+<strong>方法选型口诀</strong>： > 随机实验是金标，观测数据靠假设。 > 可观选择用匹配，验完平衡才可靠。 > 面板固定消不变，组内离差自己比。 > 动态惯性找GMM，自相关检验不能少。 > 工具变量找外源，弱IV是大忌。 > 双重差分看趋势，安慰剂检验保平安。 > 交叠处置找Bacon，负权重问题要当心。 > 高维数据用正则，偏差方差做权衡。 > P C A 来降维，特征值选主成分。
+<strong>推断口诀</strong>： > 面板数据要聚类，不聚类的p值太自信。 > 聚类数少别乱来，二十以上才放心。 > Moulton因子看N和ρ，大班小相关也严重。
+<h4>5. 跨方法五大必检项</h4>
+<strong>第一：识别假设可信吗？</strong>
+<ul><li>是否交代了"如果假设不成立会怎样"？最好的论文会做一系列稳健性检验</li>
+<li>易错点：只陈述假设，不讨论假设在具体情境中是否合理</li>
+</ul>
+<strong>第二：诊断检验通过了吗？</strong>
+<ul><li>PSM 的平衡性、GMM 的 AR(2) 和 Hansen、DID 的平行趋势——这些都是"及格线"</li>
+<li>易错点：只汇报点估计，不汇报诊断检验结果，或诊断不通过却假装没看到</li>
+</ul>
+<strong>第三：结果对模型设定敏感吗？</strong>
+<ul><li>加了控制变量后系数稳定吗？换了匹配方式结果差不多吗？换了 IV 组合结论变吗？</li>
+<li>易错点：只汇报一个设定的结果（"specification searching"后挑显著的那一个）</li>
+</ul>
+<strong>第四：经济意义合理吗？</strong>
+<ul><li>系数的符号和大小符合经济直觉吗？如果不符合，你能解释为什么吗？</li>
+<li>易错点：只看显著性不看效应大小——一个统计显著但只有 0.001% 影响的政策有意义吗？</li>
+</ul>
+<strong>第五：结论能复现吗？</strong>
+<ul><li>数据和代码是否公开？别人能用同样的数据和命令跑出同样的结果吗？</li>
+<li>易错点：不报告数据清洗步骤、不提供 do file</li>
+</ul>
+<strong>这个发现改变了什么认知</strong>：没有一种方法在所有情况下都是"最好的"。方法的选择是一个"权衡"：在识别假设的可信度、统计效率、和实施的可行性之间找到最适合你研究问题的平衡。真正好的实证研究者不是"技术最花哨的"，而是"识别假设最有说服力的"。
+---
+*全章10节"重点内容申明"撰写完毕。共计11个教学节，覆盖教材§3.8、§5.5、§6.6、§7.5.1、§7.5.4、§8.2、§8.6、§8.7、§10.3、§10.6。*
+
+<h3>三、习题</h3>
+<strong>Q10.1</strong> ⭐ 研究场景：某省2015年实施了增值税转型试点，你有该省所有规模以上工业企业2012-2018年的面板数据（含产值、固定资产、员工数、利润等），想评估该政策对企业固定资产投资的影响。请在这一场景下：(1) 可选择哪几种方法？(2) 对比各方法的识别假设和适用条件；(3) 你最终推荐哪种方法？说明理由。
+<details><summary>参考答案要点</summary>
+(1) <strong>可选方法</strong>：
+<ul><li><strong>DID</strong>（面板+政策前后+处理组/控制组）</li>
+<li><strong>PSM+DID</strong>（匹配后再差分）</li>
+<li><strong>合成控制法</strong>（SCM，如果只有1个处理单元[省]但多个控制省）</li>
+<li><strong>事件研究</strong>（政策前检验平行趋势，政策后捕捉动态效应）</li>
+</ul>
+(2) <strong>假设对比</strong>：
+<table>
+<tr>
+<th>方法</th>
+<th>识别假设</th>
+<th>适用条件</th>
+</tr>
+<tr>
+<td>DID</td>
+<td>平行趋势</td>
+<td>有面板+政策外生+有控制组</td>
+</tr>
+<tr>
+<td>PSM+DID</td>
+<td>CIA + 平行趋势</td>
+<td>担心处理组与控制组在可观测特征上有系统差异</td>
+</tr>
+<tr>
+<td>SCM</td>
+<td>可由控制组凸组合重构处理组的反事实</td>
+<td>处理单元少（如1个省）</td>
+</tr>
+<tr>
+<td>事件研究</td>
+<td>平行趋势 + 无预期效应</td>
+<td>多期面板+想知道动态效应</td>
+</tr>
+</table>
+(3) <strong>推荐DID + 事件研究</strong>：
+<ul><li>面板数据满足DID基本要求</li>
+<li>增值税转型是省级政策——可以用未试点省份作为控制组</li>
+<li>事件研究可以检验处置前趋势（2012-2014系数应≈0）</li>
+<li>使用TWFE模型：$I_{it} = \delta \cdot D_{it} + \alpha_i + \lambda_t + X_{it}'\beta + \varepsilon_{it}$</li>
+<li>做安慰剂检验（时间安慰剂和个体安慰剂）</li>
+<li>如果政策有异时性（不同城市不同时间试点）→ 用交叠DID方法（CSDID）</li>
+<li><strong>聚类到省层面</strong>（政策在省层面变化）</li>
+</ul>
+PSM+DID可作为稳健性分析：先PSM匹配企业特征，再对匹配样本做DID。
+</details>
+<strong>Q10.2</strong> ⭐⭐ 在政策评估中，DID和PSM是最常用的两种非实验方法。请从"识别假设的强弱"和"对数据的要求"两个维度比较两者。在什么情况下DID的假设比PSM更容易满足？在什么情况下反过来？
+<details><summary>参考答案要点</summary>
+<strong>识别假设对比</strong>：
+<table>
+<tr>
+<th></th>
+<th>DID</th>
+<th>PSM</th>
+</tr>
+<tr>
+<td>核心假设</td>
+<td>平行趋势</td>
+<td>CIA（依可观测选择）</td>
+</tr>
+<tr>
+<td>假设内容</td>
+<td>若无政策，处理组和控制组趋势相同</td>
+<td>控制X后处置分配如随机</td>
+</tr>
+<tr>
+<td>不可观测混杂</td>
+<td>可以有不随时间变化的不可观测因素</td>
+<td>不能有任何不可观测混杂</td>
+</tr>
+<tr>
+<td>数据要求</td>
+<td>需面板数据（至少两期）+ 政策外生</td>
+<td>仅需横截面 + 丰富的X</td>
+</tr>
+</table>
+<strong>DID假设更容易满足的情况</strong>：
+<ul><li>存在不随时间变化的不可观测混杂（如地理位置、历史传统）</li>
+<li>样本期较短，时变不可观测因素影响小</li>
+<li>处理组和控制组有很多共同"宏观冲击"（如邻近地区）</li>
+<li>例如：相邻两州的最低工资政策差异（Card-Krueger），因为不随时间变化的州特征被差分消去</li>
+</ul>
+<strong>PSM假设更容易满足的情况</strong>：
+<ul><li>只有横截面数据</li>
+<li>CIA可能成立——处置分配主要由可观测因素决定（如政策申请的条件门槛是公开且客观的）</li>
+<li>有非常丰富的X变量可以很好地预测处置分配</li>
+<li>例如：融资融券标的筛选标准透明（流通股本、股东人数等均可观测），CIA可能成立</li>
+</ul>
+<strong>综合建议</strong>：
+<ul><li>如果有面板数据，优先用DID（假设更弱）——但必须做可靠性和安慰剂检验</li>
+<li>PSM+DID是稳妥组合——先用PSM在共同支撑区域内匹配，再对匹配样本做DID</li>
+<li>如果只有横截面数据，别无选择只能用PSM——但必须坦诚说明CIA可能不成立，并做敏感性分析</li>
+</ul>
+</details>
+<strong>Q10.3</strong> ⭐⭐⭐ 综合设计题：请针对"高铁开通对县域经济增长的因果效应"这一研究问题，设计一个完整的研究方案。方案需包括：(1) 问题的经济学意义与识别挑战；(2) 识别策略选择与论证（比较至少两种候选方法）；(3) 具体估计方法（写出回归方程并说明变量定义）；(4) 诊断检验计划（至少三项）；(5) 稳健性分析计划（至少三项）；(6) 数据来源与样本构造方案。
+<details><summary>参考答案要点</summary>
+<strong>(1) 经济学意义与识别挑战</strong>：
+<ul><li><strong>意义</strong>：高铁是近20年中国最大规模的基础设施投资之一，理解其经济增长效应有助于评估基建投资的回报率、为区域发展规划提供依据。</li>
+<li><strong>识别挑战</strong>：高铁站点选址非随机——经济发达的县更可能设站（存在选择偏误）。反向因果：经济增长快的县更可能获批设站。遗漏变量：如省级发展战略同时影响设站决策和经济表现。</li>
+</ul>
+<strong>(2) 识别策略选择</strong>：
+候选一：<strong>DID（推荐）</strong>
+<ul><li>处理组：高铁设站的县；控制组：未设站但"本该设站"的县</li>
+<li>假设：若无高铁，两类县的GDP增速平行</li>
+<li>优势：可消除不随时间变化的县域特征</li>
+<li>劣势：时变不可观测因素可能威胁平行趋势</li>
+</ul>
+候选二：<strong>合成控制法（SCM，对单个处理单元）或DID+PSM</strong>
+<ul><li>先用PSM基于地形、人口、到中心城市距离等匹配控制县</li>
+<li>在匹配样本上做DID</li>
+<li>优势：控制可观测特征差异，增强可比性</li>
+<li>劣势：仍不能控制不可观测的时变混杂</li>
+</ul>
+<strong>最终推荐</strong>：交叠DID（因为高铁分年逐批开通，不同县开通时间不同）+ 事件研究。
+<strong>(3) 估计方程</strong>：
+$$Y_{it} = \alpha_i + \lambda_t + \sum_{\ell=-m}^{-1}\delta_\ell^{lead} \cdot D_{it}^\ell + \sum_{\ell=1}^{q}\delta_\ell^{lag} \cdot D_{it}^\ell + X_{it}'\beta + \varepsilon_{it}$$
+变量定义：
+<ul><li>$Y_{it}$：县i在t年的对数GDP（或夜间灯光亮度作为替代）</li>
+<li>$D_{it}^\ell$：高铁开通相对时间的虚拟变量（$\ell$年相对开通年）</li>
+<li>$X_{it}$：时变控制变量（人口、财政支出、产业结构等）</li>
+<li>$\alpha_i$：县固定效应；$\lambda_t$：年份固定效应</li>
+<li>聚类到县层面</li>
+</ul>
+<strong>(4) 诊断检验计划</strong>（至少三项）： 1. <strong>平行趋势检验</strong>：事件研究中$\delta_\ell^{lead}$（$\ell=-1,\dots,-m$）应不显著 → <code>estat grangerplot</code> 2. <strong>时间安慰剂</strong>：假设高铁开通提前3年 → 伪政策效应应不显著 3. <strong>个体安慰剂</strong>：随机分配高铁设站状态，500次置换 → 真实估计应落在置换分布的尾部 4. <strong>Bacon分解</strong>（如有交叠）：检查"禁止比较"的权重占比及各组系数 → <code>bacondecomp</code> 5. <strong>Hausman检验</strong>：对比FE和RE，确认个体效应的内生性
+<strong>(5) 稳健性分析</strong>（至少三项）： 1. <strong>替代被解释变量</strong>：用夜间灯光亮度替代GDP 2. <strong>替代控制组</strong>：只用"规划线路经过但未设站"的县作为控制组 3. <strong>加入个体特定线性时间趋势</strong>：$w_i \cdot t$ → 控制各县异质性增长趋势 4. <strong>PSM+DID</strong>：先用PSM匹配再DID → 检验结论对匹配方式是否敏感 5. <strong>排除其他政策的干扰</strong>：控制同期"撤县设区"、"扶贫政策"等 6. <strong>CSDID交叠DID</strong>：如果开通时间不同，比较TWFE和CS方法的差异
+<strong>(6) 数据来源</strong>：
+<ul><li>县域GDP及控制变量：中国县域统计年鉴（2010-2020）</li>
+<li>高铁站点及开通时间：中国铁路总公司公开信息、12306网站</li>
+<li>夜间灯光NPP-VIIRS数据（备选Y变量）</li>
+<li>地理信息：ArcGIS计算到最近大城市的距离、地形坡度</li>
+<li>样本：约2000个县×10年，排除直辖市市辖区</li>
+</ul>
+<strong>评分标准</strong>：方案的完整性和逻辑一致性比具体内容更重要——识别策略的选择必须有"为什么这个方法"而不只是"用什么方法"的论证。
+</details>
+---
+## 附录：习题统计
+<table>
+<tr>
+<th>指标</th>
+<th>数值</th>
+</tr>
+<tr>
+<td>总题数</td>
+<td>45</td>
+</tr>
+<tr>
+<td>§2（PSM/RA）题数</td>
+<td>5（重点节）</td>
+</tr>
+<tr>
+<td>§6（动态面板GMM）题数</td>
+<td>6（重点节）</td>
+</tr>
+<tr>
+<td>§7（DID）题数</td>
+<td>6（重点节）</td>
+</tr>
+<tr>
+<td>⭐ 基础题</td>
+<td>17</td>
+</tr>
+<tr>
+<td>⭐⭐ 进阶题</td>
+<td>15</td>
+</tr>
+<tr>
+<td>⭐⭐⭐ 拓展题</td>
+<td>13</td>
+</tr>
+<tr>
+<td>外部文献引用</td>
+<td>Angrist & Pischke (2009), Cunningham (2021), MacKinnon et al. (2022), Hansen (1982), Blundell & Bond (1998), Callaway & Sant'Anna (2021), Sun & Abraham (2021), Tibshirani (1996), Jolliffe (2002) 等</td>
+</tr>
+</table>
+
+</section>
+
+</main>
+
+<script>
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', newTheme);
+  btn.innerHTML = newTheme === 'light' ? '🌙 暗色' : '☀️ 亮色';
+  localStorage.setItem('key-review-theme', newTheme);
+}
+(function() {
+  const saved = localStorage.getItem('key-review-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').innerHTML = saved === 'light' ? '🌙 暗色' : '☀️ 亮色';
+  }
+})();
+
+// Sidebar active tracking
+(function() {
+  const sections = document.querySelectorAll('.section-card[id]');
+  const navLinks = document.querySelectorAll('#sidebar nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -75% 0px' });
+  sections.forEach(s => observer.observe(s));
+})();
+
+// Mobile sidebar auto-close
+document.querySelectorAll('#sidebar nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 768) document.getElementById('sidebar').classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
