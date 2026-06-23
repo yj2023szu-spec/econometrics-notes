@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计‎量经济学 · 复习重点 — 徐秋华老师画重点</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+<style>
+/* ===== CSS 设计系统 V3 · 复习重点 ===== */
+:root {
+  --bg: #fdfaf5;
+  --bg-card: #fffef9;
+  --text: #2c2416;
+  --text-secondary: #5c5344;
+  --border: #e5d9c5;
+  --accent: #8b4513;
+  --accent-light: #d4a574;
+  --tag-bg: #f5ede0;
+  --code-bg: #f9f6ef;
+  --shadow: 0 1px 3px rgba(0,0,0,.06);
+  --highlight: #fff3cd;
+  --star3: #c0392b;
+  --star2: #e67e22;
+  --star1: #7f8c8d;
+  --sidebar-bg: #f8f3e8;
+  --sidebar-active: #e8d5b0;
+  --search-bg: #fff;
+}
+
+[data-theme="dark"] {
+  --bg: #1a1814;
+  --bg-card: #242118;
+  --text: #e8dcc8;
+  --text-secondary: #b8a88c;
+  --border: #3d3528;
+  --accent: #d4a574;
+  --accent-light: #8b6f4e;
+  --tag-bg: #2d2820;
+  --code-bg: #221f18;
+  --shadow: 0 1px 3px rgba(0,0,0,.3);
+  --highlight: #3d3520;
+  --star3: #e74c3c;
+  --star2: #f39c12;
+  --star1: #95a5a6;
+  --sidebar-bg: #1f1c16;
+  --sidebar-active: #3d3528;
+  --search-bg: #2d2820;
+}
+
+* { box-sizing:border-box; margin:0; padding:0; }
+
+body {
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", "STSong", serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.85;
+  transition: background .3s, color .3s;
+}
+
+/* Sidebar */
+#sidebar {
+  position: fixed; left: 0; top: 0; width: 280px; height: 100vh;
+  background: var(--sidebar-bg);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; z-index: 100;
+  padding: 24px 16px;
+  transition: transform .3s, background .3s;
+}
+#sidebar h2 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.1rem; color: var(--accent);
+  margin-bottom: 16px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--accent-light);
+}
+#sidebar nav a {
+  display: block; padding: 7px 12px; margin: 2px 0;
+  font-size: .88rem; color: var(--text-secondary);
+  text-decoration: none; border-radius: 6px;
+  transition: all .15s;
+}
+#sidebar nav a:hover, #sidebar nav a.active {
+  background: var(--sidebar-active); color: var(--accent); font-weight: 600;
+}
+#sidebar nav a .tag {
+  display: inline-block; font-size: .7rem;
+  background: var(--tag-bg); padding: 1px 6px; border-radius: 3px;
+  margin-right: 4px; font-weight: 600;
+}
+.sidebar-toggle {
+  position: fixed; left: 290px; top: 16px; z-index: 101;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--bg-card); border: 1px solid var(--border);
+  cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow); transition: left .3s, background .3s;
+}
+
+/* Main */
+#main {
+  margin-left: 280px; padding: 40px 48px;
+  max-width: 960px; transition: margin-left .3s;
+}
+
+/* Header */
+.header-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 32px; padding-bottom: 20px;
+  border-bottom: 3px double var(--border);
+}
+.header-bar h1 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.8rem; color: var(--accent);
+}
+.header-bar .subtitle {
+  font-size: .9rem; color: var(--text-secondary); margin-top: 4px;
+}
+.header-actions {
+  display: flex; gap: 8px; align-items: center;
+}
+.header-actions button {
+  padding: 6px 14px; border: 1px solid var(--border);
+  border-radius: 20px; cursor: pointer; font-size: .82rem;
+  background: var(--bg-card); color: var(--text);
+  transition: all .2s;
+}
+.header-actions button:hover { border-color: var(--accent); color: var(--accent); }
+#searchBox {
+  padding: 6px 14px; border: 1px solid var(--border);
+  border-radius: 20px; font-size: .82rem; width: 180px;
+  background: var(--search-bg); color: var(--text);
+  outline: none; transition: border-color .2s;
+}
+#searchBox:focus { border-color: var(--accent); }
+
+/* Teacher highlight banner */
+.teacher-banner {
+  background: var(--highlight); border: 1px solid var(--accent-light);
+  border-radius: 12px; padding: 20px 24px; margin-bottom: 32px;
+}
+.teacher-banner h3 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  color: var(--accent); font-size: 1.05rem; margin-bottom: 10px;
+}
+.teacher-banner ol {
+  padding-left: 20px; font-size: .92rem; color: var(--text-secondary);
+  line-height: 1.9;
+}
+.teacher-banner ol li { margin-bottom: 4px; }
+.teacher-banner ol li strong { color: var(--accent); }
+
+/* Section cards */
+.section-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; padding: 28px 32px; margin-bottom: 28px;
+  box-shadow: var(--shadow); transition: background .3s, border-color .3s;
+  scroll-margin-top: 80px;
+}
+.section-card h2 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.35rem; color: var(--accent);
+  margin-bottom: 8px; padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent-light);
+}
+.section-card h2 .sec-num {
+  font-size: .85rem; background: var(--accent); color: #fff;
+  padding: 2px 10px; border-radius: 12px; margin-right: 8px;
+  vertical-align: middle;
+}
+.section-card h3 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: 1.1rem; color: var(--text); margin: 20px 0 10px;
+}
+.section-card h4 {
+  font-family: "PingFang SC", "Microsoft YaHei", "SimHei", sans-serif;
+  font-size: .98rem; color: var(--accent); margin: 16px 0 8px;
+}
+
+/* Importance badges */
+.imp { display:inline-block; padding: 2px 10px; border-radius: 12px; font-size:.78rem; font-weight:700; margin-left:6px; vertical-align:middle; }
+.imp-3 { background:#fdecea; color:var(--star3); border:1px solid #f5c6cb; }
+.imp-2 { background:#fef3e2; color:var(--star2); border:1px solid #fce4b8; }
+.imp-1 { background:#f0f0f0; color:var(--star1); border:1px solid #ddd; }
+
+/* Method chain */
+.method-chain {
+  background: var(--code-bg); border-left: 4px solid var(--accent);
+  padding: 14px 18px; margin: 12px 0; border-radius: 0 8px 8px 0;
+  font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: .88rem; line-height: 1.7; white-space: pre; overflow-x: auto;
+}
+
+/* Stata code */
+.stata-code {
+  background: #1e1e1e; color: #d4d4d4;
+  border-radius: 8px; padding: 16px 20px; margin: 12px 0;
+  font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: .85rem; line-height: 1.6; overflow-x: auto;
+  position: relative;
+}
+.stata-code .comment { color: #6a9955; }
+.stata-code .keyword { color: #569cd6; }
+.stata-code .string { color: #ce9178; }
+.stata-code .num { color: #b5cea8; }
+.stata-code::before {
+  content: "Stata"; position: absolute; top: 6px; right: 12px;
+  font-size: .7rem; color: #555; font-family: sans-serif;
+}
+
+/* Collapsible */
+details {
+  border: 1px solid var(--border); border-radius: 8px;
+  margin: 10px 0; padding: 0; overflow: hidden;
+}
+details summary {
+  padding: 12px 16px; cursor: pointer; font-weight: 600;
+  background: var(--tag-bg); user-select: none;
+  font-size: .92rem; transition: background .2s;
+}
+details summary:hover { background: var(--sidebar-active); }
+details .details-content { padding: 16px 20px; }
+
+/* Tables */
+table {
+  width: 100%; border-collapse: collapse; margin: 14px 0; font-size: .9rem;
+}
+th, td {
+  padding: 10px 14px; text-align: left;
+  border: 1px solid var(--border);
+}
+th { background: var(--tag-bg); font-weight: 700; color: var(--accent); }
+tr:nth-child(even) { background: var(--code-bg); }
+
+/* Decision tree */
+.decision-tree {
+  background: var(--code-bg); border: 1px solid var(--border);
+  border-radius: 10px; padding: 18px 22px; margin: 14px 0;
+  font-family: "Fira Code", "Cascadia Code", "Consolas", monospace;
+  font-size: .85rem; line-height: 1.7; white-space: pre; overflow-x: auto;
+}
+
+/* Mnemonic */
+.mnemonic {
+  background: var(--highlight); border: 1px dashed var(--accent-light);
+  border-radius: 10px; padding: 16px 20px; margin: 14px 0;
+  font-size: .95rem; line-height: 1.8; font-style: italic;
+}
+.mnemonic::before {
+  content: "🧠 速记口诀 "; font-style: normal; font-weight: 700;
+  color: var(--accent); font-size: .82rem;
+}
+
+/* Highlighted search */
+.highlight-match { background: #ffeb3b; border-radius: 2px; padding: 0 2px; }
+
+/* Responsive */
+@media (max-width: 768px) {
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; padding: 24px 16px; }
+  .sidebar-toggle { left: 12px; }
+  .section-card { padding: 18px 16px; }
+  table { font-size: .78rem; }
+  th, td { padding: 6px 8px; }
+}
+
+/* Print */
+@media print {
+  #sidebar, .sidebar-toggle, .header-actions { display: none !important; }
+  #main { margin-left: 0; padding: 0; }
+  .section-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+  details .details-content { display: block !important; }
+  body { font-size: 11pt; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-light); }
+
+/* Smooth scroll */
+html { scroll-behavior: smooth; }
+
+/* KaTeX overrides */
+.katex { font-size: 1.05em; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<aside id="sidebar">
+  <h2>📋 复习重点目录</h2>
+  <nav>
+    <a href="#banner"><span class="tag">📌</span>老师5条重点</a>
+    <a href="#s0"><span class="tag">§0</span>全篇导论：方法谱系总图</a>
+    <a href="#s1"><span class="tag">★1</span>双重固定效应·GMM·动态面板</a>
+    <a href="#s2"><span class="tag">★2</span>随机实验·回归·CATE·因果推断</a>
+    <a href="#s3"><span class="tag">★3</span>高维数据·ML·交叉验证·DML</a>
+    <a href="#s4"><span class="tag">★4</span>匹配·PSM·面板固定效应</a>
+    <a href="#s5"><span class="tag">★5</span>识别条件·IV·双机器学习</a>
+    <a href="#s6"><span class="tag">⊕</span>全篇总结·方法决策树</a>
+  </nav>
+</aside>
+
+<button class="sidebar-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')" title="切换侧边栏">☰</button>
+
+<!-- Main -->
+<main id="main">
+
+<!-- Header -->
+<div class="header-bar">
+  <div>
+    <h1>计‎量经济学 · 复习重点</h1>
+    <div class="subtitle">基于徐秋华老师课堂画重点 · 7章知识融合 · 5大核心主题</div>
+  </div>
+  <div class="header-actions">
+    <input type="text" id="searchBox" placeholder="🔍 搜索知识点..." oninput="doSearch()">
+    <button onclick="toggleTheme()" id="themeBtn">🌙 暗色</button>
+    <button onclick="window.print()">🖨 打印</button>
+  </div>
+</div>
+
+<!-- Teacher Banner -->
+<div class="teacher-banner" id="banner">
+  <h3>📌 徐秋华老师课堂画重点（5条核心）</h3>
+  <ol>
+    <li><strong>双重固定效应 & GMM & 动态面板</strong>：双重固定效应是理解动态面板数据的基石；GMM估计中的正负项与维度匹配问题是应用核心。</li>
+    <li><strong>随机实验 & 回归分析 & 因果关系</strong>：控制变量和合理假设是因果分析的前提；CATE（条件平均处理效应）要求关注交互效应；回归调整技术在实际操作中需注意的条件。</li>
+    <li><strong>模型复杂度 & 高维数据 & 神经网络</strong>：样本内外性能评估体系；高维数据分步估计与检验；神经网络捕捉非线性关系；交叉验证与残差分析在模型选择中的作用。</li>
+    <li><strong>匹配 & 验证 & 面板数据分析</strong>：严格性与灵活性之间的平衡；匹配后事‎后验证与平衡性考量；固定效应模型在不同组间个体差异分析中的应用。</li>
+    <li><strong>识别条件 & 工具变量 & 双机器学习</strong>：缺乏明确因果关系时识别条件的核心作用；非线性关系与条件估计在识别因果效应中的应用；交叉分层识别方法的效用。</li>
+  </ol>
+</div>
+
+<!-- ====== §0 全篇导论 ====== -->
+<section class="section-card" id="s0">
+<h2><span class="sec-num">§0</span>全篇导论：现代计量经济学的方法谱系</h2>
+<span class="imp imp-3">★★★ 必考</span>
+
+<h3>脉络梳理</h3>
+<p>现代计量经济学的核心命题是<strong>"如何在非实验数据中识别因果关系"</strong>。从经典的OLS回归到最前沿的双机器学习，方法论演进遵循一条清晰的主线：</p>
+
+<div class="method-chain">
+                         ┌─→ 匹配/PSM ──→ DID ──→ 交叠DID(CSDID)
+                         │
+OLS(基线) ──→ 固定效应FE ──→ 面板内生性 ──→ 2SLS/面板IV ──→ GMM(差分/系统)
+                         │
+                         └─→ 高维方法(LASSO) ──→ Double Lasso ──→ DML/Neyman正交
+                                                      │
+                                                      └─→ 非线性ML(树/RF/Boosting/NN)
+</div>
+
+<p><strong>一句话主线</strong>：观测数据中处置分配非随机 → 需要假设识别条件 → 不同假设引出不同方法 → 方法的核心差异在于"用什么信息替代随机化"。</p>
+
+<h3>七个知识域与五大重点的对应</h3>
+<table>
+<tr><th>知识域</th><th>对应老师重点</th><th>核心方法</th></tr>
+<tr><td>面板数据模型</td><td>★1, ★4</td><td>FE / RE / Hausman / TWFE</td></tr>
+<tr><td>面板内生性处理</td><td>★1, ★5</td><td>面板IV / 差分GMM / 系统GMM</td></tr>
+<tr><td>回归、匹配与因果推断</td><td>★2, ★4</td><td>CIA / RA / PSM / IPW</td></tr>
+<tr><td>双重差分(DID)</td><td>★2, ★4</td><td>TWFE / 安慰剂 / DDD / Bacon / CSDID</td></tr>
+<tr><td>高维线性方法</td><td>★3</td><td>LASSO / Post-LASSO / Double Lasso</td></tr>
+<tr><td>非线性回归与Causal ML</td><td>★3, ★5</td><td>树 / RF / Boosting / NN / DML</td></tr>
+<tr><td>模型与变量选择</td><td>★3</td><td>AIC/BIC / Ridge / LASSO / CV / PCA</td></tr>
+</table>
+
+<h3>习题</h3>
+<details><summary>⭐ Q0.1 简述现代计量经济学方法论的主线演进逻辑。</summary><div class="details-content">
+<p><strong>参考答案要点</strong>：从OLS出发，面对三大挑战——①不可观测异质性 → FE/RE；②内生性 → IV/GMM；③高维混杂 → LASSO/Double Lasso → DML。每一步都是在"更弱的假设下识别因果效应"。核心trade-off始终是"识别假设的可信度 vs 估计效率"。</p>
+</div></details>
+</section>
+
+<!-- ====== 重点1: 双重固定效应·GMM·动态面板 ====== -->
+<section class="section-card" id="s1">
+<h2><span class="sec-num">★1</span>双重固定效应 · GMM · 动态面板</h2>
+<span class="imp imp-3">★★★ 必考大题</span>
+
+<h3>脉络梳理</h3>
+<p><strong>开场Puzzle</strong>：你有一份企业面板数据，研究R&D支出与规模的关系。控制了企业固定效应后系数显著——但企业规模本身可能是内生的（成功的创新→增长→规模扩大）。固定效应能解决这个问题吗？<strong>不能</strong>——FE只消除不随时间变化的遗漏变量，不能处理时变的内生性。</p>
+
+<p><strong>方法演进链</strong>：</p>
+<div class="method-chain">
+FE(消除αi，但Xit与εit相关→不一致)
+  → 面板2SLS(xtivreg)：对组内离差变换后的数据做2SLS
+  → 动态面板：加入Yit-1，组内变换导致Nickell偏误(≈O(1/T))
+  → Anderson-Hsiao：用Yit-2作为ΔYit-1的IV
+  → 差分GMM(Arellano-Bond)：所有可用滞后项做IV，块对角Zi矩阵
+  → 系统GMM(Blundell-Bond)：加入水平方程矩条件，解决γ→1时的弱IV
+</div>
+
+<h3>重点内容申明</h3>
+
+<!-- FE基础 -->
+<h4>1. 固定效应(FE)与组内变换</h4>
+<p><strong>直觉</strong>：每个个体有自己的截距αi，吸收所有不随时间变化的特征。相当于"每个个体跟自己比"。</p>
+<p>模型：$Y_{it} = \alpha_i + X_{it}'\beta + \varepsilon_{it}$</p>
+<p>组内变换减去个体时间均值：$\ddot{Y}_{it} = \ddot{X}_{it}'\beta + \ddot{\varepsilon}_{it}$，αi被消除。</p>
+<p><strong>关键假设</strong>——严格外生性：$E(\varepsilon_{it} | X_{i1},...,X_{iT}, \alpha_i) = 0$。这比横截面OLS的外生性强得多——要求各期误差与所有时期的X都不相关。</p>
+<p><strong>FE的代价</strong>：时不变变量的系数无法估计（性别、种族等——被αi吸收了）。</p>
+
+<div class="stata-code"><span class="comment">* 固定效应模型</span>
+<span class="keyword">xtset</span> id year
+<span class="keyword">xtreg</span> y x1 x2, <span class="keyword">fe</span> <span class="keyword">vce</span>(cluster id)
+<span class="comment">* fe选项自动做组内离差变换</span>
+<span class="comment">* vce(cluster id) 允许个体内误差相关</span></div>
+
+<!-- Nickell偏误 -->
+<h4>2. Nickell偏误——动态面板的根源问题 <span class="imp imp-3">★★★ 必考</span></h4>
+<p><strong>直觉</strong>：经济行为有惯性——今年的消费与去年相关。加入$Y_{it-1}$后，组内变换使$\Delta Y_{it-1}$与$\Delta\varepsilon_{it}$通过$\varepsilon_{it-1}$产生相关。</p>
+<p>以T=3为例：差分方程$\Delta Y_{i3} = \gamma \Delta Y_{i2} + \Delta \varepsilon_{i3}$。展开：</p>
+<p>$E(\Delta Y_{i2} \Delta \varepsilon_{i3}) = E[(Y_{i2}-Y_{i1})(\varepsilon_{i3}-\varepsilon_{i2})]$</p>
+<p>关键项：$E(Y_{i2}\varepsilon_{i2}) = -\sigma^2_{\varepsilon} \neq 0$——这破坏了OLS的一致性。</p>
+<p><strong>偏误大小</strong>：≈$O(1/T)$。T=5时偏误约-20%，不可忽视。Hansen的结论：无论T多大，动态面板不能用FE。</p>
+
+<!-- Anderson-Hsiao -->
+<h4>3. Anderson-Hsiao估计量 <span class="imp imp-3">★★★ 核心</span></h4>
+<p><strong>核心直觉</strong>：差分消除αi后，用$Y_{it-2}$作为$\Delta Y_{it-1}$的工具变量。</p>
+<p><strong>外生性</strong>：若εit无自相关，$Y_{it-2}$只依赖于$\varepsilon_{it-2}$及更早信息，与$\varepsilon_{it}$和$\varepsilon_{it-1}$均无关 → $E(Y_{it-2}\Delta\varepsilon_{it}) = 0$。</p>
+<p><strong>相关性</strong>：$Y_{it-2}$与$\Delta Y_{it-1} = Y_{it-1} - Y_{it-2}$显然相关。</p>
+
+<div class="stata-code"><span class="comment">* Anderson-Hsiao: 一阶差分+滞后两期做IV</span>
+<span class="keyword">xtivreg</span> y x1 x2 (L.y = L2.y), <span class="keyword">fd</span> <span class="keyword">vce</span>(robust)
+<span class="comment">* L.y：因变量滞后一期（内生）</span>
+<span class="comment">* L2.y：因变量滞后两期（工具变量）</span>
+<span class="comment">* fd：一阶差分消除固定效应</span></div>
+
+<p><strong>局限</strong>：①只用一个IV，效率低；②εit必须无自相关；③γ接近1时$Y_{it-2}$变成弱IV。</p>
+
+<!-- 差分GMM -->
+<h4>4. 差分GMM (Arellano-Bond) <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p><strong>核心思想</strong>：不同时间点可用的滞后IV数量不同——t=3有1个(Yi1)、t=4有2个(Yi1,Yi2)、...。差分GMM把所有可用滞后项纳入矩条件<strong>联合估计</strong>。</p>
+<p><strong>工具变量矩阵Zi</strong>是块对角结构：</p>
+<p>$$Z_i = \begin{pmatrix} [Y_{i1}, \Delta X_{i3}] & 0 & \cdots \\ 0 & [Y_{i1},Y_{i2},\Delta X_{i4}] & \cdots \\ \vdots & \vdots & \ddots \end{pmatrix}$$</p>
+<p>矩条件：$E(Z_i'\Delta\varepsilon_i)=0$。工具变量总数$L = K(T-2) + \frac{(T-1)(T-2)}{2}$</p>
+
+<table>
+<tr><th></th><th>一步GMM</th><th>两步GMM</th></tr>
+<tr><td>权重矩阵</td><td>假设同方差</td><td>先用一步残差估计S</td></tr>
+<tr><td>效率</td><td>较低</td><td>渐近更有效</td></tr>
+<tr><td>标准误</td><td>普通稳健</td><td>Windmeijer小样本修正</td></tr>
+</table>
+
+<p><strong>多弱工具变量问题</strong>：当T较大时IV数量$O(T^2)$膨胀。实证建议用<code>maxldep(#)</code>限制滞后阶数。</p>
+
+<div class="stata-code"><span class="comment">* 两步差分GMM（推荐）</span>
+<span class="keyword">xtabond</span> depvar indepvars, <span class="keyword">lags</span>(2) <span class="keyword">maxldep</span>(3) <span class="comment">//</span>
+    <span class="keyword">twostep</span> <span class="keyword">vce</span>(robust)
+<span class="comment">* lags(2)：模型中含Yit-1和Yit-2</span>
+<span class="comment">* maxldep(3)：IV最多用到滞后3期</span></div>
+
+<!-- 系统GMM -->
+<h4>5. 系统GMM (Blundell-Bond) <span class="imp imp-3">★★★ 必考</span></h4>
+<p><strong>为什么需要系统GMM？</strong>当γ→1（高度持续性）时，$Y_{it-1}$的变动几乎全部来自αi和久远冲击，$Y_{it-2}$对$\Delta Y_{it-1}$的预测能力 → 0。差分GMM的IV变成弱IV。</p>
+<p><strong>Blundell-Bond的洞见</strong>：为水平方程也找IV——用<strong>$\Delta Y_{it-1}$作为水平方程中$Y_{it-1}$的IV</strong>。</p>
+<ul>
+  <li><strong>相关性</strong>：差分与水平值显然相关</li>
+  <li><strong>外生性</strong>：若εit无自相关，$\Delta Y_{it-1}$与当期$\varepsilon_{it}$不相关</li>
+  <li><strong>附加条件</strong>（初值条件）：$E[(Y_{i1} - \frac{\alpha_i}{1-\gamma})\alpha_i] = 0$——初值偏离均值的部分与个体效应无关</li>
+</ul>
+<p>系统GMM = 差分方程矩条件 + 水平方程矩条件，联合估计。蒙特卡洛模拟表明γ≈1时系统GMM小样本性质远优于差分GMM。</p>
+
+<div class="stata-code"><span class="comment">* xtabond2：实证首选（非官方命令）</span>
+<span class="keyword">ssc install</span> xtabond2
+<span class="keyword">xtabond2</span> lwage L.lwage occ south smsa ind <span class="comment">//</span>
+    wks L.wks ms union, <span class="comment">//</span>
+    <span class="keyword">gmmstyle</span>(lwage, lag(2 4)) <span class="comment">//</span>
+    <span class="keyword">gmmstyle</span>(wks ms union, lag(2 3)) <span class="comment">//</span>
+    <span class="keyword">ivstyle</span>(occ south smsa ind) <span class="comment">//</span>
+    <span class="keyword">twostep</span> <span class="keyword">robust</span>
+
+<span class="comment">* gmmstyle：GMM型IV（滞后项）</span>
+<span class="comment">* ivstyle：标准IV（严格外生变量）</span>
+<span class="comment">* 去掉noleveleq即系统GMM；加noleveleq即仅差分GMM</span></div>
+
+<!-- 三类变量 -->
+<h4>6. 变量分类：严格外生·前定·内生 <span class="imp imp-2">★★ 常考</span></h4>
+<table>
+<tr><th>类型</th><th>定义</th><th>差分后IV选取</th></tr>
+<tr><td>严格外生</td><td>$E(X_{it}\varepsilon_{is})=0, \forall t,s$</td><td>ΔXit自身</td></tr>
+<tr><td>前定</td><td>$E(X_{it}\varepsilon_{is})=0, s\geq t$；与未来误差可相关</td><td>Xit-1, Xit-2,...</td></tr>
+<tr><td>内生</td><td>$E(X_{it}\varepsilon_{it}) \neq 0$</td><td>从Xit-2开始</td></tr>
+</table>
+<p><strong>为什么前定变量差分后内生？</strong>$\Delta X_{it}$中含$X_{it-1}$，而$X_{it}$可能与$\varepsilon_{it-1}$相关（前定变量允许与<em>未来</em>误差相关，但当期$X_{it}$对过去的$\varepsilon_{it-1}$...这要看具体经济含义）。关键公式：</p>
+<p>$E(\Delta X_{it} \Delta \varepsilon_{it}) = -E(X_{it}\varepsilon_{it-1}) \neq 0$</p>
+
+<!-- 检验 -->
+<h4>7. 诊断检验：自相关 & 过度识别 <span class="imp imp-3">★★★ 必考</span></h4>
+<p><strong>自相关检验(estat abond)</strong>：检验<strong>差分残差</strong>的自相关。注意：即使εit无自相关，Δεit必有一阶自相关。合格结果：一阶p&lt;0.05，二阶(及以上)p&gt;0.05。</p>
+<p><strong>过度识别检验</strong>：IV数 > 内生变量数时可检验所有矩条件是否同时成立。异方差下用Hansen检验，同方差下用Sargan检验。拒绝H0 → 某些IV不满足外生性。</p>
+
+<div class="stata-code"><span class="comment">* 自相关检验</span>
+<span class="keyword">estat abond</span>, artests(3)
+<span class="comment">* 过度识别检验</span>
+<span class="keyword">estat sargan</span>   <span class="comment">// 同方差</span>
+<span class="comment">* xtabond2自动报告Hansen检验</span></div>
+
+<h3>习题</h3>
+<details><summary>⭐ Q1.1 Nickell偏误的来源是什么？为什么T越大偏误越小？</summary><div class="details-content">
+<p>来源：组内离差变换使$\Delta Y_{it-1}$与$\Delta\varepsilon_{it}$通过$\varepsilon_{it-1}$产生相关（$E(Y_{it-1}\varepsilon_{it-1}) \neq 0$）。偏误≈$O(1/T)$，T增大时每个体更多期观测，组内均值的估计更精确，离差变换带来的相关性减弱。</p>
+<p><strong>易错点</strong>：不能说"T大时FE就一致了"——理论上偏误永远存在，只是变小。</p>
+</div></details>
+
+<details><summary>⭐⭐ Q1.2 差分GMM和系统GMM的区别是什么？什么情况下系统GMM显著优于差分GMM？</summary><div class="details-content">
+<p><strong>核心区别</strong>：差分GMM仅用差分方程的矩条件；系统GMM额外加入水平方程的矩条件（用差分做IV）。</p>
+<p><strong>系统GMM显著优于差分GMM的场景</strong>：①γ接近1（高度持续性，如GDP、消费）；②个体效应方差远大于误差方差（$\sigma^2_\alpha/\sigma^2_\varepsilon$大）。这两种情况下差分GMM的滞后项IV变成弱IV，系统GMM的水平方程提供额外识别信息。</p>
+<p><strong>代价</strong>：系统GMM需要更强的假设——初值条件（均值平稳性）。</p>
+</div></details>
+
+<details><summary>⭐⭐⭐ Q1.3 假设εit服从MA(1)过程，工具变量选取需如何调整？</summary><div class="details-content">
+<p>若$\varepsilon_{it} = \eta_{it} + \psi\eta_{it-1}$，则$\varepsilon_{it}$与$\varepsilon_{it-1}$相关。此时$Y_{it-2}$与$\Delta\varepsilon_{it}$中的$\varepsilon_{it-1}$相关 → $Y_{it-2}$不再外生。有效IV从$Y_{it-3}$开始。Stata中调整：<code>gmmstyle(y, lag(3 5))</code>替换<code>lag(2 4)</code>。水平方程IV从$\Delta Y_{it-2}$开始。</p>
+</div></details>
+</section>
+
+<!-- ====== 重点2: 随机实验·回归·CATE ====== -->
+<section class="section-card" id="s2">
+<h2><span class="sec-num">★2</span>随机实验 · 回归调整 · CATE · 因果推断</h2>
+<span class="imp imp-3">★★★ 核心</span>
+
+<h3>脉络梳理</h3>
+<p><strong>开场Puzzle</strong>：研究"上大学对收入的因果效应"。直接比较大学毕业生和高中毕业生的平均收入——差异很大。但这是上大学的因果效应吗？不——上大学的人本身能力可能更强，即使不上大学收入也更高。这就是<strong>选择偏误</strong>(selection bias)。</p>
+
+<div class="method-chain">
+随机实验(IA)：处置与潜在结果独立——黄金标准但经济数据不可得
+  ↓
+条件独立(CIA/CMI)：控制可观测Xi后处置近似随机
+  ↓
+回归调整(RA)：用参数模型"部分掉"Xi的影响
+  ↓
+匹配/PSM：构造可比样本，非参数地控制Xi
+</div>
+
+<h3>重点内容申明</h3>
+
+<h4>1. 条件独立假设(CIA)与条件均值独立(CMI) <span class="imp imp-3">★★★ 核心</span></h4>
+<p><strong>直觉</strong>：CIA = "分组后，组内随机"。虽然不控制时不可比，但在每个Xi取值相同的子群体内，处置就像抽签。</p>
+<p>CIA：$(Y_{1i}, Y_{0i}) \perp\!\!\!\perp D_i \mid X_i$ ——要求整个<strong>分布</strong>独立。</p>
+<p>CMI：$E(Y_{di} \mid X_i, D_i) = E(Y_{di} \mid X_i)$ ——只要求<strong>均值</strong>独立。</p>
+<p><strong>关键区别</strong>：CMI比CIA弱——回归只需要均值独立就够了。但CIA/CMI都<strong>不可直接检验</strong>——你必须论证"控制了足够多的变量"。</p>
+
+<h4>2. 同质处置效应下的回归调整 <span class="imp imp-3">★★★ 必考</span></h4>
+<p>假设$\tau_i = \tau$（所有人效应相同），在CMI+线性CEF下：</p>
+<p>$Y_i = \alpha + \tau D_i + X_i'\gamma + \varepsilon_i$</p>
+<p>$D_i$的系数$\tau$就是因果效应。回归相当于把Xi的影响"部分掉"(partial out)，剩下的Di与Yi的关系就是干净的因果效应。</p>
+<p><strong>三个条件同时成立</strong>：CMI + 同质效应 + 线性CEF → OLS给出τ的一致估计。</p>
+
+<h4>3. 异质处置效应与CATE <span class="imp imp-3">★★★ 必考</span></h4>
+<p><strong>直觉</strong>：处置效应因人而异——教育回报可能因能力而异，政策效果可能因地区而异。这就是<strong>条件平均处理效应(CATE)</strong>的核心关注点。</p>
+<p>设异质POM：</p>
+<p>$Y_{0i} = \psi_0 + (X_i - \eta)'\gamma_0 + u_{0i}$</p>
+<p>$Y_{1i} = \psi_1 + (X_i - \eta)'\gamma_1 + u_{1i}$</p>
+<p>代入$Y_i = Y_{0i} + D_i(Y_{1i} - Y_{0i})$，整理得：</p>
+<p>$Y_i = \psi_0 + \tau_{ATE} D_i + (X_i - \bar{X})'\gamma_0 + D_i(X_i - \bar{X})'\delta + \varepsilon_i$</p>
+<p>其中$\tau_{ATE} = \psi_1 - \psi_0$，$\delta = \gamma_1 - \gamma_0$。<strong>交互项$D_i(X_i-\bar{X})$捕捉了"谁受益更多"</strong>。</p>
+<p><strong>CATE的实证含义</strong>：$\tau(X_i) = \tau_{ATE} + (X_i - \bar{X})'\delta$——不同特征个体的处置效应不同。</p>
+
+<h4>4. Stata实现 <span class="imp imp-2">★★ 常考</span></h4>
+<div class="stata-code"><span class="comment">* 同质RA</span>
+<span class="keyword">ivtreatreg</span> Y D $xvar, <span class="keyword">model</span>(cf-ols) <span class="keyword">vce</span>(robust)
+
+<span class="comment">* 异质RA（加入交互项）</span>
+<span class="keyword">ivtreatreg</span> Y D $xvar, <span class="keyword">hetero</span>($xvarh) <span class="keyword">model</span>(cf-ols) <span class="keyword">vce</span>(robust)
+
+<span class="comment">* Bootstrap估计ATET和ATENT</span>
+<span class="keyword">bootstrap</span> atet=e(atet) atent=e(atent), <span class="keyword">rep</span>(200): <span class="comment">//</span>
+    <span class="keyword">ivtreatreg</span> Y D $xvar, <span class="keyword">hetero</span>($xvarh) <span class="keyword">model</span>(cf-ols)
+
+<span class="comment">* 官方命令 teffects ra</span>
+<span class="keyword">teffects ra</span> (Y $xvar, linear) (D)
+<span class="keyword">teffects ra</span> (Y $xvar, linear) (D), <span class="keyword">atet</span></div>
+
+<h3>习题</h3>
+<details><summary>⭐ Q2.1 CIA和CMI的核心区别是什么？为什么CMI对回归足够？</summary><div class="details-content">
+<p>CIA要求$(Y_1,Y_0)$的整个联合分布独立于D|X，CMI只要求条件均值独立。回归只关心$E(Y|X,D)$，均值独立就能保证Di的系数有因果解释。CIA更强但通常不是必需的。</p>
+</div></details>
+
+<details><summary>⭐⭐ Q2.2 异质处置效应下，为什么需要加入$D_i \times (X_i - \bar{X})$交互项？</summary><div class="details-content">
+<p>异质时ATE不仅来自截距差还来自斜率差。从POM推导：$Y_i = Y_{0i} + D_i(Y_{1i}-Y_{0i})$，将两个POM方程代入展开，Di与$(X_i-\bar{X})$的交互项系数$\delta=\gamma_1-\gamma_0$捕捉"特征Xi如何改变处置效应"。不加交互项会把异质部分挤入误差项，导致$\hat{\tau}$不一致。</p>
+</div></details>
+
+<details><summary>⭐⭐⭐ Q2.3 CATE（条件平均处理效应）在政策评估中的实际意义是什么？</summary><div class="details-content">
+<p>CATE回答"谁从政策中受益更多"。ATE只给总体平均，掩盖了重要的异质性。例如：职业培训对低学历者效果更好（CATE随教育水平递减）→ 政策应精准投放。从方法角度，CATE需要交互项或分组估计，且需要更强的识别条件（CIA必须在所有X取值处成立）。参考Chernozhukov et al.的Generic ML方法可估计CATE。</p>
+</div></details>
+</section>
+
+<!-- ====== 重点3: 高维·ML·交叉验证·DML ====== -->
+<section class="section-card" id="s3">
+<h2><span class="sec-num">★3</span>高维数据 · ML方法 · 交叉验证 · DML</h2>
+<span class="imp imp-3">★★★ 核心难点</span>
+
+<h3>脉络梳理</h3>
+<p><strong>开场Puzzle</strong>：你想评估"CEO学历对上市公司绩效的因果效应"。潜在混杂变量可能有数百个（行业、规模、年龄、治理结构、地域...）——当p接近或超过n时，OLS直接崩溃（X'X奇异）。如何在"宽数据"中可靠地估计和推断？</p>
+
+<div class="method-chain">
+            预测主线                    推断主线
+              │                          │
+OLS(p<n)     LASSO(ℓ1正则化)           Double Lasso(BCH 2014)
+  │            │                          │
+  └──→ 高维(p>n)→ Post-Lasso            Neyman正交得分
+               │                          │
+               ├──→ 岭回归(ℓ2)           DML(Chernozhukov+ 2018)
+               │                          │
+               └──→ 非线性ML             √N渐近正态推断
+                    (RF/Boosting/NN)
+</div>
+<p><strong>一句话主线</strong>：正则化让高维估计成为可能；Neyman正交+交叉拟合让ML预测器的灵活性不损害统计推断的可靠性。</p>
+
+<h3>重点内容申明</h3>
+
+<h4>1. LASSO与ℓ1正则化 <span class="imp imp-3">★★★ 核心</span></h4>
+<p>$$\hat{\beta}_{LASSO} = \arg\min_\beta \|Y - X\beta\|^2 + \lambda\|\beta\|_1$$</p>
+<p><strong>直觉</strong>：ℓ1惩罚的"菱形"约束域使解倾向于落在坐标轴上 → 部分系数精确为零 → 自动变量选择。这在几何上是ℓ1球与等高线的切点更容易出现在尖角处。</p>
+<p><strong>LASSO的核心局限</strong>：系数有<strong>收缩偏误</strong>(shrinkage bias)——即使选对了变量，$\hat{\beta}_j$也被λ压缩了。对预测这无害（甚至有益，降低了方差），但对推断有问题——不能直接用LASSO系数做置信区间和t检验。</p>
+
+<h4>2. Post-Lasso与选择后推断问题 <span class="imp imp-3">★★★</span></h4>
+<p>Post-Lasso = Lasso选变量 → OLS估计所选变量的系数。消除了收缩偏误，但引入新问题：</p>
+<p><strong>选择后推断(post-selection inference)</strong>：如果用全部数据先选变量再做OLS，标准误被系统性低估——因为变量选择步骤利用了数据中Y与X的随机相关性，这些"运气成分"在推断阶段没被考虑。</p>
+<p><strong>解法</strong>：样本分割——一份数据选变量，另一份做推断。Double Lasso将此思想系统化。</p>
+
+<h4>3. Double Lasso (BCH 2014) <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p><strong>核心问题</strong>：估计D对Y的因果效应，有大量潜在混杂Z（p可能≫n）。</p>
+<p><strong>三步走</strong>：</p>
+<ol>
+  <li><strong>Lasso Y~Z</strong> → 选出预测Y的混杂 $\hat{S}_Y$</li>
+  <li><strong>Lasso D~Z</strong> → 选出预测D的混杂 $\hat{S}_D$</li>
+  <li><strong>OLS Y~D+$\hat{S}_Y \cup \hat{S}_D$</strong> → 对D的系数做推断</li>
+</ol>
+<p><strong>为什么取并集？</strong>单做第1步可能遗漏"对Y影响弱但对D影响强"的混杂——它们不直接预测Y但通过D间接影响结果。第2步专门捕获这类变量。取并集确保不遗漏任何重要混杂。</p>
+<p><strong>这是老师强调的"分步法在高维数据面前有效估计与检验假设"的核心实例。</strong></p>
+
+<h4>4. 非线性ML预测器概览 <span class="imp imp-2">★★ 常考</span></h4>
+<table>
+<tr><th>方法</th><th>核心思想</th><th>优势</th><th>劣势</th></tr>
+<tr><td>回归树</td><td>递归二分空间，区域常数预测</td><td>完全可解释</td><td>单棵方差大</td></tr>
+<tr><td>随机森林</td><td>Bootstrap+随机子集变量→多树平均</td><td>稳健、少调参</td><td>精度<Boosting</td></tr>
+<tr><td>XGBoost</td><td>序贯种树，每棵修正前树残差</td><td>精度最高</td><td>需调参、易过拟合</td></tr>
+<tr><td>神经网络</td><td>层层非线性变换构造特征</td><td>逼近任意函数</td><td>需大数据、黑箱</td></tr>
+</table>
+
+<p><strong>老师特别强调的"利用神经网络捕捉非线性关系"</strong>：$h^{(l)} = \sigma(W^{(l)}h^{(l-1)} + b^{(l)})$。激活函数σ引入非线性——没有它，多层等价于单层线性变换。深度网络在图像/文本上优势明显，但在结构化表格数据上XGBoost常更优。</p>
+
+<h4>5. 双重机器学习(DML) <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p><strong>DML = Neyman正交得分 + 交叉拟合 + 任意ML预测器</strong></p>
+<p><strong>核心思想</strong>：以部分线性模型$Y = D\theta_0 + g_0(Z) + \varepsilon$为例：</p>
+<ol>
+  <li>用ML估计$\hat{E}[Y|Z]$和$\hat{E}[D|Z]$</li>
+  <li>构造残差$\hat{W} = Y - \hat{E}[Y|Z]$，$\hat{V} = D - \hat{E}[D|Z]$</li>
+  <li>回归$\hat{W}$~$\hat{V}$得$\hat{\theta}$</li>
+</ol>
+<p><strong>正交化的魔力</strong>：残差化消除了$g_0(Z)$的混杂影响。得分函数对讨厌参数的导数为零 → 讨厌参数估计误差对θ的影响是<strong>二阶的</strong> → 只要ML以$n^{-1/4}$速率收敛，θ就是$\sqrt{n}$渐近正态的。</p>
+<p><strong>交叉拟合</strong>：将样本分K份，轮流用K-1份估计$g_0$，在剩下1份上估计θ，最后平均。防止过拟合偏差——避免用同一份数据既训练ML又做推断。</p>
+<p><strong>这是老师强调的"模型选择与评估技术如交叉验证与残差分析"在因果推断中的核心应用。</strong></p>
+
+<h4>6. 偏差-方差权衡与交叉验证 <span class="imp imp-3">★★★ 必考</span></h4>
+<p>$MSE = \text{Bias}^2 + \text{Variance} + \text{Irreducible Error}$</p>
+<p><strong>过拟合</strong>：模型太复杂 → 低偏差高方差 → 训练集完美、测试集崩溃。<strong>欠拟合</strong>：太简单 → 高偏差。</p>
+<p>正则化通过惩罚项控制复杂度，等价于在偏差和方差之间人为设定最优平衡点。λ的选取通过K折交叉验证（常用K=5或10）。</p>
+<p><strong>关键警告（老师强调）</strong>：所有模型选择步骤必须在CV循环<strong>内部</strong>完成。在CV之前先做变量筛选 → 信息泄露 → CV误差被严重低估。这在实践中极其常见且危险。</p>
+
+<h4>7. 模型选择：AIC vs BIC <span class="imp imp-2">★★ 常考</span></h4>
+<p>$AIC = -2\log L + 2k$，$BIC = -2\log L + k\log n$</p>
+<p>AIC目标是最小化预测误差（不假定真实模型在候选集中）；BIC目标是选出真实模型（假定它存在且n大时一致）。BIC惩罚更重（n≥8时logn>2）→ 选出模型更简洁。实证中：预测导向用AIC，因果/结构解释可用BIC参考。</p>
+
+<h3>习题</h3>
+<details><summary>⭐ Q3.1 LASSO的ℓ1惩罚为什么产生稀疏解而Ridge的ℓ2惩罚不产生？</summary><div class="details-content">
+<p>几何解释：ℓ1约束域是菱形（有尖角），ℓ2约束域是球面（光滑）。OLS等高线与ℓ1菱形更容易在坐标轴（尖角）处相切 → 某些系数精确为零。ℓ2球面处处光滑，切线几乎不可能正好在坐标轴上 → 系数被压缩但不为零。数学上，ℓ1的次梯度在零点不唯一，允许最优解落在零处。</p>
+</div></details>
+
+<details><summary>⭐⭐ Q3.2 Double Lasso为什么必须取两个LASSO的并集而不是交集？</summary><div class="details-content">
+<p>LASSO Y~Z选出预测Y的变量；LASSO D~Z选出预测D的变量。一个变量如果"对Y影响弱但对D影响强"，在第一个LASSO中可能被惩罚到零（因为λ的选取以预测Y为目标），但在第二个LASSO中会被选出来。如果取交集就漏掉了这类<strong>重要的混杂变量</strong>——它们通过D间接影响Y。取并集确保不遗漏任何重要混杂。</p>
+</div></details>
+
+<details><summary>⭐⭐⭐ Q3.3 解释DML中"交叉拟合"的必要性——为什么不能在同一份数据上既训练ML又估计θ？</summary><div class="details-content">
+<p>如果同一份数据既用于训练ML估计$\hat{g}_0$又用于估计θ，会产生过拟合偏差：ML（尤其是灵活方法如随机森林）会过度拟合Y中的随机噪声，使得残差$\hat{W}$中的人为相关性被带入第二阶段回归，导致$\hat{\theta}$有偏。交叉拟合确保每个观测值的残差来自"没见过该观测值"的ML模型——等价于样本外的残差化，切断了过拟合的传导链。Chernozhukov et al. (2018)证明K折交叉拟合下，偏误约为$O(n^{-1/2})$。</p>
+</div></details>
+</section>
+
+<!-- ====== 重点4: 匹配·PSM·面板固定效应 ====== -->
+<section class="section-card" id="s4">
+<h2><span class="sec-num">★4</span>匹配 · 验证 · PSM · 面板固定效应 · DID</h2>
+<span class="imp imp-3">★★★ 核心</span>
+
+<h3>脉络梳理</h3>
+<p><strong>开场Puzzle</strong>：评估"参加职业培训对就业的因果效应"。参加培训的人和没参加的人在年龄、学历、工作经验上本就不同。回归调整假设Y与X是线性关系——但如果不是呢？匹配方法提供了一条非参数路径：直接为每个参训者找一个"各方面相似但没参训"的对照。</p>
+
+<div class="method-chain">
+精确匹配（概念清楚，高维失败）→ PSM(Rosenbaum-Rubin降维)
+  │
+  └─→ DID(面板+时间差分，消除时不变不可观测混杂)
+        │
+        ├─→ 2×2 DID → TWFE → 安慰剂检验 → DDD → 事件研究
+        │
+        └─→ 交叠DID(Bacon分解揭示负权重) → CSDID/Sun-Abraham
+</div>
+
+<h3>重点内容申明</h3>
+
+<h4>1. 匹配方法的理论基础 <span class="imp imp-3">★★★ 核心</span></h4>
+<p><strong>回归 vs 匹配：两种哲学</strong>。回归靠<strong>函数形式</strong>控制混杂——假设Y与X是线性关系。匹配靠<strong>构造可比样本</strong>——为处理组找特征相近的对照组，在"相似性空间"而非"参数空间"中做因果推断。两者都建基于CIA，当使用相同X时差异主要来自加权方式不同。</p>
+<p><strong>分层框架</strong>：总体ATE = 各层ATE(X)的加权平均 → $\tau_{ATE} = \sum_x ATE(x) \cdot \Pr(X_i=x)$。这给匹配提供了"分层-加权"的结构基础。</p>
+
+<h4>2. PSM：倾向得分的降维魔法 <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p>$p(X) \equiv \Pr(D=1 \mid X)$——无论X有多少维度，p(X)始终是[0,1]上的一维标量。</p>
+<p><strong>两条核心性质</strong>：</p>
+<ul>
+  <li><strong>平衡性(Balancing)</strong>：$D \perp\!\!\!\perp X \mid p(X)$。在相同倾向得分层内，X在处理组和控制组间无系统性差异。p(X)足以"平衡"所有协变量。</li>
+  <li><strong>非混杂性(Unconfoundedness)</strong>：若CIA成立，则$(Y_1,Y_0) \perp\!\!\!\perp D \mid p(X)$。倾向得分继承了原始协变量的识别能力。</li>
+</ul>
+<p><strong>实证重心</strong>：PSM的重点不是"估计倾向得分"，而是<strong>"检验匹配后平衡性是否成立"</strong>——这正是老师强调的"匹配后还需进行事后验证，以考虑平衡性问题"。</p>
+
+<h4>3. PSM四步实施 <span class="imp imp-2">★★ 常考</span></h4>
+<ol>
+  <li><strong>估计倾向得分</strong>：Logit/Probit回归D~X</li>
+  <li><strong>匹配</strong>：用|p(Xi)-p(Xj)|定义距离（1-1最近邻、1-M近邻、核匹配）</li>
+  <li><strong>检验平衡性</strong>：标准化偏差SMD&lt;0.1；不满足则回到步骤1（加交互项/平方项）</li>
+  <li><strong>计算处置效应</strong>：$\hat{\tau}_{ATET} = \frac{1}{n_1}\sum_{i:D_i=1}(Y_i - \hat{Y}_{0i})$</li>
+</ol>
+<p><strong>两个独立要求</strong>：重合性(0&lt;p(X)&lt;1，支持集重叠) ≠ 平衡性(D⊥X|匹配后，分布相同)。</p>
+
+<div class="stata-code"><span class="comment">* PSM via teffects（官方）</span>
+<span class="keyword">teffects psmatch</span> (Y) (D $xvar, logit), <span class="keyword">atet</span> <span class="keyword">nn</span>(1)
+
+<span class="comment">* 平衡性诊断</span>
+<span class="keyword">tebalance summarize</span>    <span class="comment">// 标准化偏差</span>
+<span class="keyword">tebalance density</span>       <span class="comment">// 倾向得分分布图</span>
+
+<span class="comment">* psmatch2（非官方，更灵活）</span>
+<span class="keyword">psmatch2</span> D $xvar, <span class="keyword">outcome</span>(Y) <span class="keyword">logit</span> <span class="keyword">ate</span> <span class="keyword">common</span>
+<span class="keyword">pstest</span> $xvar, <span class="keyword">both</span> <span class="keyword">graph</span></div>
+
+<h4>4. DID：双重差分 <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p><strong>核心直觉</strong>：当不可观测因素同时影响处置和结果时，CIA失效——回归调整和匹配都不可用。DID利用面板数据的时间维度，通过"差分的差分"消除不随时间变化的不可观测混杂。Card-Krueger(1994)最低工资研究是教科书案例。</p>
+<p>$$\hat{\delta}_{DID} = [\bar{Y}_{NJ}^{post} - \bar{Y}_{NJ}^{pre}] - [\bar{Y}_{PA}^{post} - \bar{Y}_{PA}^{pre}]$$</p>
+<p>= (政策效应+时间趋势) - (纯时间趋势) = 政策效应</p>
+<p><strong>平行趋势假设</strong>：无政策时处理组和控制组的时间变化应相同。不可直接检验（需要反事实），但处理前趋势可间接支持。</p>
+
+<h4>5. TWFE：DID的回归实现 <span class="imp imp-3">★★★</span></h4>
+<p>$Y_{it} = \alpha_i + \lambda_t + \tau D_{it} + X_{it}'\beta + \varepsilon_{it}$</p>
+<p>αi吸收时不变差异，λt吸收共同时间冲击。τ即DID估计量。2×2时TWFE=DID；多期同处置时点时TWFE=ATT；交叠处置时TWFE可能出问题。</p>
+
+<div class="stata-code"><span class="comment">* 经典2×2 DID</span>
+<span class="keyword">reg</span> emp treat##post, <span class="keyword">cluster</span>(store)
+
+<span class="comment">* 多期TWFE</span>
+<span class="keyword">xtset</span> id year
+<span class="keyword">xtreg</span> y d i.year, <span class="keyword">fe</span> <span class="keyword">vce</span>(cluster id)
+
+<span class="comment">* 事件研究（平行趋势检验+动态效应）</span>
+<span class="keyword">eventdd</span> y, <span class="keyword">time</span>(year) <span class="keyword">treated</span>(d) <span class="keyword">cluster</span>(id)</div>
+
+<h4>6. 交叠DID与Bacon分解 <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p><strong>核心问题</strong>：不同个体在不同时间接受处置(staggered adoption)时，TWFE的$\hat{\tau}$是所有可能2×2 DID的加权平均。Goodman-Bacon(2021)将其分解为三类比较：</p>
+<ol>
+  <li>早处理vs未处理 ✅</li>
+  <li>晚处理vs未处理 ✅</li>
+  <li><strong>早处理vs晚处理（晚组未处置期）⚠️ 负权重！</strong></li>
+</ol>
+<p>第3类中，已处理个体被当作"控制组"——若处置效应随时间变化，这个"禁止比较"导致严重偏误，甚至可能导致符号反转。</p>
+
+<div class="stata-code"><span class="comment">* Bacon分解（诊断工具）</span>
+<span class="keyword">bacondecomp</span> y d, <span class="keyword">stub</span>(_bacon) <span class="keyword">ddetail</span>
+
+<span class="comment">* Callaway-Sant'Anna（现代解法）</span>
+<span class="keyword">csdid</span> y, <span class="keyword">time</span>(year) <span class="keyword">gvar</span>(first_treat) <span class="keyword">notyet</span>
+<span class="keyword">csdid_estat simple</span>    <span class="comment">// 总体ATT</span>
+<span class="keyword">csdid_estat event</span>     <span class="comment">// 事件研究图</span></div>
+
+<p><strong>现代解决方案对比</strong>：</p>
+<table>
+<tr><th>方法</th><th>核心思路</th><th>Stata命令</th></tr>
+<tr><td>Callaway-Sant'Anna</td><td>分组-时间ATT，干净对照组</td><td>csdid</td></tr>
+<tr><td>Sun-Abraham</td><td>交互加权，队列份额为权</td><td>eventstudyinteract</td></tr>
+<tr><td>dCDH</td><td>瞬时处置效应</td><td>did_multiplegt</td></tr>
+<tr><td>BJS</td><td>从未处理组插补反事实</td><td>did_imputation</td></tr>
+</table>
+
+<h4>7. 安慰剂检验与DDD <span class="imp imp-2">★★ 常考</span></h4>
+<p><strong>时间安慰剂</strong>：政策时间前移 → "假政策"应不显著。<strong>组别安慰剂</strong>：随机打乱处置状态B次 → 真实估计应落在分布尾部。<strong>结果安慰剂</strong>：用已知不受影响的变量做Y → 应不显著。</p>
+<p><strong>DDD</strong>：引入第三层差分（如省份×群体），当平行趋势存疑时进一步消除特定趋势。</p>
+
+<h4>8. FE/RE/Hausman检验 <span class="imp imp-3">★★★ 必考</span></h4>
+<p>RE假设$\alpha_i$与$X_{it}$不相关，用GLS提高效率；FE允许相关，用组内变换消除$\alpha_i$。Hausman检验比较两者差异：H0下都一致但RE更有效→差异应小；H1下RE不一致→差异大。拒绝H0→用FE。</p>
+
+<div class="stata-code"><span class="keyword">xtreg</span> y x, <span class="keyword">fe</span>
+<span class="keyword">estimates store</span> FE
+<span class="keyword">xtreg</span> y x, <span class="keyword">re</span>
+<span class="keyword">estimates store</span> RE
+<span class="keyword">hausman</span> FE RE</div>
+
+<h3>习题</h3>
+<details><summary>⭐ Q4.1 PSM的平衡性和重合性有什么区别？</summary><div class="details-content">
+<p>重合性(overlap)：0&lt;p(X)&lt;1——每类个体都有被处置和不被处置的可能（支持集重叠）。平衡性(balancing)：匹配后D⊥X|p(X)——两组协变量分布相同。重合性是PSM的前提条件（没有它无法匹配），平衡性是匹配质量的检验标准（匹配后必须满足）。</p>
+</div></details>
+
+<details><summary>⭐⭐ Q4.2 Bacon分解揭示的TWFE"负权重"问题是什么？</summary><div class="details-content">
+<p>交叠DID下，TWFE将"早处理vs晚处理（晚组未处置时）"的比较纳入估计，赋予负权重。这些比较中已处理个体被当作控制组——其Y包含处置效应的变化，污染了DID估计。当处置效应随时间异质时（如效应逐渐增大），负权重可能导致TWFE估计值方向错误。Bacon分解可以量化各类比较的权重，诊断问题严重程度。</p>
+</div></details>
+
+<details><summary>⭐⭐⭐ Q4.3 比较Callaway-Sant'Anna和Sun-Abraham两种交叠DID估计量的异同。</summary><div class="details-content">
+<p><strong>相同点</strong>：①都基于分组-时间ATT(g,t)的框架；②都使用"干净"对照组（从未处理或尚未处理）；③都允许处置效应异质性；④都生成事件研究图。</p>
+<p><strong>不同点</strong>：CS用DR（双重稳健）估计每个ATT(g,t)，然后以队列份额为权重聚合；SA用交互加权估计量，在回归框架中估计队列特定系数后以样本份额加权。CS的DR性质使它对倾向得分或结果模型之一误设稳健；SA在控制变量设定上更灵活，可加入时变控制变量。实证建议报告两者作为稳健性检验。</p>
+</div></details>
+</section>
+
+<!-- ====== 重点5: 识别条件·IV·双机器学习 ====== -->
+<section class="section-card" id="s5">
+<h2><span class="sec-num">★5</span>识别条件 · 工具变量 · 双机器学习 · 因果推断</h2>
+<span class="imp imp-3">★★★ 核心</span>
+
+<h3>脉络梳理</h3>
+<p><strong>开场Puzzle</strong>：你想要估计价格对需求量的因果效应。但价格由供需同时决定——直接回归得到的是供需曲线的混合，不是需求曲线。这就是经典的<strong>内生性/识别问题</strong>：没有外生变动源，就无法分离因果方向。</p>
+
+<div class="method-chain">
+识别问题的根源：Y和X相互决定（联立性），或遗漏变量同时影响两者
+  │
+  ├─→ 工具变量(IV)：找到只通过X影响Y的Z——排除限制(exclusion restriction)
+  │     └─→ 面板IV = 先组内离差再做2SLS
+  │
+  ├─→ 识别条件：即使不知道真实β，也可通过允许参数微小变动来识别
+  │     └─→ 非线性/条件异方差提供额外识别信息（如异方差识别法）
+  │
+  └─→ 双机器学习(DML)：在Neyman正交框架下，用ML估计讨厌参数
+        └─→ 交叉分层识别：对复杂数据结构分层处理识别问题
+</div>
+<p><strong>一句话主线</strong>：识别条件是将统计关联转化为因果解释的桥梁——IV从外部找变动源，DML从内部构造正交条件，两者的共同目标是在更弱的假设下实现可信的因果推断。</p>
+
+<h3>重点内容申明</h3>
+
+<h4>1. 工具变量的识别逻辑 <span class="imp imp-3">★★★ 核心</span></h4>
+<p><strong>2SLS的核心</strong>：第一阶段将内生变量X投影到IV空间（得到$\hat{X}$），第二阶段用$\hat{X}$替代X做回归。$\hat{X}$中只保留了X的"外生部分"——与IV相关且与误差不相关的那部分变动。</p>
+<p>IV的两个条件：</p>
+<ul>
+  <li><strong>相关性</strong>：$Cov(Z, X) \neq 0$（可检验——第一阶段F>10）</li>
+  <li><strong>外生性</strong>：$Cov(Z, \varepsilon) = 0$（<strong>不可检验</strong>——必须基于经济理论论证）</li>
+</ul>
+<p><strong>面板IV</strong>：固定效应2SLS ≡ 对组内离差变换后的数据做2SLS。Stata中xtivreg自动处理变换。</p>
+
+<div class="stata-code"><span class="comment">* 面板固定效应2SLS</span>
+<span class="keyword">xtivreg</span> y x1 x2 (x3 = z1 z2), <span class="keyword">fe</span> <span class="keyword">vce</span>(robust)
+<span class="comment">* x1,x2：外生协变量</span>
+<span class="comment">* x3：内生变量</span>
+<span class="comment">* z1,z2：排他性工具变量</span></div>
+
+<h4>2. Neyman正交得分——DML的数学核心 <span class="imp imp-3">★★★ 必考大题</span></h4>
+<p><strong>核心定义</strong>：得分函数$\psi(W;\theta,\eta)$满足：</p>
+<p>$$\partial_\eta \mathbb{E}[\psi(W; \theta_0, \eta)] \big|_{\eta=\eta_0} = 0$$</p>
+<p><strong>直觉</strong>：得分函数对讨厌参数(η)的导数为零 → 讨厌参数估计误差对目标参数(θ)的影响是二阶的 → $\hat{\eta}$不完美不影响$\hat{\theta}$的一阶渐近性质。</p>
+<p><strong>部分线性模型的Neyman正交得分</strong>：</p>
+<p>$$\psi(W; \theta, \eta) = (Y - \ell(X) - \theta(D - m(X))) \cdot (D - m(X))$$</p>
+<p>其中$\ell(X)=E[Y|X]$，$m(X)=E[D|X]$。这是"双重残差化"的得分——Y和D都先对X做残差化，本质上等价于Frisch-Waugh-Lovell定理在高维/非线性场景的推广。</p>
+
+<h4>3. DML的收敛速率条件 <span class="imp imp-3">★★★</span></h4>
+<p><strong>关键定理</strong>（Chernozhukov et al., 2018）：若得分函数满足Neyman正交性，且使用K折交叉拟合，则只要ML对讨厌参数的估计速率达到$o_p(n^{-1/4})$，目标参数就是$\sqrt{n}$渐近正态的。</p>
+<p>$n^{-1/4}$是什么概念？比$\sqrt{n}$慢得多。这意味着即使用收敛较慢的ML方法（如深度神经网络），只要收敛速率好于$n^{-1/4}$，最终推断仍然有效。这是"ML灵活性+统计推断严谨性"能够结合的<strong>关键数学保障</strong>。</p>
+<p><strong>直觉</strong>：Neyman正交性将ML误差的影响降为二阶 → 误差的平方进入偏误（$o(n^{-1/2}) = o((n^{-1/4})^2)$）→ ML不需要非常精确就能保证推断有效。</p>
+
+<h4>4. 交叉分层识别 <span class="imp imp-2">★★ 常考</span></h4>
+<p>当数据具有多层结构（如学生嵌套于班级、班级嵌套于学校），不同层级的识别条件可能不同。交叉分层识别方法允许：</p>
+<ul>
+  <li>在同一层级内利用"类实验"变异（如班级内的随机分班）</li>
+  <li>在更高层级用IV处理选择偏误（如学校的政策变化作为IV）</li>
+  <li>在不同层级之间通过交互效应传递识别信息</li>
+</ul>
+<p>这是老师强调的"交叉分层识别方法在处理复杂数据结构时的效用"。</p>
+
+<h4>5. 非线性关系与条件估计在因果识别中的应用 <span class="imp imp-2">★★ 常考</span></h4>
+<p><strong>非线性识别来源</strong>：当函数形式为非线性时，即使没有排他性IV也可能识别因果效应。例如，Heckman选择模型依赖正态性假设识别；非参数IV利用非线性/异方差提供识别信息。</p>
+<p><strong>条件估计</strong>：在不同条件下（不同子群体、不同时期、不同制度环境）分别估计因果效应，然后比较异质性模式——这本身可以作为一种非正式的识别策略。如果不同条件下效应模式一致，增加因果解释的可信度。</p>
+
+<h4>6. 识别条件的核心地位（老师重点强调） <span class="imp imp-3">★★★</span></h4>
+<p><strong>识别 ≠ 估计</strong>：识别是"即使有无限数据，参数能否唯一确定"的问题——是参数本身是否可从数据中分离的逻辑问题。估计是"给定有限数据，如何最佳地近似参数"——是统计效率问题。识别是估计的前提——不可识别的参数，估计再好也无意义。</p>
+<p><strong>老师原话的核心含义</strong>："即使面对未知的参数值，如真实贝塔值，也能通过允许参数微小变动来识别和估计因果关系"——这指向的是<strong>局部识别</strong>(local identification)的概念：参数在真实值附近的小邻域内被唯一确定。这与全局识别不同，但在很多非线性模型中已足够支撑推断。</p>
+
+<h3>习题</h3>
+<details><summary>⭐ Q5.1 识别(Identification)和估计(Estimation)的区别是什么？</summary><div class="details-content">
+<p>识别是参数是否可从观测数据的联合分布中唯一确定的逻辑问题——即使样本量无限大。估计是给定有限样本如何最优近似参数值的统计问题。不可识别的参数不能被一致估计。例如：联立方程系统中，不满足阶条件和秩条件的参数是"不可识别的"——无论样本多大，都无法区分供给曲线和需求曲线。</p>
+</div></details>
+
+<details><summary>⭐⭐ Q5.2 解释Neyman正交得分为什么能将ML估计误差的影响降为二阶。</summary><div class="details-content">
+<p>将估计方程$\frac{1}{n}\sum_i \psi(W_i;\hat{\theta},\hat{\eta})=0$在真实值处做Taylor展开：$\frac{1}{n}\sum_i \psi(W_i;\theta_0,\eta_0) + \frac{\partial\psi}{\partial\theta}(\hat{\theta}-\theta_0) + \frac{\partial\psi}{\partial\eta}(\hat{\eta}-\eta_0) +$ 二阶交叉项。Neyman正交性保证$\frac{\partial\psi}{\partial\eta}=0$（在期望意义上），因此$\hat{\eta}-\eta_0$的一阶项消失。剩下的误差来自$(\hat{\eta}-\eta_0)^2$量级的二阶项——只要$\hat{\eta}$以$n^{-1/4}$收敛，二阶项就是$o(n^{-1/2})$，不影响$\hat{\theta}$的$\sqrt{n}$渐近正态性。</p>
+</div></details>
+
+<details><summary>⭐⭐⭐ Q5.3 结合DML框架，讨论"非线性关系和条件估计在识别因果效应中"的应用。</summary><div class="details-content">
+<p>DML允许用非线性ML方法（树、森林、神经网络）估计$E[Y|Z]$和$E[D|Z]$，从而捕捉传统线性模型漏掉的非线性混杂模式。条件估计方面，DML可扩展到估计CATE：在Neyman正交框架下对每个子群体分别估计θ(x)，或使用Generic ML直接对θ(X)建模。关键创新是：非线性和异质性可以在不牺牲推断有效性的前提下被纳入——正交化+交叉拟合提供了数学保障。这正好对应老师强调的"利用神经网络捕捉非线性关系，揭示变量间复杂联系"在现代因果推断框架中的实现。</p>
+</div></details>
+</section>
+
+<!-- ====== §6 全篇总结 ====== -->
+<section class="section-card" id="s6">
+<h2><span class="sec-num">⊕</span>全篇总结：方法决策树与速记口诀</h2>
+<span class="imp imp-3">★★★ 必考</span>
+
+<h3>脉络梳理</h3>
+<p>从OLS到DML，现代计量经济学提供了一套完整的方法工具箱。选择哪个方法，取决于你对数据生成过程的理解——尤其是<strong>处置分配机制</strong>和<strong>潜在混杂的性质</strong>。</p>
+
+<h3>完整方法决策树</h3>
+<div class="decision-tree">
+数据：N个个体 × T期 × K个变量
+│
+├── 关心因果效应（非纯预测）
+│   │
+│   ├── 处置外生（随机实验/自然实验）
+│   │   └── Di ⊥ (Y1i,Y0i) → 直接比较均值（IA成立）
+│   │
+│   ├── 处置依可观测变量选择（CIA/CMI成立）
+│   │   ├── 低维离散X → 精确匹配 + 分层
+│   │   ├── 高维/连续X, 线性CEF → 回归调整(RA)
+│   │   └── 高维X, 更关注可比样本 → PSM（平衡性检验！）
+│   │
+│   ├── 存在不可观测混杂（CIA不成立）
+│   │   ├── 面板数据+处置前后 → DID（平行趋势！）
+│   │   │   ├── 2×2经典 → TWFE
+│   │   │   ├── 多期同处置时点 → TWFE+事件研究
+│   │   │   └── 交叠处置 → CSDID/Sun-Abraham
+│   │   ├── 有工具变量(IV) → 2SLS/面板IV
+│   │   └── 面板+动态 → 差分GMM/系统GMM
+│   │
+│   └── 高维混杂(p接近或超过n)
+│       ├── 稀疏线性 → Double Lasso(BCH)
+│       └── 非线性混杂 → DML(RF/Boosting+交叉拟合)
+│
+└── 关心预测（非因果）
+    ├── p<n → AIC/BIC选模型
+    ├── p>n → LASSO/Ridge/Elastic Net
+    └── 非线性 → RF/Boosting/NN（交叉验证选超参数）
+</div>
+
+<h3>核心方法的检查清单</h3>
+<table>
+<tr><th>方法</th><th>核心识别假设</th><th>不可忽略的检验</th><th>常见陷阱</th></tr>
+<tr><td>FE</td><td>严格外生性</td><td>Hausman检验(FE vs RE)</td><td>时不变变量系数不可估计</td></tr>
+<tr><td>差分GMM</td><td>εit无自相关</td><td>estat abond + Hansen检验</td><td>γ→1时弱IV</td></tr>
+<tr><td>系统GMM</td><td>εit无自相关 + 初值条件</td><td>estat abond + Hansen + C检验</td><td>IV数量不超过N</td></tr>
+<tr><td>PSM</td><td>CIA + 重合性</td><td>平衡性检验(SMD<0.1)</td><td>CIA不可检验</td></tr>
+<tr><td>DID</td><td>平行趋势</td><td>处理前趋势图 + 安慰剂检验</td><td>交叠处置→Bacon分解</td></tr>
+<tr><td>CSDID</td><td>条件平行趋势</td><td>ATT(g,t)处理前≈0</td><td>少量处置组→聚类问题</td></tr>
+<tr><td>DML</td><td>Neyman正交条件</td><td>n^{-1/4}收敛速率</td><td>交叉拟合必须严格</td></tr>
+</table>
+
+<h3>五大必检项（跨方法通用）</h3>
+<ol>
+  <li><strong>识别假设是否可信？</strong>——CIA/平行趋势/排他性——这是所有方法的第一道防线。</li>
+  <li><strong>诊断检验是否通过？</strong>——Hausman/abond/Hansen/平衡性/安慰剂——检验不通过就换方法。</li>
+  <li><strong>结果对设定是否敏感？</strong>——换IV集合、换匹配参数、换控制变量——稳健性比显著性更重要。</li>
+  <li><strong>经济意义是否合理？</strong>——系数大小、符号方向、异质性模式——统计显著≠经济显著。</li>
+  <li><strong>结论能复现吗？</strong>——换样本时期、换变量定义、换估计方法——可靠的发现应该稳健。</li>
+</ol>
+
+<div class="mnemonic">
+内生找IV，面板做FE。动态用GMM，γ近1上系统。<br>
+匹配验平衡，DID看趋势。高维靠LASSO，推断走DML。<br>
+识别先于估计，稳健重于显著。五个必检项，步步不偷懒。
+</div>
+
+</section>
+
+</main>
+
+<script>
+// Theme toggle
+function toggleTheme() {
+  const html = document.documentElement;
+  const btn = document.getElementById('themeBtn');
+  const newTheme = html.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+  html.setAttribute('data-theme', newTheme);
+  btn.innerHTML = newTheme === 'light' ? '🌙 暗色' : '☀️ 亮色';
+  localStorage.setItem('review-theme', newTheme);
+}
+// Init theme
+(function() {
+  const saved = localStorage.getItem('review-theme');
+  if (saved) {
+    document.documentElement.setAttribute('data-theme', saved);
+    document.getElementById('themeBtn').innerHTML = saved === 'light' ? '🌙 暗色' : '☀️ 亮色';
+  }
+})();
+
+// Search
+function doSearch() {
+  const q = document.getElementById('searchBox').value.trim().toLowerCase();
+  // Clear previous highlights
+  document.querySelectorAll('.highlight-match').forEach(el => {
+    el.replaceWith(el.textContent);
+  });
+  if (!q) return;
+  // Search in section cards
+  document.querySelectorAll('.section-card').forEach(card => {
+    const walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT, null, false);
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+    textNodes.forEach(node => {
+      const text = node.textContent.toLowerCase();
+      const idx = text.indexOf(q);
+      if (idx >= 0 && node.parentElement) {
+        const span = document.createElement('span');
+        span.className = 'highlight-match';
+        const before = node.textContent.substring(0, idx);
+        const match = node.textContent.substring(idx, idx + q.length);
+        const after = node.textContent.substring(idx + q.length);
+        span.textContent = match;
+        node.replaceWith(document.createTextNode(before), span, document.createTextNode(after));
+      }
+    });
+  });
+}
+
+// Sidebar active tracking
+(function() {
+  const sections = document.querySelectorAll('.section-card[id]');
+  const navLinks = document.querySelectorAll('#sidebar nav a');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(link => {
+          link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+  sections.forEach(s => observer.observe(s));
+})();
+
+// Keyboard shortcut: Ctrl+K / Cmd+K for search
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    document.getElementById('searchBox').focus();
+  }
+});
+
+// Mobile sidebar auto-close on link click
+document.querySelectorAll('#sidebar nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  });
+});
+</script>
+
+</body>
+</html>
