@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>计量经济学复习资料库</title>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   总目录首页 · 设计系统 V2（与各章复习页统一）
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  --bg: #fdfbf7;
+  --card: #ffffff;
+  --text: #1e1b18;
+  --text2: #5c5852;
+  --text3: #8c8880;
+  --border: #e6e2da;
+  --border-lt: #f0ece5;
+
+  --code-bg: #1a1e2b;
+  --code-text: #d6deeb;
+  --code-accent: #82aaff;
+
+  --accent: #2c6485;
+  --accent-lt: #ecf3f8;
+  --accent-dk: #1a4055;
+
+  --success: #3b7a4b;
+  --warn: #a06830;
+  --purple: #6b4c9a;
+  --cyan: #2d7f8e;
+
+  --font-body: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', 'SimSun', 'Noto Serif', Georgia, serif;
+  --font-heading: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, 'Source Code Pro', monospace;
+
+  --maxw: 1100px;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.04);
+}
+
+html.dark {
+  --bg: #111318;
+  --card: #1a1d24;
+  --text: #e6e3dd;
+  --text2: #a09b93;
+  --text3: #6b6660;
+  --border: #2a2d35;
+  --border-lt: #1f2229;
+  --code-bg: #0d0f14;
+  --code-text: #c8d6e5;
+  --code-accent: #82aaff;
+  --accent: #5d9ec9;
+  --accent-lt: #182635;
+  --accent-dk: #3a6d8f;
+  --success: #5a9e6b;
+  --warn: #d4a258;
+  --purple: #8b6fc0;
+  --cyan: #5dabb8;
+  --success-lt: #1a2e1e;
+  --warn-lt: #302418;
+  --purple-lt: #242035;
+  --cyan-lt: #182a30;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.12), 0 1px 2px rgba(0,0,0,.08);
+  --shadow-hover: 0 4px 16px rgba(0,0,0,.18), 0 2px 6px rgba(0,0,0,.12);
+}
+
+/* ── Reset & Base ─────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  transition: background 0.3s, color 0.3s;
+  min-height: 100vh;
+}
+
+a { color: var(--accent); text-decoration: none; }
+
+/* ── Top Nav ──────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  padding: 0 20px;
+}
+.topbar-inner {
+  max-width: var(--maxw); margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 48px;
+}
+.topbar-title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem; font-weight: 600;
+  color: var(--text);
+}
+.theme-btn {
+  background: none; border: 1px solid var(--border); border-radius: var(--radius-sm);
+  padding: 4px 12px; cursor: pointer; font-size: 0.85rem;
+  color: var(--text2); transition: all 0.2s;
+}
+.theme-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ── Hero ─────────────────────────────────────────── */
+.hero {
+  text-align: center;
+  padding: 64px 20px 40px;
+  max-width: 720px; margin: 0 auto;
+}
+.hero-icon { font-size: 3rem; margin-bottom: 12px; }
+.hero h1 {
+  font-family: var(--font-heading);
+  font-size: 2rem; font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.hero .subtitle {
+  font-size: 1.05rem; color: var(--text2);
+  margin-bottom: 6px;
+}
+.hero .meta {
+  font-size: 0.85rem; color: var(--text3);
+}
+
+/* ── Chapter Grid ─────────────────────────────────── */
+.chapters {
+  max-width: var(--maxw); margin: 0 auto;
+  padding: 0 20px 60px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+}
+
+.chapter-card {
+  display: block;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  box-shadow: var(--shadow-card);
+  transition: all 0.25s ease;
+  text-decoration: none;
+  color: var(--text);
+  position: relative;
+  overflow: hidden;
+}
+.chapter-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 4px; height: 100%;
+  border-radius: var(--radius) 0 0 var(--radius);
+  transition: width 0.25s ease;
+}
+.chapter-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+.chapter-card:hover::before { width: 6px; }
+
+/* Chapter accent colors */
+.card-panel::before      { background: var(--accent); }
+.card-did::before         { background: var(--success); }
+.card-endogeneity::before { background: var(--warn); }
+.card-hdlinear::before    { background: var(--purple); }
+.card-hdnlinear::before   { background: var(--cyan); }
+.card-modelselect::before { background: var(--accent-dk); }
+.card-causal::before      { background: var(--warn); }
+
+.card-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--text3); text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 4px;
+}
+.card-title {
+  font-family: var(--font-heading);
+  font-size: 1.1rem; font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+.card-desc {
+  font-size: 0.88rem; color: var(--text2);
+  line-height: 1.5;
+}
+
+/* ── Footer ───────────────────────────────────────── */
+.footer {
+  text-align: center;
+  padding: 32px 20px;
+  border-top: 1px solid var(--border);
+  color: var(--text3);
+  font-size: 0.82rem;
+  max-width: var(--maxw); margin: 0 auto;
+}
+.footer a { color: var(--text2); }
+.footer a:hover { color: var(--accent); }
+
+/* ── Responsive ───────────────────────────────────── */
+@media (max-width: 700px) {
+  .hero { padding: 40px 16px 28px; }
+  .hero h1 { font-size: 1.5rem; }
+  .chapters { grid-template-columns: 1fr; padding: 0 16px 40px; }
+  .chapter-card { padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ Top Bar ═══════════════ -->
+<nav class="topbar">
+  <div class="topbar-inner">
+    <span class="topbar-title">📐 计量经济学 · 期末复习资料库</span>
+    <button class="theme-btn" id="themeBtn" title="切换亮色/暗色模式">🌙 暗色</button>
+  </div>
+</nav>
+
+<!-- ═══════════════ Hero ═══════════════ -->
+<header class="hero">
+  <div class="hero-icon">📊</div>
+  <h1>计量经济学复习资料库</h1>
+  <p class="subtitle">高级计量经济学 · 第二学期期末复习</p>
+  <p class="meta">共 7 章 · 三段式结构（脉络 → 重点 → 习题）· 费曼风格自检</p>
+</header>
+
+<!-- ═══════════════ Chapter Grid ═══════════════ -->
+<main class="chapters">
+
+  <a href="ch_panel/" class="chapter-card card-panel">
+    <div class="card-num">Chapter 1</div>
+    <div class="card-title">面板数据模型：固定效应与随机效应</div>
+    <div class="card-desc">面板数据结构、组内估计、随机效应 GLS、Hausman 检验、聚类标准误</div>
+  </a>
+
+  <a href="ch_did/" class="chapter-card card-did">
+    <div class="card-num">Chapter 2</div>
+    <div class="card-title">双重差分（DID）</div>
+    <div class="card-desc">平行趋势假设、双向固定效应、事件研究法、交叠 DID 与异质性处理效应</div>
+  </a>
+
+  <a href="ch_endogeneity/" class="chapter-card card-endogeneity">
+    <div class="card-num">Chapter 3</div>
+    <div class="card-title">面板内生性处理：工具变量与 GMM</div>
+    <div class="card-desc">面板 2SLS、动态面板偏误、Anderson-Hsiao、差分 GMM、系统 GMM</div>
+  </a>
+
+  <a href="ch_hdlinear/" class="chapter-card card-hdlinear">
+    <div class="card-num">Chapter 4</div>
+    <div class="card-title">高维线性回归的预测与推断</div>
+    <div class="card-desc">Lasso、Ridge、Elastic Net、Post-Lasso、部分去偏 Lasso 推断</div>
+  </a>
+
+  <a href="ch_hdnlinear/" class="chapter-card card-hdnlinear">
+    <div class="card-num">Chapter 5</div>
+    <div class="card-title">非线性回归与 Causal ML</div>
+    <div class="card-desc">随机森林、Boosting、Double/Debiased ML、异质性处理效应估计</div>
+  </a>
+
+  <a href="ch_modelselect/" class="chapter-card card-modelselect">
+    <div class="card-num">Chapter 6</div>
+    <div class="card-title">模型与变量选择</div>
+    <div class="card-desc">AIC/BIC、交叉验证、正则化选择、模型平均、高维变量筛选</div>
+  </a>
+
+  <a href="ch_causal/" class="chapter-card card-causal">
+    <div class="card-num">Chapter 7</div>
+    <div class="card-title">回归、匹配与因果推断</div>
+    <div class="card-desc">倾向得分匹配、逆概率加权、双重稳健估计、匹配与回归的比较</div>
+  </a>
+
+</main>
+
+<!-- ═══════════════ Footer ═══════════════ -->
+<footer class="footer">
+  <p>
+    基于高级计量经济学课程内容整理 ·
+    <a href="https://github.com" target="_blank" rel="noopener">GitHub 开源</a>
+  </p>
+  <p style="margin-top:4px;">KaTeX 数学渲染 · 支持亮色/暗色主题 · 移动端适配</p>
+</footer>
+
+<!-- ═══════════════ Theme Toggle Script ═══════════════ -->
+<script>
+const LS_KEY = 'metrics_home';
+const themeBtn = document.getElementById('themeBtn');
+function setTheme(d) {
+  document.documentElement.classList.toggle('dark', d);
+  themeBtn.textContent = d ? '☀️ 亮色' : '🌙 暗色';
+  try { localStorage.setItem(LS_KEY, d ? '1' : '0') } catch(e) {}
+}
+const saved = (() => { try { return localStorage.getItem(LS_KEY) } catch(e) { return null } })();
+setTheme(saved === '1');
+themeBtn.onclick = () => setTheme(!document.documentElement.classList.contains('dark'));
+</script>
+
+</body>
+</html>

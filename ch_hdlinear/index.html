@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高维线性回归的预测与推断 · 期末复习</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,ignoredTags:['script','noscript','style','textarea','pre','code']});"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   三段式复习资料 · 设计系统 V2
+   从零构建，无原项目预置残留
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  /* 暖白基调 — 纸质书感 */
+  --bg: #fdfbf7;
+  --card: #ffffff;
+  --text: #1e1b18;
+  --text2: #5c5852;
+  --text3: #8c8880;
+  --border: #e6e2da;
+  --border-lt: #f0ece5;
+
+  /* 代码区 */
+  --code-bg: #1a1e2b;
+  --code-text: #d6deeb;
+  --code-accent: #82aaff;
+
+  /* 主题色系 */
+  --accent: #2c6485;
+  --accent-lt: #ecf3f8;
+  --accent-dk: #1a4055;
+
+  /* 功能色 */
+  --success: #3b7a4b;
+  --success-lt: #edf6ef;
+  --warn: #a06830;
+  --warn-lt: #fdf6ee;
+  --danger: #b33a3a;
+  --danger-lt: #fdf0f0;
+  --purple: #6b4c9a;
+  --purple-lt: #f4f0f8;
+  --cyan: #2d7f8e;
+  --cyan-lt: #edf6f8;
+
+  /* 排版 */
+  --font-body: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', 'SimSun', 'Noto Serif', Georgia, serif;
+  --font-heading: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, 'Source Code Pro', monospace;
+
+  --maxw: 1100px;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.04);
+}
+
+html.dark {
+  --bg: #111318;
+  --card: #1a1d24;
+  --text: #e6e3dd;
+  --text2: #a09b93;
+  --text3: #6b6660;
+  --border: #2a2d35;
+  --border-lt: #1f2229;
+  --code-bg: #0d0f14;
+  --code-text: #c8d6e5;
+  --code-accent: #82aaff;
+  --accent: #5d9ec9;
+  --accent-lt: #182635;
+  --accent-dk: #3a6d8f;
+  --success: #5a9e6b;
+  --success-lt: #1a2e1e;
+  --warn: #d4a258;
+  --warn-lt: #302418;
+  --danger: #d46565;
+  --danger-lt: #301c1c;
+  --purple: #9b7cc4;
+  --purple-lt: #241e30;
+  --cyan: #5aaab8;
+  --cyan-lt: #18282c;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.2);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.3);
+}
+
+/* ── Reset & Base ──────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.82;
+  text-wrap:pretty;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+
+/* ── Top Navigation Bar ───────────────────────────── */
+.top-bar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(253,251,247,.9);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+html.dark .top-bar{background:rgba(17,19,24,.9)}
+.top-inner{
+  max-width:var(--maxw);margin:0 auto;
+  padding:12px 28px;display:flex;align-items:center;gap:20px;
+}
+.top-inner h1{font-size:15px;font-weight:600;font-family:var(--font-heading);letter-spacing:.01em}
+.spacer{flex:1}
+.btn{
+  background:var(--card);border:1px solid var(--border);color:var(--text2);
+  padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;
+  font-size:13px;font-family:var(--font-heading);transition:all .2s;
+}
+.btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-lt)}
+
+/* ── Progress Bar ─────────────────────────────────── */
+.progress-wrap{height:2px;background:transparent}
+.progress-bar{
+  height:2px;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--cyan));
+  transition:width .2s ease-out;
+}
+
+/* ── Layout ────────────────────────────────────────── */
+.layout{
+  max-width:var(--maxw);margin:0 auto;
+  display:grid;grid-template-columns:280px 1fr;gap:44px;padding:32px 28px 48px;
+}
+
+/* ── Sidebar ───────────────────────────────────────── */
+.sidebar{
+  position:sticky;top:80px;align-self:start;
+  max-height:calc(100vh - 120px);overflow-y:auto;
+  padding:16px 0;
+}
+.sidebar-nav{display:flex;flex-direction:column;gap:1px}
+.sidebar-label{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--text3);
+  padding:4px 14px 8px;font-family:var(--font-heading);
+}
+.sidebar a{
+  display:flex;align-items:baseline;gap:8px;
+  padding:8px 14px;border-radius:var(--radius-sm);
+  text-decoration:none;color:var(--text2);font-size:13px;
+  font-family:var(--font-heading);border-left:3px solid transparent;
+  transition:all .18s;
+  line-height:1.45;
+}
+.sidebar a .sec-num{
+  font-size:11px;font-weight:700;color:var(--accent);
+  min-width:26px;opacity:.75;
+}
+.sidebar a:hover{
+  background:var(--card);color:var(--text);
+  border-left-color:var(--accent-lt);
+}
+.sidebar a.active{
+  background:linear-gradient(135deg,var(--accent-lt),var(--card));
+  color:var(--accent);border-left-color:var(--accent);font-weight:600;
+}
+.sidebar a.active .sec-num{opacity:1}
+.sidebar-tools{margin-top:18px;padding-top:14px;border-top:1px solid var(--border-lt)}
+
+/* ── Main Content ──────────────────────────────────── */
+.main{min-width:0;counter-reset:exercise}
+
+/* Section header */
+.main h2{
+  font-family:var(--font-heading);font-size:26px;font-weight:800;
+  margin:56px 0 16px;padding-top:20px;
+  border-top:3px solid var(--accent);color:var(--accent-dk);
+  letter-spacing:.02em;text-wrap:balance;
+}
+.main h2:first-of-type{border-top:none;margin-top:0;padding-top:0}
+
+/* Sub-section */
+.main h3{
+  font-family:var(--font-heading);font-size:19px;font-weight:700;
+  margin:36px 0 12px;color:var(--accent);
+  padding-left:12px;border-left:4px solid var(--accent);text-wrap:balance;
+}
+
+/* Sub-sub-section */
+.main h4{
+  font-family:var(--font-heading);font-size:16px;font-weight:600;
+  margin:24px 0 8px;color:var(--text);text-wrap:balance;
+}
+
+/* Paragraph */
+.main p{margin:12px 0;text-indent:2em}
+.main p:first-of-type{text-indent:0}
+
+/* Lists */
+.main ul,.main ol{margin:10px 0;padding-left:28px}
+.main li{margin:6px 0;padding-left:4px}
+.main li::marker{color:var(--accent)}
+
+/* Inline text */
+.main strong{color:var(--text);font-weight:700}
+.main em{font-style:italic;color:var(--text2)}
+.main a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-lt)}
+.main a:hover{border-bottom-color:var(--accent)}
+
+/* Blockquote — 用于重要性标注和提示 */
+.main blockquote{
+  margin:20px 0;padding:16px 20px;
+  background:linear-gradient(135deg,var(--accent-lt),var(--card));
+  border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;
+  color:var(--text2);font-size:15px;
+}
+.main blockquote strong{color:var(--accent)}
+
+/* 隐藏正文中的冗余文本目录（侧边栏已提供导航） */
+.inline-toc{display:none}
+/* Horizontal rule */
+hr{
+  border:none;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  margin:40px 0;
+}
+
+/* ── Code ──────────────────────────────────────────── */
+code{
+  background:var(--accent-lt);padding:2px 7px;border-radius:var(--radius-sm);
+  font-family:var(--font-mono);font-size:.88em;color:var(--accent-dk);
+}
+pre.stata-code,pre.code-block{
+  background:var(--code-bg);color:var(--code-text);
+  padding:20px 24px;border-radius:var(--radius);overflow-x:auto;
+  font-family:var(--font-mono);font-size:13.5px;line-height:1.65;
+  margin:18px 0;box-shadow:var(--shadow-card);
+}
+pre.stata-code code,pre.code-block code{
+  background:transparent;padding:0;color:inherit;font-size:inherit;
+}
+
+/* ── Tables ────────────────────────────────────────── */
+.md-table{
+  border-collapse:collapse;width:100%;margin:18px 0;font-size:14px;
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);
+}
+.md-table th,.md-table td{
+  border:1px solid var(--border);padding:10px 14px;text-align:left;vertical-align:top;
+}
+.md-table th{background:var(--accent);color:#fff;font-weight:600;font-family:var(--font-heading)}
+.md-table tr:nth-child(2n) td{background:var(--card)}
+html.dark .md-table th{background:var(--accent-dk)}
+
+/* ── Callout Cards ─────────────────────────────────── */
+.callout{
+  margin:18px 0;padding:16px 20px;border-radius:var(--radius);
+  border-left:5px solid var(--accent);background:var(--accent-lt);
+  box-shadow:var(--shadow-card);break-inside:avoid;
+}
+.callout.warn{border-color:var(--warn);background:var(--warn-lt)}
+.callout.danger{border-color:var(--danger);background:var(--danger-lt)}
+.callout.success{border-color:var(--success);background:var(--success-lt)}
+.callout.purple{border-color:var(--purple);background:var(--purple-lt)}
+.callout.cyan{border-color:var(--cyan);background:var(--cyan-lt)}
+
+/* ── Exercise (details/summary) ────────────────────── */
+details{
+  margin:12px 0;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;break-inside:avoid;
+}
+details:hover{box-shadow:var(--shadow-hover)}
+details summary{
+  cursor:pointer;padding:12px 16px;font-weight:600;font-size:14px;
+  font-family:var(--font-heading);color:var(--text);
+  list-style:none;display:flex;align-items:center;gap:8px;
+  user-select:none;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:'▸';color:var(--accent);font-size:13px;
+  transition:transform .2s;display:inline-block;
+}
+details[open] summary::before{content:'▾';transform:rotate(0)}
+/* 答案内容：缩小字号，增加右边距 */
+details[open]{
+  padding:0 24px 18px 20px;
+}
+details[open] > p,
+details[open] > ul,
+details[open] > ol,
+details[open] > blockquote{
+  font-size:14px;line-height:1.7;
+  margin:6px 0;padding-right:12px;
+}
+details[open] > p{text-indent:0}
+
+/* ── Math (KaTeX) ──────────────────────────────────── */
+.katex-display{margin:18px 0;overflow-x:auto;overflow-y:hidden;padding:6px 0}
+.katex{font-size:1.08em}
+
+/* ── Back to Top ───────────────────────────────────── */
+#btt{
+  position:fixed;right:24px;bottom:24px;width:42px;height:42px;
+  border-radius:50%;background:var(--card);border:1px solid var(--border);
+  cursor:pointer;font-size:18px;display:none;align-items:center;
+  justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:all .2s;z-index:90;
+}
+#btt:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+
+/* ── Footer ────────────────────────────────────────── */
+.footer{
+  max-width:var(--maxw);margin:0 auto;padding:32px 28px;
+  color:var(--text3);font-size:13px;text-align:center;
+  border-top:1px solid var(--border-lt);font-family:var(--font-heading);
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;padding:20px 16px;gap:0}
+  .sidebar{display:none}
+  .top-inner{padding:10px 16px}
+  .top-inner h1{font-size:13px}
+  .main h2{font-size:22px;margin-top:36px}
+  .main h3{font-size:17px}
+  body{font-size:15px}
+}
+
+/* ── Print ─────────────────────────────────────────── */
+@media print{
+  @page{margin:2cm}
+  .top-bar,.sidebar,#btt,.progress-wrap,script{display:none!important}
+  .layout{display:block;max-width:100%;padding:0}
+  body{font-size:11pt;line-height:1.55;color:#000;background:#fff}
+  .main h2{page-break-before:auto;border-top:1px solid #ccc}
+  .main h3{border-left:2px solid #333}
+  .callout,details,.md-table,pre{break-inside:avoid}
+  pre.stata-code,pre.code-block{background:#f5f5f5;color:#000;border:1px solid #ccc}
+  code{background:#f0f0f0;color:#000}
+  a{color:#000;text-decoration:none;border:none}
+}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="progress-wrap"><div class="progress-bar" id="pbar"></div></div>
+  <div class="top-inner">
+    <h1>高维线性回归的预测与推断 · 期末复习</h1>
+    <div class="spacer"></div>
+    <button class="btn" id="themeBtn" title="切换暗色模式">🌙</button>
+    <button class="btn" id="tocBtn" title="显示目录">☰</button>
+  </div>
+</div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">章节导航</div>
+    <nav class="sidebar-nav"><a href="#sec0" data-sec="sec0"><span class="sec-num">§0</span>导论：为什么需要高维方法</a>
+    <a href="#sec1" data-sec="sec1"><span class="sec-num">§1</span>Lasso 与高维线性预测</a>
+    <a href="#sec2" data-sec="sec2"><span class="sec-num">§2</span>Post-Lasso 与模型比较</a>
+    <a href="#sec3" data-sec="sec3"><span class="sec-num">§3</span>Double Lasso 与高维推断</a>
+    <a href="#sec4" data-sec="sec4"><span class="sec-num">§4</span>Neyman 正交性与多目标系数</a>
+    <a href="#sec5" data-sec="sec5"><span class="sec-num">§5</span>全章总结</a></nav>
+    <div class="sidebar-tools">
+      <div class="sidebar-label">工具</div>
+      <a href="#" onclick="window.print();return false">🖨️ 打印 / 导出 PDF</a>
+      <a href="#" onclick="expandAll();return false">📖 展开所有习题答案</a>
+    </div>
+  </aside>
+  <main class="main">
+
+<blockquote><strong>三段式结构</strong>：每节 = 脉络梳理 + 重点内容申明 + 习题。
+费曼讲法 · 三问自检 · 借助外部教材扩充习题。</blockquote>
+
+<hr>
+
+<p><div class="inline-toc"></p>
+<h2>目录</h2>
+
+<ul><li>[§0 导论：为什么需要高维方法](#sec0)</li><li>[§1 Lasso 与高维线性预测](#sec1)</li><li>[§2 Post-Lasso 与模型比较](#sec2)</li><li>[§3 Double Lasso 与高维推断](#sec3)</li><li>[§4 Neyman 正交性与多目标系数](#sec4)</li><li>[§5 全章总结](#sec5)</li></ul>
+<p></div></p>
+
+<hr>
+
+<a id="sec0"></a>
+<h2>§0 导论：为什么需要高维方法</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>当协变量个数 p 接近甚至超过样本量 n 时，OLS 不可用（X'X 奇异）。现代经济数据中"宽数据"越来越常见。高维方法用正则化同时做估计和变量选择。本章分两条主线：预测（Lasso/Post-Lasso）和推断（Double Lasso/Neyman 正交）。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>当协变量个数 $p$ 接近甚至超过样本量 $n$ 时，OLS 不可用（$X'X$ 奇异）。但现代经济数据中"宽数据"越来越常见——企业特征可能有数百个，基因数据可能有数千个。高维方法的核心思想是用<strong>正则化</strong>（penalization）同时做估计和变量选择。</p>
+
+<p>本章分两条主线：(1) 预测——Lasso 与 Post-Lasso；(2) 推断——Double Lasso 与 Neyman 正交得分。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ 为什么 p>n 时 OLS 不可行？</li></ol>
+<details><summary>参考答案要点</summary>X'X 是 p×p 矩阵，p>n 时 X 列秩≤n<p，X'X 奇异不可逆。高维方法用正则化解。</details>
+
+<ol><li>⭐ 列出高维方法的两条主线。</li></ol>
+<details><summary>参考答案要点</summary>(1)预测——Lasso/Post-Lasso 做变量选择和降维预测；(2)推断——Double Lasso/DML 在高维混杂控制下对处置效应做 √n 渐近正态推断。</details>
+
+<hr>
+
+<a id="sec1"></a>
+<h2>§1 Lasso 与高维线性预测</h2>
+
+<p><strong>重要性</strong>：★★★ 核心</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>Lasso 在 OLS 目标函数上加 ℓ1 惩罚项，使某些系数精确为零——同时做变量选择和估计。但系数有收缩偏误，不能直接用于推断。Lasso 适合预测和降维，是进入高维世界的入口方法。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>对高维线性模型 $Y = X\beta + \varepsilon$，Lasso 求解：</p>
+
+<p>$$\hat{\beta} = \arg\min_\beta \|Y - X\beta\|^2 + \lambda\|\beta\|_1$$</p>
+
+<p>$\ell_1$ 惩罚使得某些 $\hat{\beta}_j$ 精确为零。Lasso 做变量选择的同时给出预测。但 Lasso 的系数估计有<strong>收缩偏误</strong>——即使选对了变量，$\hat{\beta}_j$ 也被 $\lambda$ 压缩了。这对预测无害（甚至有益，因为降了方差），但对推断有问题——你不能直接拿 Lasso 系数做置信区间。</p>
+
+<p><strong>三问自检</strong>：①Lasso 的核心优势？同时做变量选择和估计，p>n 时仍可用。②Lasso 的核心局限？系数被压缩，不能直接用做推断。③$\ell_1$ vs $\ell_2$？$\ell_1$ 产生稀疏解（变量选择），$\ell_2$ 只收缩（Ridge）。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ Lasso 的核心优势和一个关键局限？</li></ol>
+<details><summary>参考答案要点</summary>优势：同时选变量和估计，p>n 仍可用。局限：系数有收缩偏误，不能直接做置信区间。</details>
+
+<ol><li>⭐⭐ 为什么 ℓ1 罚产生稀疏解而 ℓ2 罚不产生？</li></ol>
+<details><summary>参考答案要点</summary>ℓ1 约束域菱形有尖角→等高线更易"撞"在坐标轴→某些 βj=0。ℓ2 约束域圆形无尖角→系数被压缩但不为零。这是 LASSO 能做变量选择的几何原因。</details>
+
+<hr>
+
+<a id="sec2"></a>
+<h2>§2 Post-Lasso 与模型比较</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>Post-Lasso 分两步：先用 Lasso 选变量，再用 OLS 估计——消除收缩偏误。但需注意"选择后推断"问题：如果全样本先选变量再做 OLS，标准误被系统性低估。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>Post-Lasso 分两步：(1) Lasso 选变量；(2) 用选出的变量做 OLS。这消除了 Lasso 的收缩偏误——OLS 系数是无偏的（在给定所选变量的条件下）。</p>
+
+<p>但注意：Post-Lasso 不能"双浸"(double dipping)——不能在第一步选变量时用了全部数据，第二步还用全部数据做推断。这会导致选择后推断(post-selection inference)问题——标准误被低估。解决方案：<strong>样本分割</strong>或<strong>Double Lasso</strong>。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ Post-Lasso 比 Lasso 好在哪？有什么陷阱？</li></ol>
+<details><summary>参考答案要点</summary>好：OLS 系数无收缩偏误。陷阱：如果用全部数据先 Lasso 选变量再 OLS→double dipping→标准误低估。需样本分割或 Double Lasso 框架。</details>
+
+<hr>
+
+<a id="sec3"></a>
+<h2>§3 Double Lasso 与高维推断</h2>
+
+<p><strong>重要性</strong>：★★★ 必考大题</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>Belloni-Chernozhukov-Hansen 的 Double Lasso：分别用 Lasso 选 Y 和 D 的预测变量，取并集后做 OLS。核心洞察：仅选 Y 的变量可能遗漏"弱预测 Y 但强预测 D"的混杂。并集策略确保不遗漏。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>核心问题：估计某个关键变量 $D$ 对 $Y$ 的因果效应，同时有大量潜在混杂变量 $Z$（$p$ 可能 $\gg n$）。传统做法"把所有变量丢进去回归"当 $p>n$ 时不可行。</p>
+
+<p><strong>Double Lasso</strong>（Belloni, Chernozhukov, Hansen 2014）分三步：</p>
+
+<ol><li><strong>Lasso Y~Z</strong>：选出预测 $Y$ 的混杂变量集合 $\hat{S}_Y$</li><li><strong>Lasso D~Z</strong>：选出预测 $D$ 的混杂变量集合 $\hat{S}_D$</li><li><strong>Post-Lasso Y~D+$\hat{S}_Y\cup\hat{S}_D$</strong>：用并集做 OLS，对 $D$ 的系数做推断</li></ol>
+
+<p><strong>为什么是并集？</strong> 单做第 1 步可能遗漏那些"对 $Y$ 影响弱但对 $D$ 影响强"的混杂——它们不预测 $Y$ 但通过 $D$ 间接影响。第 2 步抓住了这类变量。取并集确保不遗漏任何重要混杂。</p>
+
+<p><strong>三问自检</strong>：①为什么需要 Double Lasso？单次 Lasso 可能遗漏重要的混杂变量。②为什么第三步用 OLS 而非直接用 Lasso 系数？Lasso 系数有收缩偏误，不适合推断。③正则化偏误和过拟合偏误的区别？前者来自 $\ell_1$ 收缩，后者来自 double dipping。Post-Lasso 解决了前者，样本分割/交叉拟合解决了后者。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐⭐ 写出 Double Lasso 三步流程并解释每步目的。</li></ol>
+<details><summary>参考答案要点</summary>①Lasso Y~Z→选预测 Y 的变量（直接混杂）；②Lasso D~Z→选预测 D 的变量（间接混杂）；③OLS Y~D+(①∪②)。并集保证不遗漏任何重要混杂。</details>
+
+<ol><li>⭐⭐ 如果只做第一步（Y~Z）跳过第二步（D~Z），会遗漏什么？</li></ol>
+<details><summary>参考答案要点</summary>遗漏"预测 D 但不预测 Y"的变量。这类变量通过 D 间接影响 Y 的估计——不控制也可能导致偏误。D~Z 筛选捕捉了"最可能混淆处置效应估计"的变量。</details>
+
+<hr>
+
+<a id="sec4"></a>
+<h2>§4 Neyman 正交性与多目标系数</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>Neyman 正交得分是 Double ML 的数学基础——得分函数对讨厌参数的导数为零，使得讨厌参数估计误差对目标参数的影响是二阶的。只要 ML 方法以 n^{-1/4} 速率收敛，θ̂ 就是 √n 渐近正态的。这是"ML+统计推断"能够结合的关键保障。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>Neyman 正交得分是 Double ML (DML) 的数学基础。其核心性质：得分函数对讨厌参数(nuisance parameter)的 Gateaux 导数为零。这意味着讨厌参数估计误差对目标参数的影响是<strong>二阶的</strong>——只要讨厌参数以 $n^{-1/4}$ 或更快的速率收敛，目标参数就是 $\sqrt{n}$ 渐近正态的。</p>
+
+<p><strong>实践含义</strong>：你可以用非常灵活的方法（Lasso、随机森林、XGBoost）估计讨厌参数，只要它们收敛得足够快，最终对 $\theta$ 的推断就是有效的。这是"机器学习+统计推断"能够结合的关键数学保障。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ Neyman 正交性的核心含义？</li></ol>
+<details><summary>参考答案要点</summary>得分函数对讨厌参数的导数为零：∂ηE[ψ(W;θ0,η0)]=0。实际含义：η 的估计误差对 θ 的影响是二阶的——η 不需要极其精确，θ 推断仍有效。</details>
+
+<ol><li>⭐⭐ 为什么 Neyman 正交是"ML+统计推断"的桥梁？</li></ol>
+<details><summary>参考答案要点</summary>ML 估计 η 通常只保证预测精度而非 √n 一致性。正交性把要求从 √n 降到 n^{-1/4}——ML 方法通常满足。Chernozhukov et al.(2018)证明此框架下 θ̂ 是 √n 渐近正态的。</details>
+
+<hr>
+
+<a id="sec5"></a>
+<h2>§5 全章总结</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>从 Lasso 预测到 Double Lasso 推断再到 DML 的 Neyman 正交框架，高维方法的核心演进是逐步解决"如何用 ML 的灵活性做可靠的统计推断"。λ 选对、样本分割、正交化——三者缺一不可。</p>
+
+<h3>二、重点内容申明</h3>
+
+<table class="md-table"><thead><tr><th>方法</th><th>目标</th><th>能否做推断</th></tr></thead><tbody><tr><td>Lasso</td><td>高维预测+变量选择</td><td>❌ 系数有偏</td></tr><tr><td>Post-Lasso</td><td>降维后估计</td><td>⚠ 需样本分割</td></tr><tr><td>Double Lasso</td><td>高维混杂控制</td><td>✅ Belloni et al. 框架</td></tr><tr><td>DML + Neyman 正交</td><td>ML+推断通用框架</td><td>✅ √N 渐近正态</td></tr></tbody></table>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐⭐ 比较 Lasso→Post-Lasso→Double Lasso→DML 的推断能力演进。</li></ol>
+<details><summary>参考答案要点</summary>Lasso 不能推断。Post-Lasso 可不诚实（未修正选择后偏差）。Double Lasso 通过样本分割控选择偏差，可做推断但限线性。DML 通过 Neyman 正交+交叉拟合，允许任意 ML 方法在一般半参数模型下推断——目前最通用框架。</details>
+
+<hr>
+
+  </main>
+</div>
+<button id="btt" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="footer">2026-06-22 · 三段式复习资料 · 脉络梳理 + 重点内容申明 + 习题</div>
+<script>
+// 暗色模式 (localStorage key per chapter)
+const LS_KEY = 'ch_hdlinear';
+const themeBtn = document.getElementById('themeBtn');
+function setTheme(d) {
+  document.documentElement.classList.toggle('dark', d);
+  themeBtn.textContent = d ? '☀️ 亮色' : '🌙 暗色';
+  try { localStorage.setItem(LS_KEY, d ? '1' : '0') } catch(e) {}
+}
+const saved = (() => { try { return localStorage.getItem(LS_KEY) } catch(e) { return null } })();
+setTheme(saved === '1');
+themeBtn.onclick = () => setTheme(!document.documentElement.classList.contains('dark'));
+// 移动端目录
+const tocBtn = document.getElementById('tocBtn');
+tocBtn.onclick = () => {
+  const s = document.getElementById('sidebar');
+  s.style.display = s.style.display === 'none' ? 'block' : 'none';
+};
+// 进度条
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  pbar.style.width = (h > 0 ? (scrollY / h * 100) : 0) + '%';
+  document.getElementById('btt').style.display = scrollY > 400 ? 'flex' : 'none';
+}, {passive: true});
+document.getElementById('btt').onclick = () => scrollTo({top: 0, behavior: 'smooth'});
+// 侧边栏高亮
+const sectLinks = Array.from(document.querySelectorAll('.sidebar a[data-sec]'));
+const sections = sectLinks.map(a => document.getElementById(a.dataset.sec)).filter(Boolean);
+const obs = new IntersectionObserver((es) => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      sectLinks.forEach(a => a.classList.toggle('active', a.dataset.sec === e.target.id));
+    }
+  });
+}, {rootMargin: '-80px 0px -70% 0px'});
+sections.forEach(s => obs.observe(s));
+function expandAll() {
+  document.querySelectorAll('details').forEach(d => d.open = true);
+}
+</script>
+</body>
+</html>

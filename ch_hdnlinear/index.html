@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>非线性回归与 Causal ML · 期末复习</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,ignoredTags:['script','noscript','style','textarea','pre','code']});"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   三段式复习资料 · 设计系统 V2
+   从零构建，无原项目预置残留
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  /* 暖白基调 — 纸质书感 */
+  --bg: #fdfbf7;
+  --card: #ffffff;
+  --text: #1e1b18;
+  --text2: #5c5852;
+  --text3: #8c8880;
+  --border: #e6e2da;
+  --border-lt: #f0ece5;
+
+  /* 代码区 */
+  --code-bg: #1a1e2b;
+  --code-text: #d6deeb;
+  --code-accent: #82aaff;
+
+  /* 主题色系 */
+  --accent: #2c6485;
+  --accent-lt: #ecf3f8;
+  --accent-dk: #1a4055;
+
+  /* 功能色 */
+  --success: #3b7a4b;
+  --success-lt: #edf6ef;
+  --warn: #a06830;
+  --warn-lt: #fdf6ee;
+  --danger: #b33a3a;
+  --danger-lt: #fdf0f0;
+  --purple: #6b4c9a;
+  --purple-lt: #f4f0f8;
+  --cyan: #2d7f8e;
+  --cyan-lt: #edf6f8;
+
+  /* 排版 */
+  --font-body: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', 'SimSun', 'Noto Serif', Georgia, serif;
+  --font-heading: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, 'Source Code Pro', monospace;
+
+  --maxw: 1100px;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.04);
+}
+
+html.dark {
+  --bg: #111318;
+  --card: #1a1d24;
+  --text: #e6e3dd;
+  --text2: #a09b93;
+  --text3: #6b6660;
+  --border: #2a2d35;
+  --border-lt: #1f2229;
+  --code-bg: #0d0f14;
+  --code-text: #c8d6e5;
+  --code-accent: #82aaff;
+  --accent: #5d9ec9;
+  --accent-lt: #182635;
+  --accent-dk: #3a6d8f;
+  --success: #5a9e6b;
+  --success-lt: #1a2e1e;
+  --warn: #d4a258;
+  --warn-lt: #302418;
+  --danger: #d46565;
+  --danger-lt: #301c1c;
+  --purple: #9b7cc4;
+  --purple-lt: #241e30;
+  --cyan: #5aaab8;
+  --cyan-lt: #18282c;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.2);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.3);
+}
+
+/* ── Reset & Base ──────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.82;
+  text-wrap:pretty;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+
+/* ── Top Navigation Bar ───────────────────────────── */
+.top-bar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(253,251,247,.9);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+html.dark .top-bar{background:rgba(17,19,24,.9)}
+.top-inner{
+  max-width:var(--maxw);margin:0 auto;
+  padding:12px 28px;display:flex;align-items:center;gap:20px;
+}
+.top-inner h1{font-size:15px;font-weight:600;font-family:var(--font-heading);letter-spacing:.01em}
+.spacer{flex:1}
+.btn{
+  background:var(--card);border:1px solid var(--border);color:var(--text2);
+  padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;
+  font-size:13px;font-family:var(--font-heading);transition:all .2s;
+}
+.btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-lt)}
+
+/* ── Progress Bar ─────────────────────────────────── */
+.progress-wrap{height:2px;background:transparent}
+.progress-bar{
+  height:2px;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--cyan));
+  transition:width .2s ease-out;
+}
+
+/* ── Layout ────────────────────────────────────────── */
+.layout{
+  max-width:var(--maxw);margin:0 auto;
+  display:grid;grid-template-columns:280px 1fr;gap:44px;padding:32px 28px 48px;
+}
+
+/* ── Sidebar ───────────────────────────────────────── */
+.sidebar{
+  position:sticky;top:80px;align-self:start;
+  max-height:calc(100vh - 120px);overflow-y:auto;
+  padding:16px 0;
+}
+.sidebar-nav{display:flex;flex-direction:column;gap:1px}
+.sidebar-label{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--text3);
+  padding:4px 14px 8px;font-family:var(--font-heading);
+}
+.sidebar a{
+  display:flex;align-items:baseline;gap:8px;
+  padding:8px 14px;border-radius:var(--radius-sm);
+  text-decoration:none;color:var(--text2);font-size:13px;
+  font-family:var(--font-heading);border-left:3px solid transparent;
+  transition:all .18s;
+  line-height:1.45;
+}
+.sidebar a .sec-num{
+  font-size:11px;font-weight:700;color:var(--accent);
+  min-width:26px;opacity:.75;
+}
+.sidebar a:hover{
+  background:var(--card);color:var(--text);
+  border-left-color:var(--accent-lt);
+}
+.sidebar a.active{
+  background:linear-gradient(135deg,var(--accent-lt),var(--card));
+  color:var(--accent);border-left-color:var(--accent);font-weight:600;
+}
+.sidebar a.active .sec-num{opacity:1}
+.sidebar-tools{margin-top:18px;padding-top:14px;border-top:1px solid var(--border-lt)}
+
+/* ── Main Content ──────────────────────────────────── */
+.main{min-width:0;counter-reset:exercise}
+
+/* Section header */
+.main h2{
+  font-family:var(--font-heading);font-size:26px;font-weight:800;
+  margin:56px 0 16px;padding-top:20px;
+  border-top:3px solid var(--accent);color:var(--accent-dk);
+  letter-spacing:.02em;text-wrap:balance;
+}
+.main h2:first-of-type{border-top:none;margin-top:0;padding-top:0}
+
+/* Sub-section */
+.main h3{
+  font-family:var(--font-heading);font-size:19px;font-weight:700;
+  margin:36px 0 12px;color:var(--accent);
+  padding-left:12px;border-left:4px solid var(--accent);text-wrap:balance;
+}
+
+/* Sub-sub-section */
+.main h4{
+  font-family:var(--font-heading);font-size:16px;font-weight:600;
+  margin:24px 0 8px;color:var(--text);text-wrap:balance;
+}
+
+/* Paragraph */
+.main p{margin:12px 0;text-indent:2em}
+.main p:first-of-type{text-indent:0}
+
+/* Lists */
+.main ul,.main ol{margin:10px 0;padding-left:28px}
+.main li{margin:6px 0;padding-left:4px}
+.main li::marker{color:var(--accent)}
+
+/* Inline text */
+.main strong{color:var(--text);font-weight:700}
+.main em{font-style:italic;color:var(--text2)}
+.main a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-lt)}
+.main a:hover{border-bottom-color:var(--accent)}
+
+/* Blockquote — 用于重要性标注和提示 */
+.main blockquote{
+  margin:20px 0;padding:16px 20px;
+  background:linear-gradient(135deg,var(--accent-lt),var(--card));
+  border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;
+  color:var(--text2);font-size:15px;
+}
+.main blockquote strong{color:var(--accent)}
+
+/* 隐藏正文中的冗余文本目录（侧边栏已提供导航） */
+.inline-toc{display:none}
+/* Horizontal rule */
+hr{
+  border:none;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  margin:40px 0;
+}
+
+/* ── Code ──────────────────────────────────────────── */
+code{
+  background:var(--accent-lt);padding:2px 7px;border-radius:var(--radius-sm);
+  font-family:var(--font-mono);font-size:.88em;color:var(--accent-dk);
+}
+pre.stata-code,pre.code-block{
+  background:var(--code-bg);color:var(--code-text);
+  padding:20px 24px;border-radius:var(--radius);overflow-x:auto;
+  font-family:var(--font-mono);font-size:13.5px;line-height:1.65;
+  margin:18px 0;box-shadow:var(--shadow-card);
+}
+pre.stata-code code,pre.code-block code{
+  background:transparent;padding:0;color:inherit;font-size:inherit;
+}
+
+/* ── Tables ────────────────────────────────────────── */
+.md-table{
+  border-collapse:collapse;width:100%;margin:18px 0;font-size:14px;
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);
+}
+.md-table th,.md-table td{
+  border:1px solid var(--border);padding:10px 14px;text-align:left;vertical-align:top;
+}
+.md-table th{background:var(--accent);color:#fff;font-weight:600;font-family:var(--font-heading)}
+.md-table tr:nth-child(2n) td{background:var(--card)}
+html.dark .md-table th{background:var(--accent-dk)}
+
+/* ── Callout Cards ─────────────────────────────────── */
+.callout{
+  margin:18px 0;padding:16px 20px;border-radius:var(--radius);
+  border-left:5px solid var(--accent);background:var(--accent-lt);
+  box-shadow:var(--shadow-card);break-inside:avoid;
+}
+.callout.warn{border-color:var(--warn);background:var(--warn-lt)}
+.callout.danger{border-color:var(--danger);background:var(--danger-lt)}
+.callout.success{border-color:var(--success);background:var(--success-lt)}
+.callout.purple{border-color:var(--purple);background:var(--purple-lt)}
+.callout.cyan{border-color:var(--cyan);background:var(--cyan-lt)}
+
+/* ── Exercise (details/summary) ────────────────────── */
+details{
+  margin:12px 0;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;break-inside:avoid;
+}
+details:hover{box-shadow:var(--shadow-hover)}
+details summary{
+  cursor:pointer;padding:12px 16px;font-weight:600;font-size:14px;
+  font-family:var(--font-heading);color:var(--text);
+  list-style:none;display:flex;align-items:center;gap:8px;
+  user-select:none;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:'▸';color:var(--accent);font-size:13px;
+  transition:transform .2s;display:inline-block;
+}
+details[open] summary::before{content:'▾';transform:rotate(0)}
+/* 答案内容：缩小字号，增加右边距 */
+details[open]{
+  padding:0 24px 18px 20px;
+}
+details[open] > p,
+details[open] > ul,
+details[open] > ol,
+details[open] > blockquote{
+  font-size:14px;line-height:1.7;
+  margin:6px 0;padding-right:12px;
+}
+details[open] > p{text-indent:0}
+
+/* ── Math (KaTeX) ──────────────────────────────────── */
+.katex-display{margin:18px 0;overflow-x:auto;overflow-y:hidden;padding:6px 0}
+.katex{font-size:1.08em}
+
+/* ── Back to Top ───────────────────────────────────── */
+#btt{
+  position:fixed;right:24px;bottom:24px;width:42px;height:42px;
+  border-radius:50%;background:var(--card);border:1px solid var(--border);
+  cursor:pointer;font-size:18px;display:none;align-items:center;
+  justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:all .2s;z-index:90;
+}
+#btt:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+
+/* ── Footer ────────────────────────────────────────── */
+.footer{
+  max-width:var(--maxw);margin:0 auto;padding:32px 28px;
+  color:var(--text3);font-size:13px;text-align:center;
+  border-top:1px solid var(--border-lt);font-family:var(--font-heading);
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;padding:20px 16px;gap:0}
+  .sidebar{display:none}
+  .top-inner{padding:10px 16px}
+  .top-inner h1{font-size:13px}
+  .main h2{font-size:22px;margin-top:36px}
+  .main h3{font-size:17px}
+  body{font-size:15px}
+}
+
+/* ── Print ─────────────────────────────────────────── */
+@media print{
+  @page{margin:2cm}
+  .top-bar,.sidebar,#btt,.progress-wrap,script{display:none!important}
+  .layout{display:block;max-width:100%;padding:0}
+  body{font-size:11pt;line-height:1.55;color:#000;background:#fff}
+  .main h2{page-break-before:auto;border-top:1px solid #ccc}
+  .main h3{border-left:2px solid #333}
+  .callout,details,.md-table,pre{break-inside:avoid}
+  pre.stata-code,pre.code-block{background:#f5f5f5;color:#000;border:1px solid #ccc}
+  code{background:#f0f0f0;color:#000}
+  a{color:#000;text-decoration:none;border:none}
+}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="progress-wrap"><div class="progress-bar" id="pbar"></div></div>
+  <div class="top-inner">
+    <h1>非线性回归与 Causal ML · 期末复习</h1>
+    <div class="spacer"></div>
+    <button class="btn" id="themeBtn" title="切换暗色模式">🌙</button>
+    <button class="btn" id="tocBtn" title="显示目录">☰</button>
+  </div>
+</div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">章节导航</div>
+    <nav class="sidebar-nav"><a href="#sec0" data-sec="sec0"><span class="sec-num">§0</span>导论：为什么需要非线性预测？</a>
+    <a href="#sec1" data-sec="sec1"><span class="sec-num">§1</span>决策树与回归树</a>
+    <a href="#sec2" data-sec="sec2"><span class="sec-num">§2</span>Bagging 与随机森林</a>
+    <a href="#sec3" data-sec="sec3"><span class="sec-num">§3</span>梯度提升树 (Boosting)</a>
+    <a href="#sec4" data-sec="sec4"><span class="sec-num">§4</span>神经网络基础</a>
+    <a href="#sec5" data-sec="sec5"><span class="sec-num">§5</span>双重机器学习 (DML)</a>
+    <a href="#sec6" data-sec="sec6"><span class="sec-num">§6</span>全章总结</a></nav>
+    <div class="sidebar-tools">
+      <div class="sidebar-label">工具</div>
+      <a href="#" onclick="window.print();return false">🖨️ 打印 / 导出 PDF</a>
+      <a href="#" onclick="expandAll();return false">📖 展开所有习题答案</a>
+    </div>
+  </aside>
+  <main class="main">
+
+<blockquote><strong>三段式结构</strong>：每节 = 脉络梳理 + 重点内容申明 + 习题。
+费曼讲法 · 三问自检 · 借助外部教材扩充习题。</blockquote>
+
+<hr>
+
+<p><div class="inline-toc"></p>
+<h2>目录</h2>
+
+<ul><li>[§0 导论：为什么需要非线性预测？](#sec0)</li><li>[§1 决策树与回归树](#sec1)</li><li>[§2 Bagging 与随机森林](#sec2)</li><li>[§3 梯度提升树 (Boosting)](#sec3)</li><li>[§4 神经网络基础](#sec4)</li><li>[§5 双重机器学习 (DML)](#sec5)</li><li>[§6 全章总结](#sec6)</li></ul>
+<p></div></p>
+
+<hr>
+
+<a id="sec0"></a>
+<h2>§0 导论：为什么需要非线性预测？</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>线性 CEF 假设在很多经济场景中不成立——收入的年龄曲线是倒 U 型，股票因子关系随时间变化。若真实 CEF 非线性，线性控制混杂的能力不足，因果推断结论可能偏误。本章从回归树出发，经集成方法到神经网络，最终目标是：将 ML 预测器嵌入 DML 框架做可靠因果推断。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>线性回归假设 $E[Y|Z] = Z'\beta$。但很多经济关系高度非线性——收入的年龄曲线是倒U型，股票收益率与因子的关系随时间变化。若真实 CEF 非线性，线性近似控制混杂的能力不足，因果推断结论可能偏误。</p>
+
+<p><strong>三类非线性预测器</strong>：回归树（分区常数预测）、集成方法（随机森林/Boosting）、神经网络（层次化特征构造）。本章最终目标：将 ML 预测器嵌入 DML 框架做因果推断。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ 为什么线性 CEF 假设在因果推断中可能是危险的？</li></ol>
+<details><summary>参考答案要点</summary>真实 CEF 非线性时，线性近似不能充分控制混杂。如 Y 与混杂 Z 是 U 型关系，线性控制无法消除 Z 的混杂效应。</details>
+
+<ol><li>⭐ 列出本章三类非线性预测器。</li></ol>
+<details><summary>参考答案要点</summary>回归树（分区常数预测）、集成方法（随机森林/Boosting）、神经网络（层次化特征构造）。</details>
+
+<hr>
+
+<a id="sec1"></a>
+<h2>§1 决策树与回归树</h2>
+
+<p><strong>重要性</strong>：★★★ 核心</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>回归树将 Z 空间划分为 M 个区域，每个区域预测常数值。通过递归二分实现——每次选一个变量和一个切分点最小化平方误差。优点是完全可解释，缺点是单棵方差大、对数据敏感。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>回归树将 $Z$ 空间划分为 $M$ 个区域 $R_1,...,R_M$，每个区域预测常数值：</p>
+
+<p>$$g(Z) = \sum_{m=1}^M c_m \cdot 1\{Z \in R_m\}$$</p>
+
+<p>划分通过递归二分实现——每一步选一个变量和一个切分点，最小化分区内平方误差和。树的深度由"代价复杂度剪枝"(cost-complexity pruning) 控制。</p>
+
+<p><strong>优点</strong>：完全可解释——你可以画出整棵树的决策路径。<strong>缺点</strong>：单棵树方差大，对数据微小变化敏感。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ 写出回归树的预测公式，解释 cm 和 Rm。</li></ol>
+<details><summary>参考答案要点</summary>$g(Z)=\sum_{m=1}^M c_m\cdot 1\{Z\in R_m\}$。Rm 是第 m 个分区，cm 是该分区 Y 均值。回归树用分段常数近似 CEF。</details>
+
+<ol><li>⭐⭐ 为什么单棵回归树容易过拟合？剪枝如何缓解？</li></ol>
+<details><summary>参考答案要点</summary>深树对噪声极度敏感——叶节点样本极少，均值极不稳定。代价复杂度剪枝在误差外加入"叶节点数"惩罚，选择误差+罚项最小的树。</details>
+
+<hr>
+
+<a id="sec2"></a>
+<h2>§2 Bagging 与随机森林</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>Bagging 通过 Bootstrap 重抽样+平均降低方差。随机森林在 Bagging 基础上每次分裂只考虑随机子集变量，进一步降低树间相关性。RF 是结构化表格数据上最稳健的 ML 方法之一。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p><strong>Bagging</strong>（Bootstrap Aggregating）：对原始数据做 B 次 Bootstrap 重抽样，每份样本训练一棵树，取平均预测。降低方差，但树之间高度相关时会打折扣。</p>
+
+<p><strong>随机森林</strong>在 Bagging 基础上多了一步随机化：每次分裂时只考虑随机子集的变量。这降低了树之间的相关性，进一步降低方差。</p>
+
+<pre class="code-block"><code>library(randomForest)
+rf &lt;- randomForest(y ~ ., data = train, ntree = 500, mtry = floor(sqrt(p)))</code></pre>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ Bagging 为什么能降低方差？</li></ol>
+<details><summary>参考答案要点</summary>B 份 Bootstrap 样本各训一棵树取平均：Var(平均)=Var(单棵)/B（简化假设独立时）。树越不相关，降方差效果越好。</details>
+
+<ol><li>⭐⭐ 随机森林比 Bagging 多做了什么？为什么有效？</li></ol>
+<details><summary>参考答案要点</summary>每次分裂只考虑随机子集变量（√p 个）。不同树"看不到"相同变量组合→相关性降低→平均后方差降得更低。</details>
+
+<hr>
+
+<a id="sec3"></a>
+<h2>§3 梯度提升树 (Boosting)</h2>
+
+<p><strong>重要性</strong>：★★★ 核心</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>Boosting 与 Bagging 思路相反：序贯种树，每棵新树专门修正前树的残差。学习率 ν 控制每棵树的贡献——ν 小+树多→精度高但需防范过拟合。XGBoost 是结构化数据上精度最高的方法之一。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>Boosting 的思路与 Bagging 相反：不是并行地种很多独立的树再平均，而是<strong>序贯地</strong>种树——每棵新树专门修正前面所有树的残差。</p>
+
+<p>$$F_m(x) = F_{m-1}(x) + \nu \cdot h_m(x)$$</p>
+
+<p>其中 $h_m$ 是拟合当前残差的树，$\nu$ 是学习率（shrinkage）。$\nu$ 小（如 0.01）+ 树多 → 预测准但可能过拟合。常用 XGBoost / LightGBM 实现。</p>
+
+<p><strong>三问自检</strong>：①Bagging 和 Boosting 的核心区别？Bagging 并行+降方差，Boosting 序贯+降偏差。②为什么随机森林要随机选变量？降低树间相关性，使得平均后方差降得更低。③学习率 ν 太小会怎样？需要更多棵树才能收敛，但最终泛化能力通常更好。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ Boosting 和 Bagging 的本质区别？</li></ol>
+<details><summary>参考答案要点</summary>Bagging 并行（各树独立后平均）→降方差。Boosting 序贯（每棵新树修正前树残差）→降偏差。Boosting 精度更高但更易过拟合。</details>
+
+<ol><li>⭐⭐ 学习率 ν 的作用？ν=1 和 ν=0.01 有何不同？</li></ol>
+<details><summary>参考答案要点</summary>ν 控制每棵树贡献大小（shrinkage）。ν=1 全力拟合→易过拟合。ν=0.01 小步走→需更多树但泛化能力更好。</details>
+
+<hr>
+
+<a id="sec4"></a>
+<h2>§4 神经网络基础</h2>
+
+<p><strong>重要性</strong>：★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>神经网络通过层层非线性变换构造特征。激活函数 σ 引入非线性——没有它多层等价单层。深度网络理论上可逼近任意函数，但需要大数据，在结构化表格数据上常不如 XGBoost。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>神经网络通过层层非线性变换构造特征：</p>
+
+<p>$$h^{(l)} = \sigma(W^{(l)}h^{(l-1)} + b^{(l)})$$</p>
+
+<p>其中 $\sigma$ 是激活函数（ReLU、sigmoid 等）。足够宽的深度网络理论上可逼近任意连续函数。实践中适合样本量大的场景（图像、文本），结构化表格数据上 XGBoost 仍常优于神经网络。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ 激活函数 σ 的作用？为什么不用线性？</li></ol>
+<details><summary>参考答案要点</summary>无非线性 σ→多层等价单层→丧失深度意义。σ 引入非线性使深度网络可逼近任意函数。</details>
+
+<hr>
+
+<a id="sec5"></a>
+<h2>§5 双重机器学习 (DML)</h2>
+
+<p><strong>重要性</strong>：★★★ 必考大题</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>DML 将任意 ML 预测器嵌入因果推断框架。两个关键创新：Neyman 正交得分（消除讨厌参数估计偏差）+ 交叉拟合（避免过拟合偏差）。在标准正则条件下，θ̂ 是 √n 渐近正态的——可以做置信区间和假设检验。</p>
+
+<h3>二、重点内容申明</h3>
+
+<p>DML 是 Chernozhukov et al. (2018) 提出的框架，将任意 ML 预测器嵌入因果推断。核心是<strong>正交化</strong>（Neyman 正交得分）+ <strong>交叉拟合</strong>（cross-fitting）。</p>
+
+<p>以部分线性模型 $Y = D\theta_0 + g_0(Z) + \varepsilon$ 为例：</p>
+
+<ol><li>将 Y 和 D 分别对 Z 做 ML 预测，得残差 $\hat{V} = D - \hat{E}[D|Z]$，$\hat{W} = Y - \hat{E}[Y|Z]$</li><li>对 $\hat{W}$ 回归 $\hat{V}$ 得 $\hat{\theta}$（正交化：消除了 $g_0(Z)$ 的混杂）</li></ol>
+
+<p>交叉拟合：将样本分 K 份，轮流用 K-1 份估计 $g_0$，在剩下 1 份上估计 $\theta$，最后平均。避免过拟合偏差。</p>
+
+<p><strong>关键优势</strong>：DML 允许用最灵活的 ML（随机森林、XGBoost、神经网络）控制混杂，同时保持 $\sqrt{N}$ 渐近正态性——可以做置信区间和假设检验。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ DML 为什么需要"正交化"？</li></ol>
+<details><summary>参考答案要点</summary>直接回归 D 控制 g0(Z) 的有偏估计→正则化偏差。Neyman 正交得分将 g0 估计误差与 θ"正交化"——g0 不太准也不污染 θ。</details>
+
+<ol><li>⭐⭐ 解释 DML 的交叉拟合步骤及目的。</li></ol>
+<details><summary>参考答案要点</summary>样本分 K 份。第 k 份：用其余 K-1 份估计 ĝ0，在第 k 份上估计 θk。θ̂=平均(θk)。目的：避免同一数据上既估计讨厌参数又估计目标参数导致过拟合偏差。</details>
+
+<ol><li>⭐⭐⭐ DML 为什么能实现 √n 渐近正态？</li></ol>
+<details><summary>参考答案要点</summary>Neyman 正交性：θ 的得分函数对 η 的 Gateaux 导数为零→η 估计误差对 θ 影响是二阶的→只要 η 收敛速率足够快（n^{-1/4}，ML 方法通常满足），θ 就是 √n 渐近正态。这是 ML+经典推断框架的数学基础。</details>
+
+<hr>
+
+<a id="sec6"></a>
+<h2>§6 全章总结</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>从单棵树到随机森林再到 DML，方法论的核心演进是从"纯预测"走向"预测+推断"。DML 的 Neyman 正交+交叉拟合框架使得用最灵活的 ML 控制混杂同时保持 √n 推断成为可能——这是现代因果推断最重要的进展之一。</p>
+
+<h3>二、重点内容申明</h3>
+
+<table class="md-table"><thead><tr><th>方法</th><th>强项</th><th>弱项</th></tr></thead><tbody><tr><td>回归树</td><td>可解释</td><td>单棵方差大</td></tr><tr><td>随机森林</td><td>稳健、少调参</td><td>不如 Boosting 精度高</td></tr><tr><td>XGBoost</td><td>精度最高</td><td>需调参，易过拟合</td></tr><tr><td>神经网络</td><td>逼近任意函数</td><td>需大数据，黑箱</td></tr><tr><td>DML</td><td>ML+√N 推断</td><td>依赖 Neyman 正交条件</td></tr></tbody></table>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐⭐ 什么场景选 XGBoost 而非神经网络？</li></ol>
+<details><summary>参考答案要点</summary>结构化表格数据、中等样本量（几千-几十万）→XGBoost 更快更准更易调参。神经网络适合图像/文本/序列、大数据（百万+）、需自动学习 representation 的场景。</details>
+
+<hr>
+
+  </main>
+</div>
+<button id="btt" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="footer">2026-06-22 · 三段式复习资料 · 脉络梳理 + 重点内容申明 + 习题</div>
+<script>
+// 暗色模式 (localStorage key per chapter)
+const LS_KEY = 'ch_hdnlinear';
+const themeBtn = document.getElementById('themeBtn');
+function setTheme(d) {
+  document.documentElement.classList.toggle('dark', d);
+  themeBtn.textContent = d ? '☀️ 亮色' : '🌙 暗色';
+  try { localStorage.setItem(LS_KEY, d ? '1' : '0') } catch(e) {}
+}
+const saved = (() => { try { return localStorage.getItem(LS_KEY) } catch(e) { return null } })();
+setTheme(saved === '1');
+themeBtn.onclick = () => setTheme(!document.documentElement.classList.contains('dark'));
+// 移动端目录
+const tocBtn = document.getElementById('tocBtn');
+tocBtn.onclick = () => {
+  const s = document.getElementById('sidebar');
+  s.style.display = s.style.display === 'none' ? 'block' : 'none';
+};
+// 进度条
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  pbar.style.width = (h > 0 ? (scrollY / h * 100) : 0) + '%';
+  document.getElementById('btt').style.display = scrollY > 400 ? 'flex' : 'none';
+}, {passive: true});
+document.getElementById('btt').onclick = () => scrollTo({top: 0, behavior: 'smooth'});
+// 侧边栏高亮
+const sectLinks = Array.from(document.querySelectorAll('.sidebar a[data-sec]'));
+const sections = sectLinks.map(a => document.getElementById(a.dataset.sec)).filter(Boolean);
+const obs = new IntersectionObserver((es) => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      sectLinks.forEach(a => a.classList.toggle('active', a.dataset.sec === e.target.id));
+    }
+  });
+}, {rootMargin: '-80px 0px -70% 0px'});
+sections.forEach(s => obs.observe(s));
+function expandAll() {
+  document.querySelectorAll('details').forEach(d => d.open = true);
+}
+</script>
+</body>
+</html>

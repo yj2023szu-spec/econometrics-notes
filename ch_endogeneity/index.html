@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>面板内生性处理：工具变量与 GMM · 期末复习</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],throwOnError:false,ignoredTags:['script','noscript','style','textarea','pre','code']});"></script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   三段式复习资料 · 设计系统 V2
+   从零构建，无原项目预置残留
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Design Tokens ─────────────────────────────────── */
+:root {
+  /* 暖白基调 — 纸质书感 */
+  --bg: #fdfbf7;
+  --card: #ffffff;
+  --text: #1e1b18;
+  --text2: #5c5852;
+  --text3: #8c8880;
+  --border: #e6e2da;
+  --border-lt: #f0ece5;
+
+  /* 代码区 */
+  --code-bg: #1a1e2b;
+  --code-text: #d6deeb;
+  --code-accent: #82aaff;
+
+  /* 主题色系 */
+  --accent: #2c6485;
+  --accent-lt: #ecf3f8;
+  --accent-dk: #1a4055;
+
+  /* 功能色 */
+  --success: #3b7a4b;
+  --success-lt: #edf6ef;
+  --warn: #a06830;
+  --warn-lt: #fdf6ee;
+  --danger: #b33a3a;
+  --danger-lt: #fdf0f0;
+  --purple: #6b4c9a;
+  --purple-lt: #f4f0f8;
+  --cyan: #2d7f8e;
+  --cyan-lt: #edf6f8;
+
+  /* 排版 */
+  --font-body: 'Noto Serif SC', 'Source Han Serif SC', 'Songti SC', 'STSong', 'SimSun', 'Noto Serif', Georgia, serif;
+  --font-heading: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', 'Source Han Sans SC', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Cascadia Code', 'Fira Code', Consolas, 'Source Code Pro', monospace;
+
+  --maxw: 1100px;
+  --radius: 12px;
+  --radius-sm: 6px;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.04), 0 1px 2px rgba(0,0,0,.06);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.06), 0 2px 4px rgba(0,0,0,.04);
+}
+
+html.dark {
+  --bg: #111318;
+  --card: #1a1d24;
+  --text: #e6e3dd;
+  --text2: #a09b93;
+  --text3: #6b6660;
+  --border: #2a2d35;
+  --border-lt: #1f2229;
+  --code-bg: #0d0f14;
+  --code-text: #c8d6e5;
+  --code-accent: #82aaff;
+  --accent: #5d9ec9;
+  --accent-lt: #182635;
+  --accent-dk: #3a6d8f;
+  --success: #5a9e6b;
+  --success-lt: #1a2e1e;
+  --warn: #d4a258;
+  --warn-lt: #302418;
+  --danger: #d46565;
+  --danger-lt: #301c1c;
+  --purple: #9b7cc4;
+  --purple-lt: #241e30;
+  --cyan: #5aaab8;
+  --cyan-lt: #18282c;
+  --shadow-card: 0 1px 3px rgba(0,0,0,.2);
+  --shadow-hover: 0 4px 12px rgba(0,0,0,.3);
+}
+
+/* ── Reset & Base ──────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  background:var(--bg);color:var(--text);
+  font-family:var(--font-body);font-size:16px;line-height:1.82;
+  text-wrap:pretty;-webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+
+/* ── Top Navigation Bar ───────────────────────────── */
+.top-bar{
+  position:sticky;top:0;z-index:100;
+  background:rgba(253,251,247,.9);backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  transition:background .3s;
+}
+html.dark .top-bar{background:rgba(17,19,24,.9)}
+.top-inner{
+  max-width:var(--maxw);margin:0 auto;
+  padding:12px 28px;display:flex;align-items:center;gap:20px;
+}
+.top-inner h1{font-size:15px;font-weight:600;font-family:var(--font-heading);letter-spacing:.01em}
+.spacer{flex:1}
+.btn{
+  background:var(--card);border:1px solid var(--border);color:var(--text2);
+  padding:6px 14px;border-radius:var(--radius-sm);cursor:pointer;
+  font-size:13px;font-family:var(--font-heading);transition:all .2s;
+}
+.btn:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-lt)}
+
+/* ── Progress Bar ─────────────────────────────────── */
+.progress-wrap{height:2px;background:transparent}
+.progress-bar{
+  height:2px;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--cyan));
+  transition:width .2s ease-out;
+}
+
+/* ── Layout ────────────────────────────────────────── */
+.layout{
+  max-width:var(--maxw);margin:0 auto;
+  display:grid;grid-template-columns:280px 1fr;gap:44px;padding:32px 28px 48px;
+}
+
+/* ── Sidebar ───────────────────────────────────────── */
+.sidebar{
+  position:sticky;top:80px;align-self:start;
+  max-height:calc(100vh - 120px);overflow-y:auto;
+  padding:16px 0;
+}
+.sidebar-nav{display:flex;flex-direction:column;gap:1px}
+.sidebar-label{
+  font-size:11px;font-weight:700;text-transform:uppercase;
+  letter-spacing:.12em;color:var(--text3);
+  padding:4px 14px 8px;font-family:var(--font-heading);
+}
+.sidebar a{
+  display:flex;align-items:baseline;gap:8px;
+  padding:8px 14px;border-radius:var(--radius-sm);
+  text-decoration:none;color:var(--text2);font-size:13px;
+  font-family:var(--font-heading);border-left:3px solid transparent;
+  transition:all .18s;
+  line-height:1.45;
+}
+.sidebar a .sec-num{
+  font-size:11px;font-weight:700;color:var(--accent);
+  min-width:26px;opacity:.75;
+}
+.sidebar a:hover{
+  background:var(--card);color:var(--text);
+  border-left-color:var(--accent-lt);
+}
+.sidebar a.active{
+  background:linear-gradient(135deg,var(--accent-lt),var(--card));
+  color:var(--accent);border-left-color:var(--accent);font-weight:600;
+}
+.sidebar a.active .sec-num{opacity:1}
+.sidebar-tools{margin-top:18px;padding-top:14px;border-top:1px solid var(--border-lt)}
+
+/* ── Main Content ──────────────────────────────────── */
+.main{min-width:0;counter-reset:exercise}
+
+/* Section header */
+.main h2{
+  font-family:var(--font-heading);font-size:26px;font-weight:800;
+  margin:56px 0 16px;padding-top:20px;
+  border-top:3px solid var(--accent);color:var(--accent-dk);
+  letter-spacing:.02em;text-wrap:balance;
+}
+.main h2:first-of-type{border-top:none;margin-top:0;padding-top:0}
+
+/* Sub-section */
+.main h3{
+  font-family:var(--font-heading);font-size:19px;font-weight:700;
+  margin:36px 0 12px;color:var(--accent);
+  padding-left:12px;border-left:4px solid var(--accent);text-wrap:balance;
+}
+
+/* Sub-sub-section */
+.main h4{
+  font-family:var(--font-heading);font-size:16px;font-weight:600;
+  margin:24px 0 8px;color:var(--text);text-wrap:balance;
+}
+
+/* Paragraph */
+.main p{margin:12px 0;text-indent:2em}
+.main p:first-of-type{text-indent:0}
+
+/* Lists */
+.main ul,.main ol{margin:10px 0;padding-left:28px}
+.main li{margin:6px 0;padding-left:4px}
+.main li::marker{color:var(--accent)}
+
+/* Inline text */
+.main strong{color:var(--text);font-weight:700}
+.main em{font-style:italic;color:var(--text2)}
+.main a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-lt)}
+.main a:hover{border-bottom-color:var(--accent)}
+
+/* Blockquote — 用于重要性标注和提示 */
+.main blockquote{
+  margin:20px 0;padding:16px 20px;
+  background:linear-gradient(135deg,var(--accent-lt),var(--card));
+  border-left:4px solid var(--accent);border-radius:0 var(--radius) var(--radius) 0;
+  color:var(--text2);font-size:15px;
+}
+.main blockquote strong{color:var(--accent)}
+
+/* 隐藏正文中的冗余文本目录（侧边栏已提供导航） */
+.inline-toc{display:none}
+/* Horizontal rule */
+hr{
+  border:none;height:1px;
+  background:linear-gradient(90deg,transparent,var(--border),transparent);
+  margin:40px 0;
+}
+
+/* ── Code ──────────────────────────────────────────── */
+code{
+  background:var(--accent-lt);padding:2px 7px;border-radius:var(--radius-sm);
+  font-family:var(--font-mono);font-size:.88em;color:var(--accent-dk);
+}
+pre.stata-code,pre.code-block{
+  background:var(--code-bg);color:var(--code-text);
+  padding:20px 24px;border-radius:var(--radius);overflow-x:auto;
+  font-family:var(--font-mono);font-size:13.5px;line-height:1.65;
+  margin:18px 0;box-shadow:var(--shadow-card);
+}
+pre.stata-code code,pre.code-block code{
+  background:transparent;padding:0;color:inherit;font-size:inherit;
+}
+
+/* ── Tables ────────────────────────────────────────── */
+.md-table{
+  border-collapse:collapse;width:100%;margin:18px 0;font-size:14px;
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-card);
+}
+.md-table th,.md-table td{
+  border:1px solid var(--border);padding:10px 14px;text-align:left;vertical-align:top;
+}
+.md-table th{background:var(--accent);color:#fff;font-weight:600;font-family:var(--font-heading)}
+.md-table tr:nth-child(2n) td{background:var(--card)}
+html.dark .md-table th{background:var(--accent-dk)}
+
+/* ── Callout Cards ─────────────────────────────────── */
+.callout{
+  margin:18px 0;padding:16px 20px;border-radius:var(--radius);
+  border-left:5px solid var(--accent);background:var(--accent-lt);
+  box-shadow:var(--shadow-card);break-inside:avoid;
+}
+.callout.warn{border-color:var(--warn);background:var(--warn-lt)}
+.callout.danger{border-color:var(--danger);background:var(--danger-lt)}
+.callout.success{border-color:var(--success);background:var(--success-lt)}
+.callout.purple{border-color:var(--purple);background:var(--purple-lt)}
+.callout.cyan{border-color:var(--cyan);background:var(--cyan-lt)}
+
+/* ── Exercise (details/summary) ────────────────────── */
+details{
+  margin:12px 0;background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow-card);
+  transition:box-shadow .2s;break-inside:avoid;
+}
+details:hover{box-shadow:var(--shadow-hover)}
+details summary{
+  cursor:pointer;padding:12px 16px;font-weight:600;font-size:14px;
+  font-family:var(--font-heading);color:var(--text);
+  list-style:none;display:flex;align-items:center;gap:8px;
+  user-select:none;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{
+  content:'▸';color:var(--accent);font-size:13px;
+  transition:transform .2s;display:inline-block;
+}
+details[open] summary::before{content:'▾';transform:rotate(0)}
+/* 答案内容：缩小字号，增加右边距 */
+details[open]{
+  padding:0 24px 18px 20px;
+}
+details[open] > p,
+details[open] > ul,
+details[open] > ol,
+details[open] > blockquote{
+  font-size:14px;line-height:1.7;
+  margin:6px 0;padding-right:12px;
+}
+details[open] > p{text-indent:0}
+
+/* ── Math (KaTeX) ──────────────────────────────────── */
+.katex-display{margin:18px 0;overflow-x:auto;overflow-y:hidden;padding:6px 0}
+.katex{font-size:1.08em}
+
+/* ── Back to Top ───────────────────────────────────── */
+#btt{
+  position:fixed;right:24px;bottom:24px;width:42px;height:42px;
+  border-radius:50%;background:var(--card);border:1px solid var(--border);
+  cursor:pointer;font-size:18px;display:none;align-items:center;
+  justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.08);
+  transition:all .2s;z-index:90;
+}
+#btt:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.12)}
+
+/* ── Footer ────────────────────────────────────────── */
+.footer{
+  max-width:var(--maxw);margin:0 auto;padding:32px 28px;
+  color:var(--text3);font-size:13px;text-align:center;
+  border-top:1px solid var(--border-lt);font-family:var(--font-heading);
+}
+
+/* ── Responsive ────────────────────────────────────── */
+@media (max-width:960px){
+  .layout{grid-template-columns:1fr;padding:20px 16px;gap:0}
+  .sidebar{display:none}
+  .top-inner{padding:10px 16px}
+  .top-inner h1{font-size:13px}
+  .main h2{font-size:22px;margin-top:36px}
+  .main h3{font-size:17px}
+  body{font-size:15px}
+}
+
+/* ── Print ─────────────────────────────────────────── */
+@media print{
+  @page{margin:2cm}
+  .top-bar,.sidebar,#btt,.progress-wrap,script{display:none!important}
+  .layout{display:block;max-width:100%;padding:0}
+  body{font-size:11pt;line-height:1.55;color:#000;background:#fff}
+  .main h2{page-break-before:auto;border-top:1px solid #ccc}
+  .main h3{border-left:2px solid #333}
+  .callout,details,.md-table,pre{break-inside:avoid}
+  pre.stata-code,pre.code-block{background:#f5f5f5;color:#000;border:1px solid #ccc}
+  code{background:#f0f0f0;color:#000}
+  a{color:#000;text-decoration:none;border:none}
+}
+</style>
+</head>
+<body>
+<div class="top-bar">
+  <div class="progress-wrap"><div class="progress-bar" id="pbar"></div></div>
+  <div class="top-inner">
+    <h1>面板内生性处理：工具变量与 GMM · 期末复习</h1>
+    <div class="spacer"></div>
+    <button class="btn" id="themeBtn" title="切换暗色模式">🌙</button>
+    <button class="btn" id="tocBtn" title="显示目录">☰</button>
+  </div>
+</div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-label">章节导航</div>
+    <nav class="sidebar-nav"><a href="#sec0" data-sec="sec0"><span class="sec-num">§0</span>全章导论：为什么固定效应不够？</a>
+    <a href="#sec1" data-sec="sec1"><span class="sec-num">§1</span>面板工具变量回归（2SLS）</a>
+    <a href="#sec2" data-sec="sec2"><span class="sec-num">§2</span>动态面板与 Nickell 偏误</a>
+    <a href="#sec3" data-sec="sec3"><span class="sec-num">§3</span>Anderson-Hsiao 估计量</a>
+    <a href="#sec4" data-sec="sec4"><span class="sec-num">§4</span>差分 GMM（Arellano-Bond）</a>
+    <a href="#sec5" data-sec="sec5"><span class="sec-num">§5</span>前定变量与内生变量的处理</a>
+    <a href="#sec6" data-sec="sec6"><span class="sec-num">§6</span>弱工具变量问题</a>
+    <a href="#sec7" data-sec="sec7"><span class="sec-num">§7</span>系统 GMM（Blundell-Bond）</a>
+    <a href="#sec8" data-sec="sec8"><span class="sec-num">§8</span>自相关检验与过度识别检验</a>
+    <a href="#sec9" data-sec="sec9"><span class="sec-num">§9</span>实例：工资方程动态面板估计</a>
+    <a href="#sec10" data-sec="sec10"><span class="sec-num">§10</span>误差自相关下的调整与 xtabond2</a>
+    <a href="#sec11" data-sec="sec11"><span class="sec-num">§11</span>全章总结与综合习题</a></nav>
+    <div class="sidebar-tools">
+      <div class="sidebar-label">工具</div>
+      <a href="#" onclick="window.print();return false">🖨️ 打印 / 导出 PDF</a>
+      <a href="#" onclick="expandAll();return false">📖 展开所有习题答案</a>
+    </div>
+  </aside>
+  <main class="main">
+
+<blockquote><strong>三段式结构</strong>：每节 = 脉络梳理 + 重点内容申明 + 习题。
+费曼讲法 · 三问自检 · 借助外部教材扩充习题。</blockquote>
+
+<hr>
+
+<p><div class="inline-toc"></p>
+<h2>目录</h2>
+
+<ul><li>[§0 全章导论：为什么固定效应不够？](#sec0)</li><li>[§1 面板工具变量回归（2SLS）](#sec1)</li><li>[§2 动态面板与 Nickell 偏误](#sec2)</li><li>[§3 Anderson-Hsiao 估计量](#sec3)</li><li>[§4 差分 GMM（Arellano-Bond）](#sec4)</li><li>[§5 前定变量与内生变量的处理](#sec5)</li><li>[§6 弱工具变量问题](#sec6)</li><li>[§7 系统 GMM（Blundell-Bond）](#sec7)</li><li>[§8 自相关检验与过度识别检验](#sec8)</li><li>[§9 实例：工资方程动态面板估计](#sec9)</li><li>[§10 误差自相关下的调整与 xtabond2](#sec10)</li><li>[§11 全章总结与综合习题](#sec11)</li></ul>
+<p></div></p>
+
+<hr>
+
+<a id="sec0"></a>
+<h2>§0 全章导论：为什么固定效应不够？</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>固定效应模型只能消除不随时间变化的遗漏变量偏误。当解释变量与随时间变化的误差相关（内生性），固定效应估计仍然不一致。本章解决的核心问题：面板数据中如何处理内生解释变量？从面板 2SLS 出发，逐步深入到动态面板的 GMM 方法体系。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>一个实证研究者的困境</h3>
+
+<p>设想你正在研究企业创新投入的决定因素。你有一份面板数据，控制了企业固定效应——这意味着所有不随时间变化的企业特征（文化、创始人能力、行业传统）都已被消除。你的固定效应回归显示：R&D 支出与企业规模正相关。这个结果可靠吗？</p>
+
+<p><strong>不一定。</strong> 因为企业规模本身可能是内生的——成功的创新带来增长，增长反过来扩大规模。此时 $E(X_{it}\varepsilon_{it}) \neq 0$，固定效应估计不一致。</p>
+
+<p>这是一个比"遗漏变量"更隐蔽的问题。</p>
+
+<p><strong>遗漏变量</strong>：有一个变量 Z 同时影响 X 和 Y，你没控制它 → 用固定效应消除不随时间变化的 Z。</p>
+
+<p><strong>内生性</strong>：X 和 Y 相互影响，或 X 与不可观测的时变冲击相关 → 固定效应<strong>无法消除</strong>这种偏误。</p>
+
+<p>本章的核心命题是：<strong>当解释变量与随时间变化的误差项相关时，固定效应估计不再一致——</strong> 你需要工具变量，而在面板框架下，这引出一整套 GMM 方法论。</p>
+
+<p><strong>一句话主线</strong>：固定效应消除的是"不随时间变的遗漏变量"，但解释变量如果和随时间变化的误差相关，FE 就不一致了——此时需要工具变量，在面板框架下这引出从 2SLS 到差分 GMM 再到系统 GMM 的一整套方法论。</p>
+
+<h3>方法谱系图</h3>
+
+<pre class="code-block"><code>固定效应 FE
+  │  Xit 与 εit 相关 → 不一致
+  ▼
+面板 2SLS (xtivreg)
+  │  静态面板，内生变量有工具变量
+  ▼
+动态面板：加入 Yit-1
+  │  组内离差导致 Nickell 偏误
+  ▼
+Anderson-Hsiao (Yit-2 做 IV)
+  │  只用一个工具变量，效率低
+  ▼
+差分 GMM (Arellano-Bond)
+  │  所有可用滞后项一起做工具变量
+  │  γ→1 时弱工具变量
+  ▼
+系统 GMM (Blundell-Bond)
+  差分方程 + 水平方程矩条件
+  小样本性质最优</code></pre>
+
+<p><strong>三问自检</strong>：①为什么 FE 不够？因为不能处理时变异质性导致的内生性。②动态面板的核心难点？Yit-1 与差分误差必然相关。③GMM 方法的本质？利用不同时间点可用的不同工具变量集合，将所有矩条件联合估计。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：固定效应模型能解决所有内生性问题吗？为什么？</li></ol>
+<details><summary>参考答案要点</summary>不能。固定效应只能消除不随时间变化的遗漏变量（通过组内离差或一阶差分），但如果解释变量与随时间变化的误差项相关，FE 估计仍不一致。</details>
+
+<ol><li>⭐ <strong>基础</strong>：列出从静态面板到系统 GMM 的方法演进链。</li></ol>
+<details><summary>参考答案要点</summary>固定效应 → 面板 2SLS（静态内生）→ 动态面板中的 Nickell 偏误 → Anderson-Hsiao（单 IV 差分）→ Arellano-Bond 差分 GMM（多 IV）→ Blundell-Bond 系统 GMM（差分+水平矩条件）。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：为什么说 GMM 是面板内生性处理的"统一框架"？</li></ol>
+<details><summary>参考答案要点</summary>GMM 通过矩条件统一表达不同的估计量——AH 是只用 Yit-2 一个矩条件的 GMM，差分 GMM 使用所有差分矩条件，系统 GMM 再加入水平矩条件。所有基于 IV 的估计量都可以写成 GMM 的特例。</details>
+
+<hr>
+
+<a id="sec1"></a>
+<h2>§1 面板工具变量回归（2SLS）</h2>
+
+<p><strong>重要性</strong>：★★★ 核心</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>固定效应不能消除所有内生性。当 Xit 与 εit 相关时，需要工具变量。面板 2SLS 等价于对组内离差变换后的数据做 2SLS，Stata 中用 xtivreg 命令实现。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>什么时候需要面板 IV？</h3>
+
+<p>固定效应模型假设 $E(X_{it}\varepsilon_{it}) = 0$。如果某个解释变量与误差项相关（例如：工资方程中的教育年限可能与不可观测的能力相关），那么这个假设就不成立。<strong>固定效应只能消除不随时间变化的遗漏变量，不能解决时变的内生性</strong>。</p>
+
+<h3>核心思路</h3>
+
+<p>面板 2SLS 的直觉分两步：</p>
+
+<ol><li><strong>第一阶段</strong>：把内生变量 $X_{it}$ 对工具变量 $Z_{it}$ 和个体虚拟变量做回归，得到拟合值 $\hat{X}_{it}$。个体虚拟变量能吸收固定效应的影响。</li></ol>
+
+<ol><li><strong>第二阶段</strong>：把 $Y_{it}$ 对 $\hat{X}_{it}$、外生协变量以及个体虚拟变量做回归。</li></ol>
+
+<p>但显式加入 N 个虚拟变量在实践中不可行。一个关键的代数结论是：</p>
+
+<blockquote><strong>固定效应 2SLS ≡ 对组内离差变换后的数据直接做 2SLS</strong></blockquote>
+
+<p>这意味着可以先做组内离差转换（消除 αi），再对变换后的 $(\ddot{Y}_{it}, \ddot{X}_{it}, \ddot{Z}_{it})$ 做普通 2SLS。</p>
+
+<h3>Stata 实现</h3>
+
+<pre class="stata-code"><code>* 设定面板结构
+xtset id time
+
+* 面板固定效应 2SLS
+xtivreg depvar varlist_1 (varlist_2 = varlist_iv), fe vce(robust)</code></pre>
+
+<p>参数解释：</p>
+<ul><li><code>varlist_1</code>：外生协变量（包括在工具变量中）</li><li><code>varlist_2</code>：内生变量</li><li><code>varlist_iv</code>：额外的工具变量（排他性工具变量）</li><li><code>fe</code>：使用固定效应变换</li><li><code>vce(robust)</code>：异方差稳健标准误</li></ul>
+
+<h3>注意事项</h3>
+
+<p>工具变量的两个条件在面板框架下同样适用：</p>
+<ol><li><strong>相关性</strong>：$Z_{it}$ 与内生变量相关（组内离差变换后）</li><li><strong>外生性</strong>：$Z_{it}$ 与 $\varepsilon_{it}$ 不相关</li></ol>
+
+<p>个体虚拟变量本身也是外生的，在 2SLS 中应作为外生协变量处理。L≥K（工具变量数不少于内生变量数）是识别的必要条件。</p>
+
+<p><strong>三问自检</strong>：①面板 2SLS 和普通 2SLS 的区别？先做组内离差再 2SLS，等价于带虚拟变量的 2SLS。②xtivreg 需要手动做组内离差吗？不需要，fe 选项自动处理。③工具变量是否包含个体虚拟变量？是，个体虚拟变量被视为外生协变量的一部分。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：写出面板固定效应 2SLS 的 Stata 命令，解释每个参数的含义。</li></ol>
+<details><summary>参考答案要点</summary>`xtivreg y x1 (x2 = z), fe vce(robust)`。fe：固定效应变换；括号内为内生变量=工具变量；vce(robust)：稳健标准误。</details>
+
+<ol><li>⭐ <strong>基础</strong>：面板 2SLS 为什么等价于先做组内离差再做普通 2SLS？</li></ol>
+<details><summary>参考答案要点</summary>因为包含个体虚拟变量的 2SLS 可以通过 Frisch-Waugh-Lovell 定理化简——先消除虚拟变量的影响（组内离差），再对变换后的数据做 2SLS，得到的估计量完全相同。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：如果 L<K（工具变量数少于内生变量数），会出现什么问题？如何判断？</li></ol>
+<details><summary>参考答案要点</summary>模型不可识别——无法唯一确定参数。这是秩条件的违反。在实际中可以通过第一阶段回归的 F 统计量判断工具变量的相关性强度，经验法则 F>10 可认为不存在严重弱 IV 问题。</details>
+
+<hr>
+
+<a id="sec2"></a>
+<h2>§2 动态面板与 Nickell 偏误</h2>
+
+<p><strong>重要性</strong>：★★★ 必考</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>经济行为常具有惯性——消费、投资、创新均受过去影响。将 Yit-1 加入面板模型后，组内离差变换使滞后项与差分误差相关，导致固定效应估计不一致。这就是 Nickell 偏误，与 1/T 同阶。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>为什么要引入滞后项？</h3>
+
+<p>很多经济行为具有惯性。企业今年的创新投入与去年高度相关，个人消费习惯不会突变。如果不控制这些滞后效应，模型设定就是错误的。考虑最简单的动态面板模型：</p>
+
+<p>$$Y_{it} = \gamma Y_{it-1} + \alpha_i + \varepsilon_{it} \tag{1}$$</p>
+
+<h3>Nickell 偏误的推导（核心考点）</h3>
+
+<p>以 T=3 为例演示为什么固定效应估计失效。对个体 i，两个时间点的方程为：</p>
+
+<p>$$Y_{i2} = \gamma Y_{i1} + \alpha_i + \varepsilon_{i2}$$ $$Y_{i3} = \gamma Y_{i2} + \alpha_i + \varepsilon_{i3}$$</p>
+
+<p>做组内离差变换（减去时间均值）后，实际上得到同一个方程：</p>
+
+<p>$$\Delta Y_{i3} = \gamma \Delta Y_{i2} + \Delta \varepsilon_{i3} \tag{2}$$</p>
+
+<p>其中 $\Delta Y_{it} = Y_{it} - Y_{it-1}$。此时方程变成对 N 个个体做横截面 OLS。但问题在于：</p>
+
+<p>$$E(\Delta Y_{i2} \Delta \varepsilon_{i3}) = E[(Y_{i2} - Y_{i1})(\varepsilon_{i3} - \varepsilon_{i2})]$$</p>
+
+<p>展开后交叉项中只有 $E(Y_{i1}\varepsilon_{i2})$ 非零（因为 $Y_{i1}$ 包含 $\varepsilon_{i1}$，而 $\varepsilon_{i1}$ 与 $\varepsilon_{i2}$ 可能独立），更关键的是：</p>
+
+<p>$$E(Y_{i2}\varepsilon_{i2}) = -\sigma^2_{\varepsilon}$$</p>
+
+<p>因此 $\Delta Y_{i2}$ 与 $\Delta \varepsilon_{i3}$ 相关——OLS 的前提被破坏，$\hat{\gamma}_{FE}$ 不一致。</p>
+
+<h3>偏误的大小</h3>
+
+<p>Nickell 偏误与 $1/T$ 同阶。当 T 较小时偏误不可忽视。Hansen 的结论很明确：</p>
+
+<blockquote>对于含有固定效应的动态面板模型，无论 T 取何值，都不能使用固定效应估计。</blockquote>
+
+<p><strong>三问自检</strong>：①Nickell 偏误的根源？组内离差变换使 $\Delta Y_{it-1}$ 与 $\Delta \varepsilon_{it}$ 通过 $\varepsilon_{it-1}$ 产生相关。②偏误方向和大小？通常使 $\hat{\gamma}$ 向下偏误，大小约为 $O(1/T)$。③T 很大时能忽视吗？理论上偏误会减小，但蒙特卡洛模拟表明 T 需非常大才能忽略。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：什么是 Nickell 偏误？它是如何产生的？</li></ol>
+<details><summary>参考答案要点</summary>Nickell 偏误是动态面板固定效应估计的不一致性。根源：组内离差变换后，ΔYit-1 中的 εit-1 分量与 Δεit 中的 εit-1 分量相关，破坏 OLS 的外生性条件。偏误方向通常为负（低估 γ），大小与 1/T 同阶。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：以 T=3 为例，完整推导 Nickell 偏误的来源。</li></ol>
+<details><summary>参考答案要点</summary>对 Yit=γYit-1+αi+εit，T=3 时有两个方程。组内离差后得 ΔYi3=γΔYi2+Δεi3。E(ΔYi2Δεi3)=E(Yi2εi3)-E(Yi1εi3)-E(Yi2εi2)+E(Yi1εi2)。假设未来误差与过去不相关，只剩 -E(Yi2εi2)=-σ²_ε。因此 ΔYi2 内生，OLS 不一致。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：如果 T=100，Nickell 偏误可以忽略吗？为什么实证中仍不推荐 FE？</li></ol>
+<details><summary>参考答案要点</summary>理论上 Nickell 偏误 O(1/T)，T=100 时非常小。但实证中：①面板数据的 T 通常远小于 100；②即使 T 大，还有其他内生性来源；③GMM 方法在大 T 下可通过限制工具变量阶数来应对，不一定比 FE 差。</details>
+
+<hr>
+
+<a id="sec3"></a>
+<h2>§3 Anderson-Hsiao 估计量</h2>
+
+<p><strong>重要性</strong>：★★★ 核心</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>AH 估计量的核心直觉：对差分方程，用 Yit-2 作为 ΔYit-1 的工具变量。前提是 εit 无自相关。虽然效率低于后续的 GMM 方法，但 AH 是理解整个动态面板方法论的关键垫脚石。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>核心直觉</h3>
+
+<p>差分方程消除 αi 后，$\Delta Y_{it-1}$ 是内生的。Anderson-Hsiao 的核心贡献是<strong>用 $Y_{it-2}$ 作为 $\Delta Y_{it-1}$ 的工具变量</strong>。为什么有效？</p>
+
+<p><strong>外生性</strong>：若 $\varepsilon_{it}$ 无自相关且独立于 $\alpha_i$：</p>
+
+<p>$$E(Y_{it-2}\Delta \varepsilon_{it}) = E(Y_{it-2}\varepsilon_{it}) - E(Y_{it-2}\varepsilon_{it-1}) = 0$$</p>
+
+<p>因为 $Y_{it-2}$ 只依赖于 $\varepsilon_{it-2}$ 及更早的信息，与 $\varepsilon_{it}$ 和 $\varepsilon_{it-1}$ 都无关。</p>
+
+<p><strong>相关性</strong>：$Y_{it-2}$ 与 $\Delta Y_{it-1} = Y_{it-1} - Y_{it-2}$ 显然相关——它们共享了 $Y_{it-2}$ 这项。</p>
+
+<h3>一般模型</h3>
+
+<p>对含协变量的一般动态面板：</p>
+
+<p>$$Y_{it} = \gamma Y_{it-1} + \beta'X_{it} + \alpha_i + \varepsilon_{it} \tag{3}$$</p>
+
+<p>一阶差分后：</p>
+
+<p>$$\Delta Y_{it} = \gamma \Delta Y_{it-1} + \beta'\Delta X_{it} + \Delta \varepsilon_{it}, \quad t = 3,...,T \tag{4}$$</p>
+
+<p>如果 $X_{it}$ 严格外生，则 $\Delta X_{it}$ 与 $\Delta \varepsilon_{it}$ 不相关，$\Delta X_{it}$ 可以作为自身的工具变量。</p>
+
+<h3>Stata 实现</h3>
+
+<pre class="stata-code"><code>xtset id time
+xtivreg depvar indepvars (L.depvar = L2.depvar), fd vce(robust)</code></pre>
+
+<ul><li><code>L.depvar</code>：被解释变量滞后一期（即模型中的 $Y_{it-1}$）</li><li><code>L2.depvar</code>：被解释变量滞后两期（即 $Y_{it-2}$，工具变量）</li><li><code>fd</code>：一阶差分（消除固定效应）</li></ul>
+
+<h3>局限性</h3>
+
+<ol><li><strong>误差必须无自相关</strong>：若 $\varepsilon_{it}$ 存在一阶自相关，$Y_{it-2}$ 不再外生</li><li><strong>效率偏低</strong>：只使用了一个工具变量，而实际上更多滞后项也可用</li><li><strong>γ 接近 1 时表现差</strong>：此时 $Y_{it-2}$ 与 $\Delta Y_{it-1}$ 的相关性很弱</li></ol>
+
+<p><strong>三问自检</strong>：①AH 为什么用 Yit-2 而不是 Yit-1？因为 $Y_{it-1}$ 与 $\Delta\varepsilon_{it}$ 中的 $\varepsilon_{it-1}$ 相关。②$Y_{it-3}$ 可以做工具变量吗？可以，只要无自相关条件成立。③AH 和面板 2SLS 的区别？AH 的因变量滞后项是内生的且用滞后项做 IV；面板 2SLS 针对一般内生变量。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：Anderson-Hsiao 估计量用什么作为工具变量？为什么有效？</li></ol>
+<details><summary>参考答案要点</summary>用 Yit-2 作为 ΔYit-1 的 IV。外生性：若 εit 无自相关，Yit-2 与 Δεit 不相关（Yit-2 只包含 εit-2 及更早的信息）。相关性：Yit-2 显然与 ΔYit-1=Yit-1-Yit-2 相关。</details>
+
+<ol><li>⭐ <strong>基础</strong>：AH 估计量的两个关键前提是什么？</li></ol>
+<details><summary>参考答案要点</summary>①εit 无自相关（否则 Yit-2 不再外生）；②严格外生条件成立（否则需对 Xit 也寻找工具变量）。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：比较 AH 估计量和差分 GMM 的效率差异来源。</li></ol>
+<details><summary>参考答案要点</summary>AH 只使用 Yit-2 一个工具变量，只利用了一个矩条件。差分 GMM 使用所有可用滞后项（Yit-2, Yit-3, ...），利用了多个矩条件，因此渐近更有效。但当 T 大时，工具变量数量快速膨胀可能导致有限样本效率下降。</details>
+
+<ol><li>⭐⭐⭐ <strong>拓展</strong>：查阅 Arellano-Bond (1991) 原文，说明 AH 在什么情况下与差分 GMM 等价。</li></ol>
+<details><summary>参考答案要点</summary>当 T=3 且只有 Yit-1 为内生变量时，可用的工具变量只有 Yi1，此时 AH=一步差分 GMM。T>3 后差分 GMM 使用了更多矩条件才与 AH 不同。</details>
+
+<hr>
+
+<a id="sec4"></a>
+<h2>§4 差分 GMM（Arellano-Bond）</h2>
+
+<p><strong>重要性</strong>：★★★ 必考大题</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>不同时间点可用的滞后工具变量数量不同——AH 只用了一个，差分 GMM 把所有可用滞后项纳入矩条件一起估计。工具变量矩阵 Zi 是块对角结构，估计量分为一步和两步（Windmeijer 修正）。当 T 较大时需警惕多弱工具变量问题。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>从单个 IV 到 IV 集合</h3>
+
+<p>注意到不同时间点可用的工具变量数量不同：</p>
+
+<ul><li>t=3：$\Delta Y_{i2}$ 的工具变量是 $Y_{i1}$（1 个）</li><li>t=4：$\Delta Y_{i3}$ 的工具变量是 $(Y_{i1}, Y_{i2})$（2 个）</li><li>一般地，t 期可用 $(Y_{i1}, ..., Y_{it-2})$（t-2 个）</li></ul>
+
+<p>更自然的做法是把所有这些矩条件放在一起用 GMM 估计——这就是 Arellano-Bond 差分 GMM 的核心。</p>
+
+<h3>工具变量矩阵 $Z_i$</h3>
+
+<p>对个体 i，工具变量矩阵为块对角结构：</p>
+
+<p>$$Z_i = \begin{pmatrix} (Y_{i1}, \Delta X_{i3}') & 0 & \cdots & 0 \\ 0 & (Y_{i1}, Y_{i2}, \Delta X_{i4}') & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & (Y_{i1}, ..., Y_{iT-2}, \Delta X_{iT}') \end{pmatrix}$$</p>
+
+<p>工具变量总数：$L = K(T-2) + \frac{(T-1)(T-2)}{2}$</p>
+
+<h3>矩条件与 GMM 估计量</h3>
+
+<p>定义 $\Delta \varepsilon_i = (\Delta \varepsilon_{i3}, ..., \Delta \varepsilon_{iT})'$，矩条件为：</p>
+
+<p>$$E(Z_i' \Delta \varepsilon_i) = 0 \tag{6}$$</p>
+
+<p>记 $\Delta H_{it} = (\Delta Y_{it-1}, \Delta X_{it}')'$，$\theta = (\gamma, \beta')'$。将所有个体纵向堆叠得 $\Delta Y = \Delta H \cdot \theta + \Delta \varepsilon$。差分 GMM 估计量为：</p>
+
+<p>$$\hat{\theta}_{GMM} = \left( \Delta H' Z \hat{S}^{-1} Z' \Delta H \right)^{-1} \left( \Delta H' Z \hat{S}^{-1} Z' \Delta Y \right)$$</p>
+
+<p>其中 $S = E(Z_i' \Delta \varepsilon_i \Delta \varepsilon_i' Z_i)$。</p>
+
+<h3>一步 vs 两步 GMM</h3>
+
+<table class="md-table"><thead><tr><th></th><th>一步 GMM</th><th>两步 GMM</th></tr></thead><tbody><tr><td>$\hat{S}$</td><td>假设 $\varepsilon_{it}$ 同方差</td><td>先用一步估计残差再估计 S</td></tr><tr><td>效率</td><td>较低</td><td>渐近更有效</td></tr><tr><td>标准误</td><td>普通稳健标准误</td><td>Windmeijer 小样本修正</td></tr></tbody></table>
+
+<h3>多弱工具变量问题</h3>
+
+<p>当 T 较大时，工具变量数量 $O(T^2)$ 快速膨胀，有效信息未必同步增加。实证建议：<strong>限制作为工具变量的滞后阶数</strong>（通过 maxldep 选项）。</p>
+
+<h3>Stata 实现</h3>
+
+<pre class="stata-code"><code>xtset id time
+
+* 一步差分 GMM
+xtabond depvar indepvars, lags(#) vce(robust) maxldep(#)
+
+* 两步差分 GMM（推荐）
+xtabond depvar indepvars, lags(#) twostep vce(robust) maxldep(#)</code></pre>
+
+<ul><li><code>lags(#)</code>：模型中 $Y_{it}$ 的滞后阶数</li><li><code>maxldep(#)</code>：作为工具变量的滞后项最大阶数（控制工具变量数量）</li><li><code>twostep</code>：两步 GMM</li><li><code>vce(robust)</code>：一步时为异方差稳健；两步时为 Windmeijer 修正</li></ul>
+
+<p><strong>三问自检</strong>：①差分 GMM 比 AH 好在哪？利用了更多矩条件，渐近更有效率。②Zi 为什么是块对角的？不同时间点可用的工具变量不同，且工具变量的外生性条件是针对每个 t 分别定义的。③maxldep 的作用？限制滞后阶数以控制工具变量总数，避免 many weak instruments。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：写出个体 i 的工具变量矩阵 Zi 的形式（T=4 时）。</li></ol>
+<details><summary>参考答案要点</summary>对 T=4，只有 t=3 和 t=4 两个差分方程。Zi 为 2 行的块对角矩阵：t=3 行有 (Yi1, ΔXi3')；t=4 行有 (Yi1, Yi2, ΔXi4')。块对角的原因是不同 t 的工具变量外生性条件分别成立。</details>
+
+<ol><li>⭐ <strong>基础</strong>：一步差分 GMM 和两步差分 GMM 有什么区别？</li></ol>
+<details><summary>参考答案要点</summary>一步假设 εit 同方差，直接给出估计。两步先用一步残差估计 S=E(Zi'ΔεiΔεi'Zi)，再代入 GMM 公式，渐近更有效。但两步标准误有向下偏误，需 Windmeijer 小样本修正。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：写出差分 GMM 的矩条件并推导估计量公式。</li></ol>
+<details><summary>参考答案要点</summary>矩条件 E(Zi'Δεi)=0。最小化二次型 min(Δε'Z)Ŝ⁻¹(Z'Δε)，一阶条件得 θ̂=(ΔH'ZŜ⁻¹Z'ΔH)⁻¹(ΔH'ZŜ⁻¹Z'ΔY)。关键在于 Ŝ 的构造——同方差下 Ŝ=Z'(I⊗G)Z，异方差下用残差估计。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：当 T=7 时，差分 GMM 有多少个工具变量？这有什么风险？</li></ol>
+<details><summary>参考答案要点</summary>不含 Xit 的工具变量：仅因变量滞后项贡献 (T-1)(T-2)/2 = 15 个 IV。含 K 个严格外生 X 则加 K(T-2) 个。T=7, K=4 时约 35 个工具变量。风险：many weak instruments——工具变量多但每个与内生变量相关性弱，导致有限样本偏误和检验 size 扭曲。建议用 maxldep 限制滞后阶数。</details>
+
+<ol><li>⭐⭐⭐ <strong>拓展</strong>：Windmeijer 修正的原理是什么？为什么两步 GMM 需要它？</li></ol>
+<details><summary>参考答案要点</summary>两步 GMM 的标准误公式忽略了 Ŝ 是估计出来的这一事实，导致小样本下标准误被低估。Windmeijer (2005, Journal of Econometrics) 提出用泰勒展开对标准误做有限样本修正，修正后的标准误在小样本下更可靠。Stata 的 vce(robust) 在 twostep 下自动应用此修正。</details>
+
+<hr>
+
+<a id="sec5"></a>
+<h2>§5 前定变量与内生变量的处理</h2>
+
+<p><strong>重要性</strong>：★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>不是所有解释变量都满足严格外生。前定变量与当期误差不相关但与未来误差相关，内生变量与当期误差即相关。差分后二者的工具变量选法不同——前定用滞后一期起的滞后项，内生需从滞后两期开始。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>三类变量的区别</h3>
+
+<p>在 GMM 框架下，变量根据与误差项的关系分为三类：</p>
+
+<table class="md-table"><thead><tr><th>类型</th><th>条件</th><th>差分后</th></tr></thead><tbody><tr><td><strong>严格外生</strong></td><td>$E(X_{it}\varepsilon_{is}) = 0, \forall t,s$</td><td>$\Delta X_{it}$ 自身为工具变量</td></tr><tr><td><strong>前定</strong></td><td>$E(X_{it}\varepsilon_{is}) = 0, s \geq t$，但与未来误差可相关</td><td>需用 $X_{it-1}, X_{it-2},...$ 做 IV</td></tr><tr><td><strong>内生</strong></td><td>$E(X_{it}\varepsilon_{it}) \neq 0$</td><td>需从 $X_{it-2}$ 开始做 IV</td></tr></tbody></table>
+
+<h3>为什么前定变量差分后内生？</h3>
+
+<p>即使 $X_{it}$ 与 $\varepsilon_{it}$ 当期不相关，差分后：</p>
+
+<p>$$E(\Delta X_{it} \Delta \varepsilon_{it}) = E[(X_{it} - X_{it-1})(\varepsilon_{it} - \varepsilon_{it-1})] = -E(X_{it}\varepsilon_{it-1}) \neq 0$$</p>
+
+<p>因为 $X_{it}$ 可能与过去的误差 $\varepsilon_{it-1}$ 相关。但 $X_{it-1}$ 与 $\Delta \varepsilon_{it}$ 不相关。</p>
+
+<h3>Stata 语法</h3>
+
+<pre class="stata-code"><code>xtabond depvar indepvars, lags(#) ///
+    pre(varlist, lagstruct(lags, endlags))     // 前定变量
+    endogenous(varlist, lagstruct(lags, endlags)) // 内生变量</code></pre>
+
+<ul><li><code>lags</code>：该变量滞后几期进入模型</li><li><code>endlags</code>：该变量滞后项做工具变量时的最大个数</li></ul>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：区分严格外生、前定和内生的定义。</li></ol>
+<details><summary>参考答案要点</summary>严格外生：Xit 与所有时期的 εis 都不相关。前定：Xit 与当期和过去的 ε 不相关，但可能与未来 ε 相关。内生：Xit 与当期 ε 即相关。</details>
+
+<ol><li>⭐ <strong>基础</strong>：前定变量差分后为什么内生？应如何处理？</li></ol>
+<details><summary>参考答案要点</summary>差分后 E(ΔXitΔεit)=-E(Xitεit-1)≠0（因为 Xit 可能与 εit-1 相关）。处理方法：用 Xit-1, Xit-2, ... 作为 ΔXit 的 IV。Stata 中通过 pre(varlist, lagstruct(...)) 设定。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：写出 xtabond 中 pre 和 endogenous 选项的完整语法并解释。</li></ol>
+<details><summary>参考答案要点</summary>`pre(wks, lag(1,2))`：wks 在模型中滞后 1 阶，其滞后项做 IV 用 2 阶。`endogenous(ms, lag(0,2))`：ms 当期进入模型，其滞后项做 IV 用 2 阶。lagstruct 的第二个参数实际指定了做 IV 的最大滞后阶数。</details>
+
+<hr>
+
+<a id="sec6"></a>
+<h2>§6 弱工具变量问题</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>当 γ→1 或固定效应方差远大于误差方差时，Yit-2 变成弱工具变量。平稳条件下可解析证明此结论。这直接催生了系统 GMM。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>为什么会出现弱工具变量？</h3>
+
+<p>对简化模型 $Y_{it} = \gamma Y_{it-1} + \alpha_i + \varepsilon_{it}$，AH 第一阶段为 $\Delta Y_{it-1} = \alpha Y_{it-2} + \nu_{it}$。平稳条件下可推导：</p>
+
+<p>$$\alpha = (\gamma - 1)\left( \frac{\tau}{\tau + \sigma^2_\alpha / \sigma^2_\varepsilon} \right), \quad \tau = \frac{1-\gamma}{1+\gamma}$$</p>
+
+<p><strong>关键结论</strong>：</p>
+<ol><li>当 $\gamma \to 1$（高度持续）：$\alpha \to 0$，弱 IV</li><li>当 $\sigma^2_\alpha / \sigma^2_\varepsilon$ 很大（个体差异远大于随机波动）：$\alpha \to 0$，弱 IV</li></ol>
+
+<p>这直接催生了 Blundell-Bond 的系统 GMM。</p>
+
+<p><strong>三问自检</strong>：①为什么 γ 接近 1 时弱 IV？增量 ΔY 中可预测的部分（由 Yit-2 解释的）比例很低。②弱 IV 的后果？估计量偏误增大，标准误膨胀，检验功效下降。③有什么解法？系统 GMM 加入水平方程矩条件提供额外的识别信息。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：静态面板中为什么 $Y_{it-2}$ 会成为弱工具变量？</li></ol>
+<details><summary>参考答案要点</summary>当 γ→1（高度持续）或 σ²α/σ²ε 很大时，Yit-2 对 ΔYit-1 的预测能力很弱——因为 ΔYit-1=(γ-1)Yit-2+αi+εit-1，γ≈1 时第一项接近 0，Yit-2 不能解释 ΔYit-1 的变异。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：推导平稳条件下第一阶段系数 α 的表达式。</li></ol>
+<details><summary>参考答案要点</summary>平稳条件下 Yit=αi/(1-γ)+Σγᵏεit-k。代入 α=E(ΔYit-1·Yit-2)/E(Y²it-2)，经过代数化简得 α=(γ-1)[τ/(τ+σ²α/σ²ε)]，τ=(1-γ)/(1+γ)。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：弱工具变量问题在 GMM 框架下有哪些诊断方法？</li></ol>
+<details><summary>参考答案要点</summary>①第一阶段 F 统计量（经验法则 F>10）；②Cragg-Donald Wald F 统计量（检验最大 IV 偏误是否超过容忍值）；③Kleibergen-Paap rk LM/Wald 统计量（异方差稳健版本）；④比较 OLS、FE 与 GMM 的 γ 估计值——GMM 应在 OLS 和 FE 之间。</details>
+
+<hr>
+
+<a id="sec7"></a>
+<h2>§7 系统 GMM（Blundell-Bond）</h2>
+
+<p><strong>重要性</strong>：★★★ 必考</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>为缓解弱工具变量，系统 GMM 在差分方程矩条件之外加入水平方程矩条件——用 ΔYit-1 作为水平方程中 Yit-1 的工具变量。统计模拟表明系统 GMM 在 γ≈1 时的小样本性质优于差分 GMM。Stata 中 xtdpdsys 和 xtabond2 均可实现。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>差分 GMM 在什么情况下出问题？</h3>
+
+<p>差分 GMM 把所有的滞后项都用作工具变量。这个策略在 γ 不太接近 1 时表现良好。但实际经济数据中，很多行为具有高度持续性——今年的 GDP 与去年高度相关（γ≈0.9），企业的市场份额变化缓慢，个体的消费习惯具有强惯性。</p>
+
+<p>当 γ→1 时，$Y_{it-1}$ 的变动几乎全部来自 $\alpha_i$ 和久远过去的冲击，$Y_{it-2}$ 对 $\Delta Y_{it-1}$ 的预测能力趋近于零。差分 GMM 的工具变量变得"弱"——它与内生变量不再有足够强的相关性。</p>
+
+<p><strong>弱工具变量的后果</strong>：</p>
+<ul><li>估计量向 OLS 偏误方向收缩</li><li>标准误膨胀</li><li>假设检验不可靠</li></ul>
+
+<p>这就是 Blundell 和 Bond（1998）的出发点：<strong>能否为水平方程本身也找到工具变量，提供额外的识别信息？</strong></p>
+
+<h3>为什么 $\Delta Y_{it-1}$ 有效？</h3>
+
+<ul><li><strong>相关性</strong>：显然与 $Y_{it-1}$ 相关</li><li><strong>外生性</strong>：若 $\varepsilon_{it}$ 无自相关，$\Delta Y_{it-1}$ 与当期 $\varepsilon_{it}$ 不相关</li><li><strong>附加条件</strong>：需要 $E(\Delta Y_{it-1} \alpha_i) = 0$</li></ul>
+
+<p>Blundell-Bond 给出的一个必要条件是：</p>
+
+<p>$$E\left[ \left( Y_{i1} - \frac{\alpha_i}{1-\gamma} \right) \alpha_i \right] = 0$$</p>
+
+<p>即初值相对于均值的偏离与个体效应无关。</p>
+
+<h3>水平方程的矩条件</h3>
+
+<p>对一般模型 $Y_{it} = \gamma Y_{it-1} + \beta'X_{it} + \alpha_i + \varepsilon_{it}$：</p>
+
+<p>$$E[\Delta Y_{it-1}(Y_{it} - \gamma Y_{it-1} - \beta'X_{it})] = 0$$</p>
+
+<p>$$E[\Delta X_{it}(Y_{it} - \gamma Y_{it-1} - \beta'X_{it})] = 0$$</p>
+
+<p>系统 GMM 把这些水平和差分矩条件联合估计。</p>
+
+<h3>Stata 实现</h3>
+
+<pre class="stata-code"><code>* xtdpdsys（命令格式与 xtabond 类似）
+xtdpdsys depvar indepvars, lags(#) maxldep(#) ///
+    pre(wks, lag(1,2)) endogenous(ms union, lag(0,2)) ///
+    twostep vce(robust)
+
+* xtabond2（非官方，最灵活）
+ssc install xtabond2
+xtabond2 depvar L.depvar indepvars, ///
+    gmmstyle(L.depvar, lag(2 4)) ///
+    ivstyle(strictly_exogenous_vars) ///
+    twostep robust</code></pre>
+
+<table class="md-table"><thead><tr><th>命令</th><th>特点</th></tr></thead><tbody><tr><td>xtabond</td><td>仅差分 GMM</td></tr><tr><td>xtdpdsys</td><td>系统 GMM，语法简单</td></tr><tr><td>xtdpd</td><td>灵活，支持 MA 误差</td></tr><tr><td>xtabond2</td><td>功能最强，可输出 Hansen/C 检验</td></tr></tbody></table>
+
+<p><strong>三问自检</strong>：①系统 GMM 比差分 GMM 多了什么？水平方程矩条件。②什么时候效果最好？γ 接近 1 或个体效应方差大时。③水平方程 IV 的有效性前提？初值条件（均值平稳性）。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：系统 GMM 比差分 GMM 多了什么？为什么需要？</li></ol>
+<details><summary>参考答案要点</summary>多了水平方程的矩条件——用 ΔYit-1 做水平方程中 Yit-1 的 IV。需要的原因：当 γ 接近 1 时，差分 GMM 的滞后工具变量很弱，水平方程提供了额外的识别信息。</details>
+
+<ol><li>⭐ <strong>基础</strong>：系统 GMM 的附加矩条件是什么？</li></ol>
+<details><summary>参考答案要点</summary>①E[ΔYit-1(Yit-γYit-1-β'Xit)]=0；②E[ΔXit(Yit-γYit-1-β'Xit)]=0。前提是初值条件 E[(Yi1-αi/(1-γ))αi]=0 成立。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：解释初值条件的经济含义。什么情况下它可能不成立？</li></ol>
+<details><summary>参考答案要点</summary>初值条件要求数据生成过程已经达到平稳——个体初始观测值相对于其长期均值的偏离与个体效应无关。如果面板的起始点与内生过程相关（例如从某个政策冲击后开始观测），初值条件可能被破坏。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：系统 GMM 比差分 GMM 在有限样本下好多少？在什么情况下改善最明显？</li></ol>
+<details><summary>参考答案要点</summary>Blundell-Bond (1998) 的 Monte Carlo 模拟表明：当 γ=0.8 且 σ²α/σ²ε 较大时，系统 GMM 的偏误仅为差分 GMM 的 1/3~1/2，RMSE 也显著更小。改善最明显的情形：γ→1 + 个体效应方差大 + T 小。</details>
+
+<ol><li>⭐⭐⭐ <strong>拓展</strong>：查阅 Roodman (2009) "How to do xtabond2"，说明 xtabond2 的输出中应如何判断模型设定是否合理。</li></ol>
+<details><summary>参考答案要点</summary>①AR(1) 显著、AR(2) 不显著；②Hansen 检验 p 值在 0.1~0.25 之间（p>0.25 可能工具变量过多）；③工具变量数 < N；④γ 的 GMM 估计值应在 OLS 和 FE 之间；⑤C 检验（difference-in-Hansen）判断 GMM 和 IV 工具变量的子集有效性。</details>
+
+<hr>
+
+<a id="sec8"></a>
+<h2>§8 自相关检验与过度识别检验</h2>
+
+<p><strong>重要性</strong>：★★★ 必考</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>GMM 有效性依赖于 εit 无自相关的假设。estat abond 检验差分残差的自相关——一阶自相关显著但高阶不显著才与模型相容。过度识别检验（Sargan/Hansen）判断所有矩条件是否同时成立。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>自相关检验（estat abond）</h3>
+
+<p>Arellano-Bond 的前提是 $\varepsilon_{it}$ 无自相关。检验的是<strong>差分残差</strong>的自相关：</p>
+
+<ul><li>即使 $\varepsilon_{it}$ 无自相关，$\Delta \varepsilon_{it}$ 必有一阶自相关（因为 $Cov(\Delta\varepsilon_{it}, \Delta\varepsilon_{it-1}) = -Cov(\varepsilon_{it-1}, \varepsilon_{it-1}) \neq 0$）</li><li>但不应有更高阶自相关</li><li><strong>合格结果</strong>：一阶 p<0.05，二阶和三阶 p>0.05</li></ul>
+
+<pre class="stata-code"><code>estat abond, artests(3)</code></pre>
+
+<h3>过度识别检验</h3>
+
+<p>当工具变量数超过内生变量数时，可检验所有矩条件是否同时成立。注意区分：</p>
+
+<table class="md-table"><thead><tr><th>检验</th><th>适用条件</th><th>命令</th></tr></thead><tbody><tr><td>Sargan</td><td>同方差</td><td><code>estat sargan</code></td></tr><tr><td>Hansen</td><td>异方差稳健</td><td>xtabond2 输出</td></tr></tbody></table>
+
+<p>拒绝原假设意味着某些工具变量不满足外生性——模型设定有问题。</p>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：Arellano-Bond 自相关检验检验的是什么？为什么一阶自相关一定显著？</li></ol>
+<details><summary>参考答案要点</summary>检验差分残差的自相关。即使 εit 无自相关，Cov(Δεit, Δεit-1) = -Cov(εit-1,εit-1) = -σ²ε ≠ 0，所以一阶必然显著。正确结果：一阶 p<0.05，二阶和三阶 p>0.05。</details>
+
+<ol><li>⭐ <strong>基础</strong>：Sargan 检验和 Hansen 检验的区别是什么？实证中应报告哪个？</li></ol>
+<details><summary>参考答案要点</summary>Sargan 假设同方差，异方差下过度拒绝。Hansen 异方差稳健，但工具变量过多时会变弱（p→1）。实证中报告 Hansen 检验，但需注意工具变量数量不要过多。两步 GMM 下只能用 Hansen。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：如果 estat abond 显示二阶自相关显著，说明什么问题？应如何调整？</li></ol>
+<details><summary>参考答案要点</summary>说明 εit 存在自相关——至少是一阶自相关或 MA(1)。调整方法：①滞后一阶 Yit-1 可能不够，考虑在模型中加入 Yit-2；②工具变量从更远的滞后期开始（滞后 3 期而非 2 期）；③使用 xtdpd 命令允许设定 MA 误差结构。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：为什么过度检验的 p 值太接近 1 也是警告信号？</li></ol>
+<details><summary>参考答案要点</summary>Hansen 检验的 p 值接近 1（如 >0.5）通常意味着工具变量过多——矩条件数量远远超过所需，检验的效力被稀释。经验法则：工具变量数不应超过横截面个体数 N。</details>
+
+<hr>
+
+<a id="sec9"></a>
+<h2>§9 实例：工资方程动态面板估计</h2>
+
+<p><strong>重要性</strong>：★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>用 mus208psid.dta 数据集完整演示：严格外生变量（occ, south, smsa, ind）、前定变量（wks）、内生变量（ms, union）在差分 GMM 和系统 GMM 中如何设定工具变量结构。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>数据（mus208psid.dta）</h3>
+
+<p>1976-1982 年美国 595 个家庭户主平衡面板，T=7。变量包括对数工资（lwage）、职业类型（occ）、工作周数（wks）、婚姻状态（ms）、工会（union）、制造业（ind）、南部（south）、都市（smsa）。</p>
+
+<h3>设定</h3>
+
+<p>严格外生：occ, south, smsa, ind 前定：wks（与当期误差无关，但可能与未来误差相关） 内生：ms, union（当期即与误差相关）</p>
+
+<h3>差分 GMM 程序</h3>
+
+<pre class="stata-code"><code>use mus208psid.dta, clear
+xtabond lwage occ south smsa ind, lags(2) maxldep(3) ///
+    pre(wks, lag(1,2)) endogenous(ms, lag(0,2)) ///
+    endogenous(union, lag(0,2)) twostep vce(robust)</code></pre>
+
+<h3>如何理解工具变量输出</h3>
+
+<p>Stata 输出：</p>
+<pre class="code-block"><code>Instruments for differenced equation
+  GMM-type: L(2/4).lwage L(1/2).L.wks L(2/3).ms L(2/3).union
+  Standard: D.occ D.south D.smsa D.ind</code></pre>
+
+<p>解读：</p>
+<ul><li><code>L(2/4).lwage</code>：lwage 滞后 2-4 期作为 $\Delta lwage_{it-1}$ 的 IV</li><li><code>L(1/2).L.wks</code>：wks 滞后 2-3 期（原始数据）作为 $\Delta wks_{it}$ 的 IV</li><li><code>Standard</code>：严格外生变量的差分可做自身工具变量</li></ul>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：在工资方程实例中，wks 为什么被设为前定变量而非严格外生？</li></ol>
+<details><summary>参考答案要点</summary>工作周数可能受到过去工资冲击的影响（好的工资年份可能使人减少工作时长），因此 wks_t 可能与 ε_{t+1} 相关。但它与当期误差不直接相关，属于前定变量。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：解释 Stata 输出中的 <code>L(2/4).lwage</code> 和 <code>L(1/2).L.wks</code> 的含义。</li></ol>
+<details><summary>参考答案要点</summary>L(2/4).lwage 表示 lwage 滞后 2 至 4 期用作 Δlwage_it-1 的工具变量。L(1/2).L.wks 表示 wks 滞后 2 至 3 期（注意 L.wks 是 wks 的一阶滞后，再滞后 1-2 即为原始数据的滞后 2-3 期）用作 Δwks_it 的工具变量。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：为什么 ms 和 union 被设为内生变量？给出经济学理由。</li></ol>
+<details><summary>参考答案要点</summary>婚姻状态和工会成员身份可能与不可观测的个人特征（如能力、风险偏好）相关，这些特征也会影响工资。例如，能力高的人可能更容易进入工会，同时工资也更高——此时 union 与 εit 相关。</details>
+
+<hr>
+
+<a id="sec10"></a>
+<h2>§10 误差自相关下的调整与 xtabond2</h2>
+
+<p><strong>重要性</strong>：★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>若 εit 服从 MA(1)，工具变量滞后阶数需向后顺延一位。xtabond2 是实证中最常用的非官方命令，可报告 Hansen 检验和 C 检验，支持差分 GMM、系统 GMM 及二者的灵活设定。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>MA(1) 误差的调整</h3>
+
+<p>若 estat abond 拒绝二阶无自相关，可能 $\varepsilon_{it}$ 服从 MA(1)：$\varepsilon_{it} = \eta_{it} + \psi\eta_{it-1}$。此时：</p>
+
+<ul><li>$Y_{it-2}$ 不再外生（与 $\varepsilon_{it-1}$ 相关）</li><li>有效 IV 从 $Y_{it-3}$ 开始</li><li>水平方程有效 IV 从 $\Delta Y_{it-2}$ 开始</li></ul>
+
+<p>调整：<code>dgmmiv(lwage, lagrange(3 4))</code> 替换 <code>lagrange(2 4)</code></p>
+
+<h3>xtabond2：实证首选</h3>
+
+<pre class="stata-code"><code>ssc install xtabond2
+xtabond2 lwage L.lwage L2.lwage occ south smsa ind ///
+    wks L.wks ms union, ///
+    gmmstyle(lwage, lag(2 4)) ///
+    gmmstyle(wks ms union, lag(2 3)) ///
+    ivstyle(occ south smsa ind) ///
+    noleveleq twostep robust</code></pre>
+
+<ul><li><code>gmmstyle</code>：GMM 型工具变量（滞后项）</li><li><code>ivstyle</code>：标准 IV（严格外生变量）</li><li><code>noleveleq</code>：仅差分 GMM；去掉即系统 GMM</li><li>输出含 Hansen 检验和 C 检验</li></ul>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐ <strong>基础</strong>：如果 εit 服从 MA(1)，工具变量策略应如何调整？</li></ol>
+<details><summary>参考答案要点</summary>①差分方程中 Yit-2 不再有效，有效 IV 从 Yit-3 开始；②水平方程中有效 IV 从 ΔYit-2 开始（而非 ΔYit-1）；③xtdpd 命令支持 MA 误差设定。</details>
+
+<ol><li>⭐ <strong>基础</strong>：xtabond2 中 gmmstyle 和 ivstyle 的区别是什么？</li></ol>
+<details><summary>参考答案要点</summary>gmmstyle 设定 GMM 型工具变量——每个时间点可用的 IV 数量不同，工具变量矩阵为块对角。ivstyle 设定标准 IV——每个变量在矩阵中只有一列（所有时期使用相同的 IV），对应严格外生变量。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：xtabond2 中的 C 检验（difference-in-Hansen）是什么？如何使用？</li></ol>
+<details><summary>参考答案要点</summary>C 检验比较两组工具变量的 Hansen 统计量差异，用于检验某一组工具变量的外生性。例如，可以检验 gmmstyle 和 ivstyle 的工具变量是否同时有效。若 C 检验显著，说明其中一组工具变量可能不满足外生条件。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：noleveleq 选项去掉后会变成什么模型？此时需要哪些额外假设？</li></ol>
+<details><summary>参考答案要点</summary>去掉 noleveleq 后 xtabond2 默认做系统 GMM——同时使用差分方程和水平方程的矩条件。额外的假设：初值条件（均值平稳性）成立，即 E[(Yi1-αi/(1-γ))αi]=0。</details>
+
+<hr>
+
+<a id="sec11"></a>
+<h2>§11 全章总结与综合习题</h2>
+
+<p><strong>重要性</strong>：★★★</p>
+
+<h3>一、脉络梳理</h3>
+
+<p>从面板 2SLS → 动态面板内生性 → AH → 差分 GMM → 系统 GMM 的完整方法论链条。方法选择速查：静态内生 → xtivreg；动态且 T 小 → 系统 GMM；动态且 T 大且弱 IV 风险 → 限制滞后阶数。</p>
+
+<h3>二、重点内容申明</h3>
+
+<h3>方法选择决策树</h3>
+
+<pre class="code-block"><code>解释变量内生？
+  ├── 否 → 固定效应 (xtreg, fe)
+  └── 是
+      ├── 静态面板 → 面板 2SLS (xtivreg, fe)
+      └── 动态面板（含 Yit-1）
+          ├── T 小, γ 不接近 1 → 差分 GMM (xtabond)
+          ├── T 小, γ 接近 1 → 系统 GMM (xtdpdsys/xtabond2)
+          └── T 大 → 系统 GMM + 限制滞后阶数</code></pre>
+
+<h3>五个关键检查</h3>
+
+<ol><li>误差自相关检验（<code>estat abond</code>）——一阶显著，高阶不显著</li><li>过度识别检验（Hansen > Sargan，异方差下用 Hansen）</li><li>工具变量数量不超过 N（<code>maxldep</code> 控制）</li><li>两步 GMM 用 Windmeijer 修正标准误（<code>vce(robust)</code>）</li><li>$\gamma$ 的估计值应在 OLS（上偏）和 FE（下偏）之间——可用于判断 GMM 估计是否合理</li></ol>
+
+<h3>全章速记口诀</h3>
+
+<blockquote>FE 不够用，内生要 IV。动态有偏误，Nickell 说不。AH 开思路，滞后做工具。差分 GMM 广，矩条件全收。γ 近 1 弱 IV，系统 GMM 补。检验三步走：自相关、过度识别、工具数量。实证用 xtabond2，Hansen 报告好。</blockquote>
+
+<h3>三、习题</h3>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：画出自固定效应到系统 GMM 的方法选择决策树，标注每种方法的适用条件。</li></ol>
+<details><summary>参考答案要点</summary>如内容申明 §11 所示。关键分支：静态 vs 动态、外生 vs 内生、γ 是否接近 1。每个节点标注关键假设和诊断检验。速记口诀见内容申明末。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：给定一个面板数据集（N=200, T=5），你怀疑创新投入方程中 ln(R&D_t) 依赖于 ln(R&D_t-1) 且公司规模是内生的。请写出完整的估计策略，包括模型设定、估计方法选择、诊断检验步骤。</li></ol>
+<details><summary>参考答案要点</summary>模型：lnRD_it = γlnRD_it-1 + βSize_it + controls + αi + εit。因 T=5，用系统 GMM（差分 GMM 在 γ 可能接近 1 时效率低）。Size 设为 endogenous。诊断：estat abond（检验自相关）、Hansen 检验（过度识别）、比较 OLS/FE/GMM 的 γ 估计值。Stata：xtabond2 lnRD L.lnRD Size controls, gmmstyle(L.lnRD, lag(2 3)) gmmstyle(Size, lag(2 3)) ivstyle(controls) twostep robust。</details>
+
+<ol><li>⭐⭐⭐ <strong>拓展</strong>：近年文献中出现了哪些对传统 GMM 方法的改进？查阅 Bun-Windmeijer (2010) 或 Kiviet (1995) 的偏误修正方法。</li></ol>
+<details><summary>参考答案要点</summary>Kiviet (1995) 提出对 LSDV 估计量做解析偏误修正——先估计偏误大小，再从 LSDV 估计中减去偏误，在 γ 不接近 1 时表现优于 GMM。Bun-Windmeijer (2010) 比较了多种偏误修正估计量。另有多维固定效应下的 GMM（允许额外的固定效应结构）和分位数回归动态面板等新方法。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：如果一篇论文使用系统 GMM 但没有报告工具变量数量和 Hansen 检验 p 值，审稿人可能提出什么质疑？</li></ol>
+<details><summary>参考答案要点</summary>①工具变量数量可能过多，导致 Hansen 检验 p 值→1，检验失效；②可能没有控制 maxldep，IV 数量超过 N；③没有报告差分方程和水平方程各自的工具变量结构，无法判断水平方程矩条件的贡献。建议做法：明确报告 IV 数量（≤N）、Hansen p 值（0.1~0.25）、C 检验结果，并做 OLS/FE/GMM 对比。</details>
+
+<ol><li>⭐⭐ <strong>进阶</strong>：综合题——同一个数据集，一位同学用 FE、另一位用差分 GMM，得到截然不同的结果。你如何判断哪个更可信？</li></ol>
+<details><summary>参考答案要点</summary>①检查是否包含 Yit-1——如果是动态面板，FE 有 Nickell 偏误；②检验内生性——如果解释变量外生，FE 更高效；③GMM 诊断——自相关检验、Hansen 检验、IV 数量是否合理；④比较 OLS(γ̂ 上偏)、FE(γ̂ 下偏)、GMM(应在中间)。如果 GMM 的 γ̂ 不在 OLS 和 FE 之间，可能模型设定有问题。</details>
+
+<ol><li>⭐⭐ <strong>基础</strong>：写出 xtabond、xtdpdsys、xtabond2 三个命令的典型用法（各一行），标注各自适用场景。</li></ol>
+<details><summary>参考答案要点</summary>①`xtabond y x, lags(1) maxldep(3) twostep vce(robust)`——差分 GMM，T 中等，γ 不接近 1。②`xtdpdsys y x, lags(1) maxldep(3) twostep vce(robust)`——系统 GMM，T 小，γ 可能接近 1。③`xtabond2 y L.y x, gmm(L.y, lag(2 4)) iv(x) twostep robust`——灵活设定工具变量结构，实证首选。</details>
+
+<ol><li>⭐⭐⭐ <strong>拓展</strong>：阅读 Arellano-Bond (1991) 和 Blundell-Bond (1998) 的原文摘要，对比两者的核心贡献与适用条件差异。</li></ol>
+<details><summary>参考答案要点</summary>AB(1991) 提出差分 GMM，核心是用所有可用滞后项构造 GMM 型工具变量矩阵，解决了 AH 的效率问题。BB(1998) 提出系统 GMM，核心是加入水平方程矩条件利用 ΔYit-1 作为附加 IV，缓解了 γ→1 时的弱 IV 问题。BB 的附加假设是初值条件（均值平稳性）。</details>
+
+<blockquote><strong>外部资料来源</strong>：
+- Arellano, M. and Bond, S. (1991). Some Tests of Specification for Panel Data: Monte Carlo Evidence and an Application to Employment Equations. <em>Review of Economic Studies</em>, 58(2), 277-297.
+- Blundell, R. and Bond, S. (1998). Initial Conditions and Moment Restrictions in Dynamic Panel Data Models. <em>Journal of Econometrics</em>, 87(1), 115-143.
+- Roodman, D. (2009). How to do xtabond2: An Introduction to Difference and System GMM in Stata. <em>Stata Journal</em>, 9(1), 86-136.
+- Windmeijer, F. (2005). A Finite Sample Correction for the Variance of Linear Efficient Two-Step GMM Estimators. <em>Journal of Econometrics</em>, 126(1), 25-51.</blockquote>
+
+<hr>
+
+  </main>
+</div>
+<button id="btt" title="回到顶部" aria-label="回到顶部">↑</button>
+<div class="footer">2026-06-22 · 三段式复习资料 · 脉络梳理 + 重点内容申明 + 习题</div>
+<script>
+// 暗色模式 (localStorage key per chapter)
+const LS_KEY = 'ch_endogeneity';
+const themeBtn = document.getElementById('themeBtn');
+function setTheme(d) {
+  document.documentElement.classList.toggle('dark', d);
+  themeBtn.textContent = d ? '☀️ 亮色' : '🌙 暗色';
+  try { localStorage.setItem(LS_KEY, d ? '1' : '0') } catch(e) {}
+}
+const saved = (() => { try { return localStorage.getItem(LS_KEY) } catch(e) { return null } })();
+setTheme(saved === '1');
+themeBtn.onclick = () => setTheme(!document.documentElement.classList.contains('dark'));
+// 移动端目录
+const tocBtn = document.getElementById('tocBtn');
+tocBtn.onclick = () => {
+  const s = document.getElementById('sidebar');
+  s.style.display = s.style.display === 'none' ? 'block' : 'none';
+};
+// 进度条
+const pbar = document.getElementById('pbar');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - window.innerHeight;
+  pbar.style.width = (h > 0 ? (scrollY / h * 100) : 0) + '%';
+  document.getElementById('btt').style.display = scrollY > 400 ? 'flex' : 'none';
+}, {passive: true});
+document.getElementById('btt').onclick = () => scrollTo({top: 0, behavior: 'smooth'});
+// 侧边栏高亮
+const sectLinks = Array.from(document.querySelectorAll('.sidebar a[data-sec]'));
+const sections = sectLinks.map(a => document.getElementById(a.dataset.sec)).filter(Boolean);
+const obs = new IntersectionObserver((es) => {
+  es.forEach(e => {
+    if (e.isIntersecting) {
+      sectLinks.forEach(a => a.classList.toggle('active', a.dataset.sec === e.target.id));
+    }
+  });
+}, {rootMargin: '-80px 0px -70% 0px'});
+sections.forEach(s => obs.observe(s));
+function expandAll() {
+  document.querySelectorAll('details').forEach(d => d.open = true);
+}
+</script>
+</body>
+</html>
